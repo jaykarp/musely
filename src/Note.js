@@ -1,26 +1,45 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {
-    Container,
     Button,
-    Form,
-    Grid,
-    Header,
-    Message,
-    Segment,
-    Image,
-    Menu,
-    Dimmer,
-    Loader
+    Popup
   } from 'semantic-ui-react';
   import 'semantic-ui-css/semantic.min.css';
 
 
 const Background = styled.div`
+    /* position: relative; */
     margin: 5px 5px 5px 5px;
+    padding: 1rem 1rem 1rem 1rem;
     background-color: #EEEEEE;
     box-shadow: 5px 5px 5px;
-    max-width: 20vw;
+    width: 30vw;
+    height: 16vh;
+`
+
+const NoteTitle = styled.h3`
+    /* padding-top: 1rem;
+    padding-left: 0.5rem; */
+    color: black;
+    margin: 0 0 0 0;
+`
+
+const TimeStamp = styled.h3`
+    color: black;
+    margin: 0 0 0 0;
+`
+
+const NoteHeader = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+`
+
+const NoteButtonContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 `
 
 
@@ -32,7 +51,15 @@ class Note extends Component {
     render() {
         return(
             <Background>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rhoncus, cursus convallis aliquet enim enim in tincidunt. Elementum enim dis vitae varius dui faucibus id nunc purus. Tincidunt purus pharetra adipiscing ridiculus feugiat cursus ullamcorper nulla dignissim. At at id bibendum egestas molestie in. Molestie dictum in posuere proin mi eget tincidunt hendrerit posuere. Elit mauris nullam...</p>
+                <NoteHeader>
+                    <NoteTitle>{this.props.title}</NoteTitle>
+                    <TimeStamp>{this.props.time}</TimeStamp>
+                </NoteHeader>
+                
+                <p>{this.props.text}</p>
+                <NoteButtonContainer>
+                    <Popup content='Add note to group' trigger={<Button icon='add' />} />
+                </NoteButtonContainer>
             </Background>
         );
     }
