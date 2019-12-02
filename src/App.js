@@ -1,20 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-// import './App.css';
-// import 'semantic-ui-css/semantic.min.css';
-import Example from "./example";
-import NavBar from './NavBar';
-import SongContainer from './SongContainer';
+import NavBar from './nav/NavBar';
+import SongContainer from './song/SongContainer';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch
+} from "react-router-dom";
+
 
 function App() {
-  return (
-    <div>
-      <NavBar />
-      <SongContainer />
-      {/* <Example /> */}
-    </div>
-    
-    );
+    return (
+        <Router>
+            <div>
+                <NavBar />
+                <Switch>
+                    <Route path={["/", "/songs"]}>
+                        <SongContainer />
+                    </Route>
+                    <Route path="/quiz">
+                        <SongContainer />
+                    </Route>
+                </Switch>
+            </div> 
+        </Router>
+   );
 }
 
 export default App;

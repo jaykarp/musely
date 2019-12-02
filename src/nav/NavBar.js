@@ -13,7 +13,8 @@ import {
     Dimmer,
     Loader
   } from 'semantic-ui-react';
-  import 'semantic-ui-css/semantic.min.css';
+import 'semantic-ui-css/semantic.min.css';
+import { Link } from "react-router-dom"
 
 let NavContainer = styled.div `
   background-color: black;
@@ -39,6 +40,8 @@ class NavBar extends Component {
             <div>
                 <NavContainer>
                     <h1 style={{color: "white", paddingTop: "1rem", paddingLeft: "2rem"}}>Musely</h1>
+                    <Button style={{marginLeft: "auto"}}> <Link to="/songs" style={{color: "black", textDecoration: "none"}}> Notes </Link> </Button>
+                    <Button> <Link to="/quiz" style={{textDecoration: "none", color: "black"}}> Quiz </Link> </Button>
                 </NavContainer>
             </div>
         );
