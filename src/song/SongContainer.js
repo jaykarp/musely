@@ -72,8 +72,8 @@ class SongContainer extends Component {
             },
         ]
 
-        const notes = notes_data.map(elem => {
-            return <Note title={elem.title} text={elem.text} time={elem.time}/>
+        const notes = notes_data.map((elem, i) => {
+            return <Note key={i} title={elem.title} text={elem.text} time={elem.time}/>
         })
 
         return(
