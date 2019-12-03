@@ -88,18 +88,21 @@ class SongContainer extends Component {
                 {/* <Header as="h1">Hello World</Header> */}
                 <SongHeader>{song_name}</SongHeader>
                 <SongHeader>Notes</SongHeader>
-                {/* <NoteContaienr> */}
+                <NoteContaienr>
                     <NotesConsumer>
                         {data => {
-                            console.log('Data', data);
-                            const thing = data.notes[song_name]
-                            console.log('THIS SONG', thing);
-                            {/* data.notes[song_name].notes.map( (elem, i) => {
-                                return <Note key={i} title={elem.title} text={elem.text} time={elem.start_time}></Note>
-                            }) */}
+                            
+                            const cur_song_notes = data.notes[song_name];
+                            {/* console.log('Data', Object.getOwnPropertyNames(data) ); */}
+                            console.log('THIS SONG', cur_song_notes && cur_song_notes.user_notes);
+
+                            return cur_song_notes && cur_song_notes.user_notes.map( (elem, i) => {
+                                console.log('ELEM', elem.title);
+                                return <Note key={i} title={elem.title} text={elem.body} time={elem.start_time}/>
+                            })
                         }}
                     </NotesConsumer>
-                {/* </NoteContaienr> */}
+                </NoteContaienr>
                     {/* {notes} */}
                     {/* <Note />
                     <Note />

@@ -50,6 +50,7 @@ class Note extends Component {
     }
 
     render() {
+        console.log('TITLE TITLE TITLE', this.props.title);
         return(
             <div>
                 <NotesConsumer>
