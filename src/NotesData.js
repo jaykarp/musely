@@ -23,7 +23,49 @@ export const NotesData = {
                 start_time: "01:10",
                 end_time: "01:25",
                 group: "easy"
-            } 
+            },
+            {
+                title: "This be tuff",
+                body: "Sheesh this piece is obtuse, huh?",
+                start_time: "00:05",
+                end_time: "00:30",
+                group: "crazy"
+            },
+            {
+                title: "This be tuff",
+                body: "Sheesh this piece is obtuse, huh?",
+                start_time: "00:05",
+                end_time: "00:30",
+                group: "super"
+            },
+            {
+                title: "This be tuff",
+                body: "Sheesh this piece is obtuse, huh?",
+                start_time: "00:05",
+                end_time: "00:30",
+                group: "crazy"
+            },
+            {
+                title: "This be tuff",
+                body: "Sheesh this piece is obtuse, huh?",
+                start_time: "00:05",
+                end_time: "00:30",
+                group: "super"
+            },
+            {
+                title: "This be tuff",
+                body: "Sheesh this piece is obtuse, huh?",
+                start_time: "00:05",
+                end_time: "00:30",
+                group: "super"
+            },
+            {
+                title: "This be tuff",
+                body: "Sheesh this piece is obtuse, huh?",
+                start_time: "00:05",
+                end_time: "00:30",
+                group: "easy"
+            },
         ]
     }, 
     Song_Name_2: {

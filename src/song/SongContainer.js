@@ -17,6 +17,7 @@ import {
   import 'semantic-ui-css/semantic.min.css';
 import Note from './Note';
 import { NotesConsumer } from '../NotesContext.js';
+import { thisExpression } from '@babel/types';
 
 
 const SongHeader = styled.h1`
@@ -60,6 +61,13 @@ const DropDownBox = styled.div`
 `
 
 class SongContainer extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            selected_groups: []
+        };
+    }
 
     componentDidMount() {
         console.log(NotesConsumer);
@@ -70,7 +78,23 @@ class SongContainer extends Component {
     }
 
     handleSearchChange = (e, data) => {
-        console.log(data);
+        console.log(data.value);
+        if (data.value.length > this.state.selected_groups.length) 
+            this.setState({
+                selected_groups: [...this.state.selected_groups, data.value[data.value.length-1]]
+            })
+        else {
+            var array = [...this.state.selected_groups];
+            var index = array.length-1;
+            if (index !== -1) {
+                array.splice(index, 1);
+                this.setState({
+                    selected_groups: array
+                });
+            }
+            
+        }
+            
     }
 
     render() {
@@ -131,12 +155,11 @@ class SongContainer extends Component {
 
                 
 
-                <NoteContaienr>
+                
                     <NotesConsumer>
                         {data => {
                             
                             const cur_song_notes = data.notes[song_name];
-                            {/* console.log('Data', Object.getOwnPropertyNames(data) ); */}
                             console.log('THIS SONG', cur_song_notes && cur_song_notes.user_notes);
                             let group_options = [];
                             var groupSet = new Set();
@@ -178,14 +201,24 @@ class SongContainer extends Component {
                                     </RightButtonsContainer>
                                 </NotesOptionsButtonsContainer>
                                 
+                                <NoteContaienr>
+                                
                                 {cur_song_notes && cur_song_notes.user_notes.map( (elem, i) => {
-                                    return <Note key={i} title={elem.title} text={elem.body} time={elem.start_time}/>
+                                    console.log(this.state.selected_groups);
+                                    if (this.state.selected_groups.length == 0) {
+                                        return <Note key={i} title={elem.title} text={elem.body} time={elem.start_time}/>
+                                    } else if (this.state.selected_groups.includes(elem.group)) {
+                                        return <Note key={i} title={elem.title} text={elem.body} time={elem.start_time}/>
+                                    }
+                                    
                                 })}
+
+                                </NoteContaienr>
                                 </React.Fragment>
                             ); // end return
                         }} 
                     </NotesConsumer>
-                </NoteContaienr>
+                
                     {/* {notes} */}
                     {/* <Note />
                     <Note />
