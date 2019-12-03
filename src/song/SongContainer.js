@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {
@@ -15,9 +16,11 @@ import {
     Dropdown
   } from 'semantic-ui-react';
   import 'semantic-ui-css/semantic.min.css';
+
 import Note from './Note';
 import { NotesConsumer } from '../NotesContext.js';
 import { thisExpression } from '@babel/types';
+import Waveform from './MyWaveform';
 
 
 const SongHeader = styled.h1`
@@ -65,8 +68,12 @@ class SongContainer extends Component {
         super(props);
 
         this.state = {
-            selected_groups: []
+            selected_groups: [],
+            playing: false,
+            pos: 0
         };
+
+        
     }
 
     componentDidMount() {
@@ -75,6 +82,18 @@ class SongContainer extends Component {
 
     handleDropDownSelect = (e) => {
         console.log('EEEEEEE', e);
+    }
+
+    handlePosChange = (e) => {
+        this.setState({
+            pos: e.originalArgs[0]
+        });
+    }
+
+    handleTogglePlay = () => {
+        this.setState({
+          playing: !this.state.playing
+        });
     }
 
     handleSearchChange = (e, data) => {
@@ -98,6 +117,8 @@ class SongContainer extends Component {
     }
 
     render() {
+
+        
 
         const notes_data = [
             {
@@ -150,6 +171,15 @@ class SongContainer extends Component {
                 {/* <Header as="h1">Hello World</Header> */}
                 
                 <SongHeader>{song_name}</SongHeader>
+
+                <Waveform
+                    src={'/escalation.mp3'}
+                    pos={this.state.pos}
+                    onPosChange={this.handlePosChange}
+                    playing={this.state.playing}
+                />
+
+                
                 
                 <SongHeader>Notes</SongHeader>
 
