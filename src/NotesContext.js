@@ -6,6 +6,7 @@ const NotesContext = React.createContext();
 class NotesProvider extends Component {
     state = {
         notes: {},
+        current_group: ""
     }
 
     componentDidMount() {

@@ -121,34 +121,7 @@ class SongContainer extends Component {
                 
                 <SongHeader>Notes</SongHeader>
 
-                <NotesOptionsButtonsContainer>
-                    <RightButtonsContainer>
-                        <Button color='blue'>Add Note</Button>
-                        <Button negative={true}>Remove Note</Button>
-                        <DropDownBox>
-                            <Dropdown
-                                placeholder='Display Group'
-                                search
-                                selection
-                                multiple
-                                options={countryOptions}
-                            />
-                        </DropDownBox>
-                        
-                        <DropDownBox>
-                            <Dropdown
-                                placeholder='Sort by'
-                                item={true}
-                                search
-                                selection
-                                options={countryOptions}
-                            />
-                        </DropDownBox>
-                        
-                        
-                    </RightButtonsContainer>
-                    
-                </NotesOptionsButtonsContainer>
+                
 
                 <NoteContaienr>
                     <NotesConsumer>
@@ -157,11 +130,51 @@ class SongContainer extends Component {
                             const cur_song_notes = data.notes[song_name];
                             {/* console.log('Data', Object.getOwnPropertyNames(data) ); */}
                             console.log('THIS SONG', cur_song_notes && cur_song_notes.user_notes);
-
-                            return cur_song_notes && cur_song_notes.user_notes.map( (elem, i) => {
-                                return <Note key={i} title={elem.title} text={elem.body} time={elem.start_time}/>
+                            let group_options = [];
+                            var groupSet = new Set();
+                            cur_song_notes && cur_song_notes.user_notes.map((elem, i) => {
+                                if (!groupSet.has(elem.group)) {
+                                    var option = { key: i, value: i, text: elem.group}
+                                    group_options = [...group_options, option];
+                                    groupSet.add(elem.group);
+                                }
+                                
                             })
-                        }}
+
+                            return (
+                                <React.Fragment>
+                                <NotesOptionsButtonsContainer>
+                                    <RightButtonsContainer>
+                                        <Button color='blue'>Add Note</Button>
+                                        <Button negative={true}>Remove Note</Button>
+                                        <DropDownBox>
+                                            <Dropdown
+                                                placeholder='Display Group'
+                                                search
+                                                selection
+                                                multiple
+                                                options={group_options}
+                                            />
+                                        </DropDownBox>
+                                        
+                                        <DropDownBox>
+                                            <Dropdown
+                                                placeholder='Sort by'
+                                                item={true}
+                                                search
+                                                selection
+                                                options={countryOptions}
+                                            />
+                                        </DropDownBox>
+                                    </RightButtonsContainer>
+                                </NotesOptionsButtonsContainer>
+                                
+                                {cur_song_notes && cur_song_notes.user_notes.map( (elem, i) => {
+                                    return <Note key={i} title={elem.title} text={elem.body} time={elem.start_time}/>
+                                })}
+                                </React.Fragment>
+                            ); // end return
+                        }} 
                     </NotesConsumer>
                 </NoteContaienr>
                     {/* {notes} */}
