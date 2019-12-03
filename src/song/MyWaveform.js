@@ -2,6 +2,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import WaveSurfer from 'wavesurfer.js'
+import styled from 'styled-components';
+
+const WaveContainer = styled.div`
+    width: 80%;
+    margin: auto;
+    height: 15rem;
+`
 
 export default class Waveform extends React.Component {
   constructor(props) {
@@ -16,7 +23,11 @@ export default class Waveform extends React.Component {
     this.wavesurfer = WaveSurfer.create({
       container: this.$waveform,
       waveColor: 'violet',
-      progressColor: 'purple'
+      progressColor: 'purple',
+      height: 200,
+      barHeight: 1,
+      barRadius: 5,
+      barWidth: 5,
     })
     this.wavesurfer.load(this.props.src)
   }
@@ -25,9 +36,10 @@ export default class Waveform extends React.Component {
   }
   render() {
     return (
-      <div className='waveform'>
-        <div className='wave'></div>
-      </div>
+      <WaveContainer>
+        <div className='wave' />
+      </WaveContainer>
+        
     )
   }
 }
