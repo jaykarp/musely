@@ -65,6 +65,14 @@ class SongContainer extends Component {
         console.log(NotesConsumer);
     }
 
+    handleDropDownSelect = (e) => {
+        console.log('EEEEEEE', e);
+    }
+
+    handleSearchChange = (e, data) => {
+        console.log(data);
+    }
+
     render() {
 
         const notes_data = [
@@ -134,7 +142,7 @@ class SongContainer extends Component {
                             var groupSet = new Set();
                             cur_song_notes && cur_song_notes.user_notes.map((elem, i) => {
                                 if (!groupSet.has(elem.group)) {
-                                    var option = { key: i, value: i, text: elem.group}
+                                    var option = { key: i, value: elem.group, text: elem.group}
                                     group_options = [...group_options, option];
                                     groupSet.add(elem.group);
                                 }
@@ -154,6 +162,7 @@ class SongContainer extends Component {
                                                 selection
                                                 multiple
                                                 options={group_options}
+                                                onChange={this.handleSearchChange}
                                             />
                                         </DropDownBox>
                                         
