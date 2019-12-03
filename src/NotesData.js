@@ -1,7 +1,7 @@
 // Starter Data for Notes
 
 export const NotesData = {
-    Song_Name: {
+    Ave_Maria: {
         user_notes: [
             {
                 title: "This be tuff",
