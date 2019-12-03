@@ -4,7 +4,8 @@ import {
     Button,
     Popup
   } from 'semantic-ui-react';
-  import 'semantic-ui-css/semantic.min.css';
+import 'semantic-ui-css/semantic.min.css';
+import { NotesConsumer } from '../NotesContext';
 
 
 const Background = styled.div`
@@ -50,17 +51,24 @@ class Note extends Component {
 
     render() {
         return(
-            <Background>
-                <NoteHeader>
-                    <NoteTitle>{this.props.title}</NoteTitle>
-                    <TimeStamp>{this.props.time}</TimeStamp>
-                </NoteHeader>
+            <div>
+                <NotesConsumer>
+                    {data => (
+                        <Background>
+                            <NoteHeader>
+                                <NoteTitle>{this.props.title}</NoteTitle>
+                                <TimeStamp>{this.props.time}</TimeStamp>
+                            </NoteHeader>
                 
-                <p>{this.props.text}</p>
-                <NoteButtonContainer>
-                    <Popup content='Add note to group' trigger={<Button icon='add' />} />
-                </NoteButtonContainer>
-            </Background>
+                            <p>{this.props.text}</p>
+                            <NoteButtonContainer>
+                                <Popup content='Add note to group' trigger={<Button icon='add' />} />
+                            </NoteButtonContainer>
+                        </Background>
+                    )}  
+                </NotesConsumer>
+            </div>
+            
         );
     }
 }

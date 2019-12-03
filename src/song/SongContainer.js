@@ -15,6 +15,7 @@ import {
   } from 'semantic-ui-react';
   import 'semantic-ui-css/semantic.min.css';
 import Note from './Note';
+import { NotesConsumer } from '../NotesContext.js';
 
 
 const SongHeader = styled.h1`
@@ -35,9 +36,13 @@ const NoteContaienr = styled.div`
 
 class SongContainer extends Component {
 
+    componentDidMount() {
+        console.log(NotesConsumer);
+    }
+
     render() {
 
-        const song_name = "Ave Maria"
+        const song_name = "Song_Name"
 
         const notes_data = [
             {
@@ -76,13 +81,26 @@ class SongContainer extends Component {
             return <Note key={i} title={elem.title} text={elem.text} time={elem.time}/>
         })
 
+        const USR_NOTES = "user_notes"
+
         return(
             <div>
                 {/* <Header as="h1">Hello World</Header> */}
                 <SongHeader>{song_name}</SongHeader>
                 <SongHeader>Notes</SongHeader>
-                <NoteContaienr>
-                    {notes}
+                {/* <NoteContaienr> */}
+                    <NotesConsumer>
+                        {data => {
+                            console.log('Data', data);
+                            const thing = data.notes[song_name]
+                            console.log('THIS SONG', thing);
+                            {/* data.notes[song_name].notes.map( (elem, i) => {
+                                return <Note key={i} title={elem.title} text={elem.text} time={elem.start_time}></Note>
+                            }) */}
+                        }}
+                    </NotesConsumer>
+                {/* </NoteContaienr> */}
+                    {/* {notes} */}
                     {/* <Note />
                     <Note />
                     <Note />
@@ -92,7 +110,7 @@ class SongContainer extends Component {
                     <Note />
                     <Note />
                     <Note /> */}
-                </NoteContaienr>
+                
                 
             </div>
         );
