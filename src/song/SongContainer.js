@@ -11,7 +11,8 @@ import {
     Image,
     Menu,
     Dimmer,
-    Loader
+    Loader,
+    Dropdown
   } from 'semantic-ui-react';
   import 'semantic-ui-css/semantic.min.css';
 import Note from './Note';
@@ -33,6 +34,30 @@ const NoteContaienr = styled.div`
     margin: auto;
 `
 
+const NotesOptionsButtonsContainer = styled.div`
+    /* display: flex;
+    flex-direction: row;
+    text-align: right; */
+    /* justify-content: flex-end;
+    align-items: space-between; */
+    position: relative;
+    /* height: 5rem; */
+    width: 95%;
+    margin: auto;
+    margin-bottom: 5rem;
+`
+
+const RightButtonsContainer = styled.div`
+    position: absolute;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+`
+
+const DropDownBox = styled.div`
+    margin-right: 5px;
+    margin-left: 5px;
+`
 
 class SongContainer extends Component {
 
@@ -41,8 +66,6 @@ class SongContainer extends Component {
     }
 
     render() {
-
-        const song_name = "Song_Name"
 
         const notes_data = [
             {
@@ -77,17 +100,56 @@ class SongContainer extends Component {
             },
         ]
 
+        
+        
         const notes = notes_data.map((elem, i) => {
             return <Note key={i} title={elem.title} text={elem.text} time={elem.time}/>
         })
 
-        const USR_NOTES = "user_notes"
+        const song_name = "Song_Name" // get it from props probably
+
+        const countryOptions = [
+            { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
+            { key: 'ax', value: 'ax', flag: 'ax', text: 'Aland Islands' },
+        ]
 
         return(
             <div>
                 {/* <Header as="h1">Hello World</Header> */}
+                
                 <SongHeader>{song_name}</SongHeader>
+                
                 <SongHeader>Notes</SongHeader>
+
+                <NotesOptionsButtonsContainer>
+                    <RightButtonsContainer>
+                        <Button color='blue'>Add Note</Button>
+                        <Button negative={true}>Remove Note</Button>
+                        <DropDownBox>
+                            <Dropdown
+                                placeholder='Display Group'
+                                search
+                                selection
+                                multiple
+                                options={countryOptions}
+                            />
+                        </DropDownBox>
+                        
+                        <DropDownBox>
+                            <Dropdown
+                                placeholder='Sort by'
+                                item={true}
+                                search
+                                selection
+                                options={countryOptions}
+                            />
+                        </DropDownBox>
+                        
+                        
+                    </RightButtonsContainer>
+                    
+                </NotesOptionsButtonsContainer>
+
                 <NoteContaienr>
                     <NotesConsumer>
                         {data => {
@@ -97,7 +159,6 @@ class SongContainer extends Component {
                             console.log('THIS SONG', cur_song_notes && cur_song_notes.user_notes);
 
                             return cur_song_notes && cur_song_notes.user_notes.map( (elem, i) => {
-                                console.log('ELEM', elem.title);
                                 return <Note key={i} title={elem.title} text={elem.body} time={elem.start_time}/>
                             })
                         }}

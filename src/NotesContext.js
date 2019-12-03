@@ -6,7 +6,6 @@ const NotesContext = React.createContext();
 class NotesProvider extends Component {
     state = {
         notes: {},
-        count: 1
     }
 
     componentDidMount() {
@@ -21,11 +20,9 @@ class NotesProvider extends Component {
             const target = { [keyName] : NotesData[song]};          // Make an object with key value equal to variable `keyName`
             incomingNotes = Object.assign(target, incomingNotes)    // append that object to `incomingNotes` object
         });
-        console.log('incomingNotes', incomingNotes);
         this.setState({
             notes: incomingNotes
         });
-        console.log('state after reset notes', this.state);
     }
 
     render() {
