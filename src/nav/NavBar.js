@@ -34,14 +34,21 @@ let NavContainer = styled.div `
 
 
 class NavBar extends Component {
-
     render() {
         return(
             <div>
                 <NavContainer>
                     <h1 style={{color: "white", paddingTop: "1rem", paddingLeft: "2rem"}}>Musely</h1>
-                    <Button style={{marginLeft: "auto"}}> <Link to="/songs" style={{color: "black", textDecoration: "none"}}> Notes </Link> </Button>
-                    <Button> <Link to="/quiz" style={{textDecoration: "none", color: "black"}}> Quiz </Link> </Button>
+                        <Button style={{marginLeft: "auto"}}> 
+                            <Link to="/songs" style={{color: "black", textDecoration: "none"}}> 
+                                Notes 
+                                </Link> 
+                            </Button>
+                        <Button> 
+                            <Link to="/quiz" style={{textDecoration: "none", color: "black"}}> 
+                                Quiz 
+                                </Link> 
+                        </Button>
                 </NavContainer>
             </div>
         );
