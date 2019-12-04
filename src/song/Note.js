@@ -13,9 +13,9 @@ const Background = styled.div`
     margin: 5px 5px 5px 5px;
     padding: 1rem 1rem 1rem 1rem;
     background-color: #EEEEEE;
-    box-shadow: 5px 5px 5px;
+    /* box-shadow: 5px 5px 5px; */
     width: 30vw;
-    height: 16vh;
+    height: 13rem;
 `
 
 const NoteTitle = styled.h3`
