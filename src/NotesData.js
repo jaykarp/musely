@@ -5,7 +5,7 @@ export const NotesData = {
         user_notes: [
             {
                 title: "This be tuff",
-                body: "Sheesh this piece is obtuse, huh?",
+                body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rhoncus, cursus convallis aliquet enim enim in tincidunt. Elementum enim dis vitae varius dui faucibus id nunc purus. Tincidunt purus pharetra adipiscing ridiculus feugiat cursus ullamcorper nulla dignissim.",
                 start_time: "00:05",
                 end_time: "00:30",
                 group: "crazy"
