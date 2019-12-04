@@ -2,17 +2,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {
-    Container,
     Button,
-    Form,
-    Grid,
-    Header,
-    Message,
-    Segment,
-    Image,
-    Menu,
-    Dimmer,
-    Loader,
     Dropdown
   } from 'semantic-ui-react';
   import 'semantic-ui-css/semantic.min.css';
@@ -30,7 +20,7 @@ const SongHeader = styled.h1`
     color: black;
 `
 
-const NoteContaienr = styled.div`
+const NoteContainer = styled.div`
     display: flex;
     flex-wrap: wrap;             
     justify-content: space-around;
@@ -66,6 +56,7 @@ const DropDownBox = styled.div`
 class SongContainer extends Component {
     constructor(props) {
         super(props);
+        debugger
 
         this.state = {
             selected_groups: [],
@@ -169,23 +160,14 @@ class SongContainer extends Component {
         return(
             <div>
                 {/* <Header as="h1">Hello World</Header> */}
-                
                 <SongHeader>{song_name}</SongHeader>
-
                 <Waveform
                     src={'/ave_maria.mp3'}
                     pos={this.state.pos}
                     onPosChange={this.handlePosChange}
                     playing={this.state.playing}
                 />
-
-                
-                
                 <SongHeader>Notes</SongHeader>
-
-                
-
-                
                 <NotesConsumer>
                     {data => {
                         
@@ -231,7 +213,7 @@ class SongContainer extends Component {
                                 </RightButtonsContainer>
                             </NotesOptionsButtonsContainer>
                             
-                            <NoteContaienr>
+                            <NoteContainer>
                             
                             {cur_song_notes && cur_song_notes.user_notes.map( (elem, i) => {
                                 console.log(this.state.selected_groups);
@@ -243,7 +225,7 @@ class SongContainer extends Component {
                                 
                             })}
 
-                            </NoteContaienr>
+                            </NoteContainer>
                             </React.Fragment>
                         ); // end return
                     }} 
@@ -259,8 +241,6 @@ class SongContainer extends Component {
                 <Note />
                 <Note />
                 <Note /> */}
-                
-                
             </div>
         );
     }
