@@ -2,11 +2,8 @@ import React from 'react'
 import NavBar from './nav/NavBar'
 import SongContainer from './song/SongContainer'
 import Login from './nav/Login'
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch
-} from "react-router-dom"
+import Library from './library/Library'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 function App() {
     return (
@@ -14,8 +11,11 @@ function App() {
             <div>
                 <NavBar />
                 <Switch>
-                    <Route path="/songs">
+                    <Route path="/song/:name">
                         <SongContainer />
+                    </Route>
+                    <Route path="/library">
+                        <Library />
                     </Route>
                     <Route path="/quiz">
                         <SongContainer />
@@ -24,9 +24,9 @@ function App() {
                         <Login />
                     </Route>
                 </Switch>
-            </div> 
+            </div>
         </Router>
-   );
+    )
 }
 
-export default App;
+export default App
