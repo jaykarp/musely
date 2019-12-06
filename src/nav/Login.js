@@ -22,34 +22,25 @@ const Fields = styled.p`
     text-align: center;
 `
 
-
 class Login extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            username: "",
-            password: "",
+            username: '',
+            password: ''
         }
     }
 
     render() {
-        return(
+        return (
             <Modal>
-                <Fields top={10}>
-                    Welcome To Musely
-                </Fields>
-                <Fields top={30}>
-                    Username
-                </Fields>
-                <Fields top={60}>
-                    Password
-                </Fields>
+                <Fields top={10}>Welcome To Musely</Fields>
+                <Fields top={30}>Username</Fields>
+                <Fields top={60}>Password</Fields>
             </Modal>
-        ) 
+        )
     }
-
-
 }
 
 export default Login

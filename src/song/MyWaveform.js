@@ -2,11 +2,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import WaveSurfer from 'wavesurfer.js'
-import styled from 'styled-components';
-import {
-    Button,
-    Icon
-  } from 'semantic-ui-react';
+import styled from 'styled-components'
+import { Button, Icon } from 'semantic-ui-react'
 
 const WaveContainer = styled.div`
     width: 80%;
@@ -27,70 +24,67 @@ const ButtonBox = styled.div`
 `
 
 export default class Waveform extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-
+    constructor(props) {
+        super(props)
+        this.state = {}
     }
-  }
-  componentDidMount() {
-    this.$el = ReactDOM.findDOMNode(this)
-    this.$waveform = this.$el.querySelector('.wave')
-    this.wavesurfer = WaveSurfer.create({
-      container: this.$waveform,
-      waveColor: 'violet',
-      progressColor: 'purple',
-      height: 200,
-      barHeight: 8,
-      barRadius: 5,
-      barWidth: 5,
-    })
-    this.wavesurfer.load(this.props.src)
-  }
+    componentDidMount() {
+        this.$el = ReactDOM.findDOMNode(this)
+        this.$waveform = this.$el.querySelector('.wave')
+        this.wavesurfer = WaveSurfer.create({
+            container: this.$waveform,
+            waveColor: 'violet',
+            progressColor: 'purple',
+            height: 200,
+            barHeight: 8,
+            barRadius: 10,
+            barWidth: 5,
+            cursorWidth: 5
+        })
 
-  handlePlay = () => {
-    this.wavesurfer.play();
-  }
+        this.wavesurfer.load(this.props.src)
+    }
 
-  handlePause = () => {
-    this.wavesurfer.pause();
-  }
+    handlePlay = () => {
+        this.wavesurfer.play()
+    }
 
-  render() {
-    return (
-      <WaveContainer>
-        <div className='wave' />
-        <MediaControlsContainer>
-            <ButtonBox>
-                <Button 
-                    icon 
-                    color='green'
-                    fluid
-                    onClick={this.handlePlay}
-                >
-                    <Icon name="play"/>
-                </Button>
-            </ButtonBox>
+    handlePause = () => {
+        this.wavesurfer.pause()
+    }
 
-            <ButtonBox>
-                <Button 
-                    icon 
-                    color='red'
-                    fluid
-                    onClick={this.handlePause}
-                >
-                    <Icon name="pause"/>
-                </Button>
-            </ButtonBox>
+    render() {
+        return (
+            <WaveContainer>
+                <div className="wave" />
+                <MediaControlsContainer>
+                    <ButtonBox>
+                        <Button
+                            icon
+                            color="green"
+                            fluid
+                            onClick={this.handlePlay}
+                        >
+                            <Icon name="play" />
+                        </Button>
+                    </ButtonBox>
 
-            
-        </MediaControlsContainer>
-      </WaveContainer>
-        
-    )
-  }
+                    <ButtonBox>
+                        <Button
+                            icon
+                            color="red"
+                            fluid
+                            onClick={this.handlePause}
+                        >
+                            <Icon name="pause" />
+                        </Button>
+                    </ButtonBox>
+                </MediaControlsContainer>
+            </WaveContainer>
+        )
+    }
 }
 
 Waveform.defaultProps = {
-  src: ""
+    src: ''
 }
