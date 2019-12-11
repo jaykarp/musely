@@ -5,7 +5,6 @@ import 'semantic-ui-css/semantic.min.css'
 
 import Note from './Note'
 import { NotesConsumer } from '../NotesContext.js'
-import { thisExpression } from '@babel/types'
 import Waveform from './MyWaveform'
 
 const SongHeader = styled.h1`
@@ -146,7 +145,9 @@ class SongContainer extends Component {
             )
         })
 
-        const song_name = 'Ave_Maria' // get it from props probably
+        const { name } = this.props.match.params
+
+        //'Ave_Maria' // get it from props probably
 
         const countryOptions = [
             { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
@@ -156,7 +157,7 @@ class SongContainer extends Component {
         return (
             <div>
                 {/* <Header as="h1">Hello World</Header> */}
-                <SongHeader>{song_name}</SongHeader>
+                <SongHeader>{name}</SongHeader>
                 <Waveform
                     src={'/ave_maria.mp3'}
                     pos={this.state.pos}
@@ -166,7 +167,7 @@ class SongContainer extends Component {
                 <SongHeader>Notes</SongHeader>
                 <NotesConsumer>
                     {data => {
-                        const cur_song_notes = data.notes[song_name]
+                        const cur_song_notes = data.notes['Ave Maria']
                         console.log(
                             'THIS SONG',
                             cur_song_notes && cur_song_notes.user_notes

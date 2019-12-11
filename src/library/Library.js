@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import SongContainer from '../song/SongContainer'
 import { Button } from 'semantic-ui-react'
 
 const Container = styled.div`
@@ -28,10 +27,6 @@ const songs = [
 ]
 
 class Library extends Component {
-    constructor(props) {
-        super(props)
-    }
-
     render() {
         return (
             <div>
