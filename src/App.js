@@ -11,18 +11,9 @@ function App() {
             <div>
                 <NavBar />
                 <Switch>
-                    <Route path="/song/:name">
-                        <SongContainer />
-                    </Route>
-                    <Route path="/library">
-                        <Library />
-                    </Route>
-                    <Route path="/quiz">
-                        <SongContainer />
-                    </Route>
-                    <Route path="/">
-                        <Login />
-                    </Route>
+                    <Route path="/song/:name" component={SongContainer} />
+                    <Route path="/library" component={Library} />
+                    <Route path="/" component={Login} />
                 </Switch>
             </div>
         </Router>
