@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Button } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
-// import Note from './Note'
+import Annotation from './Annotation'
 import Waveform from './Waveform'
 import { connect } from 'react-redux'
 import {
@@ -71,6 +72,7 @@ class SongContainer extends Component {
 
     render() {
         const { name } = this.props.match.params
+        const { notes, annotations } = this.props
 
         return (
             <div>
@@ -81,7 +83,17 @@ class SongContainer extends Component {
                     onPosChange={this.handlePosChange}
                     playing={this.state.playing}
                 />
-                <SongHeader>Notes</SongHeader>
+                <SongHeader>Annotations</SongHeader>
+                {annotations.map(ann => {
+                    return (
+                        <Annotation
+                            key={ann.id}
+                            title={ann.id}
+                            time={ann.start_time}
+                            text={ann.text}
+                        />
+                    )
+                })}
             </div>
         )
     }

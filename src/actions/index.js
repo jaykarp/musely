@@ -15,7 +15,7 @@ export const updateNote = data => ({
 
 export const addAnnotation = data => ({
     type: 'ADD_ANNOTATION',
-    id: nextAnnotationId,
+    id: nextAnnotationId++,
     text: data.text,
     start_time: data.start_time,
     end_time: data.end_time,

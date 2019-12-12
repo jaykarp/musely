@@ -38,35 +38,32 @@ const NoteButtonContainer = styled.div`
     justify-content: space-between;
 `
 
-class Note extends Component {
+class Annotation extends Component {
     constructor(props) {
         super(props)
-        debugger
     }
 
     render() {
-        console.log('TITLE TITLE TITLE', this.props.title)
+        console.log('TITLE:', this.props.title)
         return (
             <div>
-                {data => (
-                    <Background>
-                        <NoteHeader>
-                            <NoteTitle>{this.props.title}</NoteTitle>
-                            <TimeStamp>{this.props.time}</TimeStamp>
-                        </NoteHeader>
+                <Background>
+                    <NoteHeader>
+                        <NoteTitle>{this.props.title}</NoteTitle>
+                        <TimeStamp>{this.props.time}</TimeStamp>
+                    </NoteHeader>
 
-                        <p>{this.props.text}</p>
-                        <NoteButtonContainer>
-                            <Popup
-                                content="Add note to group"
-                                trigger={<Button icon="add" />}
-                            />
-                        </NoteButtonContainer>
-                    </Background>
-                )}
+                    <p>{this.props.text}</p>
+                    <NoteButtonContainer>
+                        <Popup
+                            content="Add note to group"
+                            trigger={<Button icon="add" />}
+                        />
+                    </NoteButtonContainer>
+                </Background>
             </div>
         )
     }
 }
 
-export default Note
+export default Annotation
