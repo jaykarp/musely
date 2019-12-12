@@ -9,18 +9,16 @@ const notes = (state = [], action) => {
                 }
             ]
         case 'UPDATE_NOTE':
-            const id = state.findIndex(e => e.id === action.id)
-            if (id === -1) {
-                throw Object.assign(
-                    new Error('Must assign ID to update note'),
-                    { code: 406 }
-                )
-            }
-            state[id] = {
-                id: action.id,
-                text: action.text
-            }
-            return state
+            //const id = state.findIndex(e => e.id === action.id)
+            return state.map((ann, i) => {
+                if (i !== action.id) {
+                    return ann
+                }
+                return {
+                    id: action.id,
+                    text: action.text || ann.text
+                }
+            })
         default:
             return state
     }
