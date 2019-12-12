@@ -4,6 +4,9 @@ import { Button, Dropdown } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 
 import Note from './Note'
+
+import EditAnnotation from './EditAnnotation'
+
 import { NotesConsumer } from '../NotesContext.js'
 import Waveform from './MyWaveform'
 
@@ -167,7 +170,8 @@ class SongContainer extends Component {
 					playing={this.state.playing}
 				/>
 				<SongHeader>Notes</SongHeader>
-				<NotesConsumer>
+                <EditAnnotation />
+				{/* <NotesConsumer>
 					{data => {
 						const cur_song_notes = data.notes['Ave Maria']
 						console.log(
@@ -265,7 +269,7 @@ class SongContainer extends Component {
 							</React.Fragment>
 						) // end return
 					}}
-				</NotesConsumer>
+				</NotesConsumer> */}
 
 				{/* {notes} */}
 				{/* <Note />
