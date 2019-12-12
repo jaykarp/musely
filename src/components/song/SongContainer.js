@@ -39,9 +39,9 @@ class SongContainer extends Component {
         dispatch(
             addAnnotation({
                 text: 'Hello Annotation',
-                start_time: 1,
-                end_time: 2,
-                tags: ['Crescendo', 'Famiglia']
+                start_time: 110,
+                end_time: 120,
+                tag: 'Crescendo'
             })
         )
         dispatch(
