@@ -3,6 +3,6 @@ import annotations from './annotations'
 import notes from './notes'
 
 export default combineReducers({
-    annotations,
-    notes
+    annotations: annotations,
+    notes: notes
 })

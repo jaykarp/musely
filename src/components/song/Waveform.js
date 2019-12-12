@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom'
 import WaveSurfer from 'wavesurfer.js'
 import styled from 'styled-components'
 import { Button, Icon } from 'semantic-ui-react'
-import store from '../../index'
 
 const WaveContainer = styled.div`
     width: 80%;
