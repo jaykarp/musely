@@ -1,5 +1,6 @@
 // let nextAnnotationId = 0
 // let nextNoteId = 0
+import uuid from 'uuid'
 
 export const addNote = data => ({
     type: 'ADD_NOTE',
@@ -19,7 +20,7 @@ export const addAnnotation = data => ({
     text: data.text,
     start_time: data.start_time,
     end_time: data.end_time,
-    tags: data.tags
+    tag: data.tag
 })
 
 export const updateAnnotation = data => ({

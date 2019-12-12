@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom'
 import WaveSurfer from 'wavesurfer.js'
 import styled from 'styled-components'
 import { Button, Icon } from 'semantic-ui-react'
-const WS = window.WaveSurfer;
-
+import { connect } from 'react-redux'
+const WS = window.WaveSurfer
 
 const WaveContainer = styled.div`
     width: 80%;
@@ -25,48 +25,37 @@ const ButtonBox = styled.div`
     width: 4rem;
 `
 
-export default class Waveform extends React.Component {
+class Waveform extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {}
+        this.wavesurfer = null
     }
+
     componentDidMount() {
-        this.$el = ReactDOM.findDOMNode(this)
-        this.$waveform = this.$el.querySelector('.wave')
-        this.wavesurfer = WaveSurfer.create({
-            container: this.$waveform,
-            waveColor: 'violet',
-            progressColor: 'purple',
+        this.wavesurfer = this.buildWave()
+    }
+
+    buildWave() {
+        const el = ReactDOM.findDOMNode(this)
+        const waveform = el.querySelector('.wave')
+        const wavesurfer = WaveSurfer.create({
+            container: waveform,
+            waveColor: 'grey',
+            progressColor: 'black',
             height: 200,
             barHeight: 8,
-            // barRadius: 1,
             barWidth: 1,
             cursorWidth: 3,
-            // fillParent: true
             scrollParent: false,
             plugins: [
-				WS.regions.create({
-					regions: [
-						{
-							start: 1,
-							end: 3,
-							loop: false,
-							color: 'hsla(400, 100%, 30%, 0.5)'
-						}, {
-							start: 5,
-							end: 7,
-							loop: false,
-							color: 'hsla(200, 50%, 70%, 0.4)'
-						}
-					],
-					dragSelection: {
-						slop: 5
-					}
-				})
-			]
+                WS.regions.create({
+                    regions: []
+                })
+            ]
         })
 
-        this.wavesurfer.load(this.props.src)
+        wavesurfer.load(this.props.src)
+        return wavesurfer
     }
 
     handlePlay = () => {
@@ -75,6 +64,37 @@ export default class Waveform extends React.Component {
 
     handlePause = () => {
         this.wavesurfer.pause()
+    }
+
+    buildEditableRegion = ({
+        start_time = 0,
+        end_time = 10,
+        color = 'blue'
+    }) => {
+        this.wavesurfer.clearRegions()
+        this.wavesurfer.addRegion({
+            id: 0,
+            start: start_time,
+            end: end_time,
+            color: color
+        })
+    }
+
+    buildRegionsByTag = ({ tag = null }) => {
+        const { annotations } = this.props
+        this.wavesurfer.clearRegions()
+        annotations.map(ann => {
+            if (ann.tag === tag) {
+                this.wavesurfer.addRegion({
+                    id: ann.id,
+                    start: ann.start_time,
+                    end: ann.end_time,
+                    drag: false,
+                    resize: false,
+                    color: ann.color || 'rgba(101, 145, 202, 0.87)'
+                })
+            }
+        })
     }
 
     render() {
@@ -112,3 +132,11 @@ export default class Waveform extends React.Component {
 Waveform.defaultProps = {
     src: ''
 }
+
+const mapStateToProps = state => {
+    return {
+        annotations: state.annotations
+    }
+}
+
+export default connect(mapStateToProps)(Waveform)

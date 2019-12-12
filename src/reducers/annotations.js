@@ -8,7 +8,7 @@ const annotations = (state = [], action) => {
                     text: action.text,
                     start_time: action.start_time,
                     end_time: action.end_time,
-                    tags: action.tags
+                    tag: action.tag
                 }
             ]
         case 'UPDATE_ANNOTATION':
@@ -22,7 +22,7 @@ const annotations = (state = [], action) => {
                     text: action.text || ann.text,
                     start_time: action.start_time || ann.start_time,
                     end_time: action.end_time || ann.end_time,
-                    tags: action.tags || ann.tags
+                    tag: action.tag || ann.tag
                 }
             })
         default:
