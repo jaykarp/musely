@@ -1,9 +1,4 @@
-// let nextAnnotationId = 0
-// let nextNoteId = 0
 import uuid from 'uuid'
-
-import uuid from 'uuid'
-
 
 export const addNote = data => ({
     type: 'ADD_NOTE',
