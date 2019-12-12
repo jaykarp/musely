@@ -46,5 +46,5 @@ class NotesProvider extends Component {
 
 const NotesConsumer = NotesContext.Consumer
 
-export { NotesProvider, NotesConsumer }
 
+export { NotesProvider, NotesConsumer }
