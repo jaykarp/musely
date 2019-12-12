@@ -173,7 +173,7 @@ class SongContainer extends Component {
                 <SongHeader>{song_name}</SongHeader>
 
                 <Waveform
-                    src={'/ave_maria.mp3'}
+                    src={`/${song_name}.mp3`}
                     pos={this.state.pos}
                     onPosChange={this.handlePosChange}
                     playing={this.state.playing}
