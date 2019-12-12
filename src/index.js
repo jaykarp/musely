@@ -9,6 +9,6 @@ ReactDOM.render(
         <Router>
             <App />
         </Router>
-    </NotesProvider>
-    , document.getElementById('root'));
-
+    </NotesProvider>,
+    document.getElementById('root')
+);

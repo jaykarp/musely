@@ -1,12 +1,9 @@
-import React from 'react';
-import NavBar from './nav/NavBar';
-import SongContainer from './song/SongContainer';
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch
-} from "react-router-dom";
-
+import React from 'react'
+import NavBar from './nav/NavBar'
+import SongContainer from './song/SongContainer'
+import Login from './nav/Login'
+import Library from './library/Library'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 function App() {
     return (
@@ -14,16 +11,13 @@ function App() {
             <div>
                 <NavBar />
                 <Switch>
-                    <Route path={["/", "/songs"]}>
-                        <SongContainer />
-                    </Route>
-                    <Route path="/quiz">
-                        <SongContainer />
-                    </Route>
+                    <Route path="/song/:name" component={SongContainer} />
+                    <Route path="/library" component={Library} />
+                    <Route path="/" component={Login} />
                 </Switch>
-            </div> 
+            </div>
         </Router>
-   );
+    )
 }
 
-export default App;
+export default App
