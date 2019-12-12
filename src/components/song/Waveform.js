@@ -37,7 +37,7 @@ class Waveform extends React.Component {
 
     buildWave() {
         const el = ReactDOM.findDOMNode(this)
-        const waveform = el.querySelector('.wave')
+        const waveform = el.querySelector('#wave')
         const wavesurfer = WaveSurfer.create({
             container: waveform,
             waveColor: 'grey',
@@ -50,6 +50,16 @@ class Waveform extends React.Component {
             plugins: [
                 WS.regions.create({
                     regions: []
+                }),
+                WS.cursor.create({
+                    showTime: true,
+                    opacity: 5,
+                    // customShowTimeStyle: {
+                    //     'background-color': '#000',
+                    //     color: '#fff',
+                    //     padding: '5px',
+                    //     'font-size': '10px'
+                    // }
                 })
             ]
         })
@@ -100,7 +110,7 @@ class Waveform extends React.Component {
     render() {
         return (
             <WaveContainer>
-                <div className="wave" />
+                <div id="wave" style={{position: 'relative'}}></div>
                 <MediaControlsContainer>
                     <ButtonBox>
                         <Button
