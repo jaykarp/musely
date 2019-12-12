@@ -52,9 +52,7 @@ const Colon = styled.p`
 
 export default class WindowTime extends Component {
 
-    handleStartMinuteChange = () => {
-
-    }
+    
 
     render() {
         return(
@@ -63,48 +61,37 @@ export default class WindowTime extends Component {
 
                 
                 <input 
-                    defaultValue='00'
+                    defaultValue={this.props.startMinute.length < 2 ? this.props.startMinute + '0' : this.props.startMinute}
                     maxlength="2"
                     size="2"
                     style={singleInput}
-                    onChange={this.handleStartMinuteChange}
+                    onChange={this.props.startMinuteUpdate}
                 />
                 <Colon>:</Colon>
                 <input 
-                    value='00'  
+                    defaultValue={this.props.startSecond}  
                     maxlength="2"
                     size="2"
                     style={singleInput}
-                />
-                <Colon>:</Colon>
-                <input
-                    value='00' 
-                    maxlength="2"
-                    size="2"
-                    style={singleInput}
+                    onChange={this.props.startSecondUpdate}
                 />
 
                 <Line />
 
                 <input 
-                    value='00'
+                    defaultValue={this.props.endMinute}
                     maxlength="2"
                     size="2"
                     style={singleInput}
+                    onChange={this.props.endMinuteUpdate}
                 />
                 <Colon>:</Colon>
                 <input 
-                    value='00'
+                    defaultValue={this.props.endSecond}
                     maxlength="2"
                     size="2"
                     style={singleInput}
-                />
-                <Colon>:</Colon>
-                <input
-                    value='00' 
-                    maxlength="2"
-                    size="2"
-                    style={singleInput}
+                    onChange={this.props.endSecondUpdate}
                 />
                 
 

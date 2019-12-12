@@ -6,7 +6,8 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 // If you wanna see what the heck is going on in the store,
 // but your chrome devtools arent working :()
 store.subscribe(() => console.log(store.getState()))
