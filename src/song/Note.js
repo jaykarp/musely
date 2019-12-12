@@ -1,18 +1,13 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
-import {
-    Button,
-    Popup
-  } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
-import { NotesConsumer } from '../NotesContext';
-
+import React, { Component } from 'react'
+import styled from 'styled-components'
+import { Button, Popup } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css'
 
 const Background = styled.div`
     /* position: relative; */
     margin: 5px 5px 5px 5px;
     padding: 1rem 1rem 1rem 1rem;
-    background-color: #EEEEEE;
+    background-color: #eeeeee;
     /* box-shadow: 5px 5px 5px; */
     width: 30vw;
     height: 13rem;
@@ -43,35 +38,34 @@ const NoteButtonContainer = styled.div`
     justify-content: space-between;
 `
 
-
 class Note extends Component {
     constructor(props) {
-        super(props);
+        super(props)
     }
 
     render() {
-        console.log('TITLE TITLE TITLE', this.props.title);
-        return(
+        console.log('TITLE TITLE TITLE', this.props.title)
+        return (
             <div>
-                <NotesConsumer>
-                    {data => (
-                        <Background>
-                            <NoteHeader>
-                                <NoteTitle>{this.props.title}</NoteTitle>
-                                <TimeStamp>{this.props.time}</TimeStamp>
-                            </NoteHeader>
-                
-                            <p>{this.props.text}</p>
-                            <NoteButtonContainer>
-                                <Popup content='Add note to group' trigger={<Button icon='add' />} />
-                            </NoteButtonContainer>
-                        </Background>
-                    )}  
-                </NotesConsumer>
+                {data => (
+                    <Background>
+                        <NoteHeader>
+                            <NoteTitle>{this.props.title}</NoteTitle>
+                            <TimeStamp>{this.props.time}</TimeStamp>
+                        </NoteHeader>
+
+                        <p>{this.props.text}</p>
+                        <NoteButtonContainer>
+                            <Popup
+                                content="Add note to group"
+                                trigger={<Button icon="add" />}
+                            />
+                        </NoteButtonContainer>
+                    </Background>
+                )}
             </div>
-            
-        );
+        )
     }
 }
 
-export default Note;
+export default Note
