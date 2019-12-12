@@ -1,5 +1,5 @@
 import React from 'react';
-import EditAnnotation from './song/EditAnnotation';
+import EditAnnotation from './components/song/EditAnnotation';
 
 export default {
 	title: 'Edit Annotation'

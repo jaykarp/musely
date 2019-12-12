@@ -5,7 +5,7 @@ import 'semantic-ui-css/semantic.min.css'
 
 import Note from './Note'
 
-import EditAnnotation from './EditAnnotation'
+import EditAnnotation from '../components/song/EditAnnotation'
 
 import { NotesConsumer } from '../NotesContext.js'
 import Waveform from './MyWaveform'
