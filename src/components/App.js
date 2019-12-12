@@ -4,6 +4,7 @@ import SongContainer from './song/SongContainer'
 import Login from './nav/Login'
 import Library from './library/Library'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import uuid from 'uuid'
 
 function App() {
     return (

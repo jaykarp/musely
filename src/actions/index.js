@@ -1,9 +1,9 @@
-let nextAnnotationId = 0
-let nextNoteId = 0
+// let nextAnnotationId = 0
+// let nextNoteId = 0
 
 export const addNote = data => ({
     type: 'ADD_NOTE',
-    id: nextNoteId++,
+    id: uuid.v4(),
     text: data.text
 })
 
@@ -15,7 +15,7 @@ export const updateNote = data => ({
 
 export const addAnnotation = data => ({
     type: 'ADD_ANNOTATION',
-    id: nextAnnotationId++,
+    id: uuid.v4(),
     text: data.text,
     start_time: data.start_time,
     end_time: data.end_time,
