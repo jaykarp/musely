@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Button, Dropdown } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
-
 import Note from './Note'
-import Waveform from './MyWaveform'
+import Waveform from './Waveform'
+import { connect } from 'react-redux'
+import { addNote } from '../../actions'
 
 const SongHeader = styled.h1`
     padding-left: 3rem;
@@ -247,4 +248,4 @@ class SongContainer extends Component {
     }
 }
 
-export default SongContainer
+export default connect()(SongContainer)

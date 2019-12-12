@@ -41,6 +41,7 @@ const NoteButtonContainer = styled.div`
 class Note extends Component {
     constructor(props) {
         super(props)
+        debugger
     }
 
     render() {
