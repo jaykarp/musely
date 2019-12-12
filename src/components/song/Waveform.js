@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom'
 import WaveSurfer from 'wavesurfer.js'
 import styled from 'styled-components'
 import { Button, Icon } from 'semantic-ui-react'
+const WS = window.WaveSurfer;
+
 
 const WaveContainer = styled.div`
     width: 80%;
@@ -41,7 +43,27 @@ export default class Waveform extends React.Component {
             barWidth: 1,
             cursorWidth: 3,
             // fillParent: true
-            scrollParent: false
+            scrollParent: false,
+            plugins: [
+				WS.regions.create({
+					regions: [
+						{
+							start: 1,
+							end: 3,
+							loop: false,
+							color: 'hsla(400, 100%, 30%, 0.5)'
+						}, {
+							start: 5,
+							end: 7,
+							loop: false,
+							color: 'hsla(200, 50%, 70%, 0.4)'
+						}
+					],
+					dragSelection: {
+						slop: 5
+					}
+				})
+			]
         })
 
         this.wavesurfer.load(this.props.src)
