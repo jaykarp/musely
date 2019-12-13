@@ -4,11 +4,10 @@
  .anno_sidebar {
     position: relative;
     overflow: hidden;
-    height: 30rem;
-    width: 280px;
+    height: 40rem;
+    /* width: 280px; */
     background: rgb(255, 255, 255);
-    padding: 20px;
-    font-size: 15px;
+    
 /* 
     border-right-width: 2px;
     border-right-color: black;
