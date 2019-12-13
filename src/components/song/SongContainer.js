@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import 'semantic-ui-css/semantic.min.css'
 // import Note from './Note'
 import Waveform from './Waveform'
+import AnnotationContainer from './AnnotationContainer'
+import NotesContainer from './NotesContainer'
 import EditAnnotation from './EditAnnotation'
 import { connect } from 'react-redux'
 import {
@@ -17,6 +19,12 @@ const SongHeader = styled.h1`
     padding-top: 2rem;
     font-size: 50px;
     color: black;
+`
+
+const SongWrapper = styled.div`
+    position: relative;
+    height: 100%;
+    background-color: rgb(233, 233, 233);
 `
 
 class SongContainer extends Component {
@@ -54,7 +62,9 @@ class SongContainer extends Component {
         this.state = {
             selected_groups: [],
             playing: false,
-            pos: 0
+            pos: 0,
+            annotationDrawerIsOpen: true,
+            notesDrawerIsOpen: true,
         }
     }
 
@@ -74,7 +84,7 @@ class SongContainer extends Component {
         const { name } = this.props.match.params
 
         return (
-            <div>
+            <SongWrapper>
                 <SongHeader>{name}</SongHeader>
                 <Waveform
                     src={`/${this.props.match.params.name}.mp3`}
@@ -82,9 +92,20 @@ class SongContainer extends Component {
                     onPosChange={this.handlePosChange}
                     playing={this.state.playing}
                 />
-                {/* <SongHeader>Notes</SongHeader> */}
-                <EditAnnotation />
-            </div>
+                <SongHeader>Notes</SongHeader>
+                <button onClick={() => {this.setState({annotationDrawerIsOpen: !this.state.annotationDrawerIsOpen})}}>Open Annotations</button>
+
+                <button onClick={() => {this.setState({notesDrawerIsOpen: !this.state.notesDrawerIsOpen})}}>Open Note</button>
+
+
+                <div style={{display: 'inline-flex', marginTop: '10px', width:'100%'}}>
+                    <AnnotationContainer isOpen={this.state.annotationDrawerIsOpen} notesOpen={this.state.notesDrawerIsOpen}/>
+                    <NotesContainer isOpen={this.state.notesDrawerIsOpen} annoOpen={this.state.annotationDrawerIsOpen} />
+                </div>
+                
+
+                {/* <EditAnnotation /> */}
+            </SongWrapper>
         )
     }
 }
