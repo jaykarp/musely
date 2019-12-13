@@ -29,3 +29,25 @@ export const updateAnnotation = data => ({
     end_time: data.end_time,
     tag: data.tag
 })
+
+// Tags
+
+export const addTag = data => ({
+    type: 'ADD_TAG',
+    tag_name: data.tag_name
+})
+
+export const incrementTag = data => ({
+    type: 'INCREMENT_TAG',
+    tag_name: data.tag_name,
+})
+
+export const decrementTag = data => ({
+    type: 'DECREMENT_TAG',
+    tag_name: data.tag_name,
+})
+
+export const deleteTag = data => ({
+    type: 'DELETE_TAG',
+    tag_name: data.tag_name,
+})

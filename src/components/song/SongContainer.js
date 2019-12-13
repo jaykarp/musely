@@ -11,7 +11,9 @@ import {
     addNote,
     addAnnotation,
     updateNote,
-    updateAnnotation
+    updateAnnotation,
+    addTag,
+    incrementTag,
 } from '../../actions'
 
 const SongHeader = styled.h1`
@@ -25,6 +27,14 @@ const SongWrapper = styled.div`
     position: relative;
     height: 100%;
     background-color: rgb(233, 233, 233);
+`
+
+const TagTimelineWrapper = styled.div`
+    width: 80%;
+    height: 10rem;
+    margin: auto;
+    background-color: green;
+
 `
 
 class SongContainer extends Component {
@@ -101,6 +111,21 @@ class SongContainer extends Component {
         if (hasAnnotation) {
             // TODO: Implement update annotation
         } else {
+            if (this.props.tags && this.props.tags.some(tag => tag.tag_name === this.state.tag)) { 
+                // If the current tag is already in the list of tags, we increment that tag count
+                dispatch(
+                    incrementTag({
+                        tag_name: this.state.tag
+                    })
+                )
+            } else {
+                // otherwise, we add a new tag to the tag list
+                dispatch(
+                    addTag({
+                        tag_name: this.state.tag
+                    })
+                )
+            }
             dispatch(
                 addAnnotation({
                     text: this.state.text,
@@ -191,7 +216,8 @@ class SongContainer extends Component {
             <SongWrapper>
                 <SongHeader>{name}</SongHeader>
                 <Waveform
-                    src={`/${this.props.match.params.name}.mp3`}
+                    //src={`/${name}.mp3`}
+                    src={'/jeneregretterien.mp3'}
                     currentTime={this.state.currentTime}
                     cursorTime={this.state.cursorTime}
                     handlePlay={this.handlePlay}
@@ -199,6 +225,7 @@ class SongContainer extends Component {
                     handleCursorMove={this.handleCursorMove}
                     handleRegion={this.handleRegion}
                 />
+                <TagTimelineWrapper></TagTimelineWrapper>
                 <EditAnnotation
                     handleSave={this.handleSave}
                     handleTagChange={this.handleTagChange}
@@ -226,7 +253,8 @@ class SongContainer extends Component {
 const mapStateToProps = state => {
     return {
         notes: state.notes,
-        annotations: state.annotations
+        annotations: state.annotations,
+        tags: state.tags,
     }
 }
 
