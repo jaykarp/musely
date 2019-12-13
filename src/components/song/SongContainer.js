@@ -6,6 +6,7 @@ import Waveform from './Waveform'
 import AnnotationContainer from './AnnotationContainer'
 import NotesContainer from './NotesContainer'
 import EditAnnotation from './EditAnnotation'
+import TimelineTag from './TimelineTag'
 import { connect } from 'react-redux'
 import {
     addNote,
@@ -60,7 +61,8 @@ class SongContainer extends Component {
             end_time: 0,
             cursorTime: 0,
             currentTime: 0,
-            tag: ''
+            tag: '',
+            songDuration: 0,
         }
     }
 
@@ -111,21 +113,7 @@ class SongContainer extends Component {
         if (hasAnnotation) {
             // TODO: Implement update annotation
         } else {
-            if (this.props.tags && this.props.tags.some(tag => tag.tag_name === this.state.tag)) { 
-                // If the current tag is already in the list of tags, we increment that tag count
-                dispatch(
-                    incrementTag({
-                        tag_name: this.state.tag
-                    })
-                )
-            } else {
-                // otherwise, we add a new tag to the tag list
-                dispatch(
-                    addTag({
-                        tag_name: this.state.tag
-                    })
-                )
-            }
+            
             dispatch(
                 addAnnotation({
                     text: this.state.text,
@@ -147,6 +135,13 @@ class SongContainer extends Component {
         e.preventDefault()
         this.setState({
             text: data.value
+        })
+    }
+
+    getSongDuration = (data) => {
+        console.log('duration data', data)
+        this.setState({
+            songDuration: data
         })
     }
 
@@ -224,8 +219,13 @@ class SongContainer extends Component {
                     handleCursor={this.handleCursor}
                     handleCursorMove={this.handleCursorMove}
                     handleRegion={this.handleRegion}
+                    getSongDuration={this.getSongDuration}
                 />
-                <TagTimelineWrapper></TagTimelineWrapper>
+                <TagTimelineWrapper>
+                    <TimelineTag duration={this.state.songDuration}/>
+                    <TimelineTag duration={this.state.songDuration}/>
+                    <TimelineTag duration={this.state.songDuration}/>
+                </TagTimelineWrapper>
                 <EditAnnotation
                     handleSave={this.handleSave}
                     handleTagChange={this.handleTagChange}
