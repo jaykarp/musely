@@ -11,7 +11,9 @@ import {
     addNote,
     addAnnotation,
     updateNote,
-    updateAnnotation
+    updateAnnotation,
+    addTag,
+    deleteTag
 } from '../../actions'
 
 const SongHeader = styled.h1`
@@ -40,6 +42,28 @@ class SongContainer extends Component {
         this.handleTagChange = this.handleTagChange.bind(this)
         this.handleTextChange = this.handleTextChange.bind(this)
         //this.handleTimeChange = this.handleTimeChange.bind(this)
+
+        dispatch(
+            addTag({
+                name: 'crescendo'
+            })
+        )
+
+        dispatch(
+            addTag({
+                name: 'crescendo'
+            })
+        )
+        dispatch(
+            deleteTag({
+                name: 'crescendo'
+            })
+        )
+        dispatch(
+            deleteTag({
+                name: 'crescendo'
+            })
+        )
 
         this.state = {
             playing: false,
@@ -207,16 +231,43 @@ class SongContainer extends Component {
                     end_time={this.state.end_time}
                 />
                 <SongHeader>Notes</SongHeader>
-                <button onClick={() => {this.setState({annotationDrawerIsOpen: !this.state.annotationDrawerIsOpen})}}>Open Annotations</button>
+                <button
+                    onClick={() => {
+                        this.setState({
+                            annotationDrawerIsOpen: !this.state
+                                .annotationDrawerIsOpen
+                        })
+                    }}
+                >
+                    Open Annotations
+                </button>
 
-                <button onClick={() => {this.setState({notesDrawerIsOpen: !this.state.notesDrawerIsOpen})}}>Open Note</button>
+                <button
+                    onClick={() => {
+                        this.setState({
+                            notesDrawerIsOpen: !this.state.notesDrawerIsOpen
+                        })
+                    }}
+                >
+                    Open Note
+                </button>
 
-
-                <div style={{display: 'inline-flex', marginTop: '10px', width:'100%'}}>
-                    <AnnotationContainer isOpen={this.state.annotationDrawerIsOpen} notesOpen={this.state.notesDrawerIsOpen}/>
-                    <NotesContainer isOpen={this.state.notesDrawerIsOpen} annoOpen={this.state.annotationDrawerIsOpen} />
+                <div
+                    style={{
+                        display: 'inline-flex',
+                        marginTop: '10px',
+                        width: '100%'
+                    }}
+                >
+                    <AnnotationContainer
+                        isOpen={this.state.annotationDrawerIsOpen}
+                        notesOpen={this.state.notesDrawerIsOpen}
+                    />
+                    <NotesContainer
+                        isOpen={this.state.notesDrawerIsOpen}
+                        annoOpen={this.state.annotationDrawerIsOpen}
+                    />
                 </div>
-                
 
                 {/* <EditAnnotation /> */}
             </SongWrapper>
@@ -226,7 +277,8 @@ class SongContainer extends Component {
 const mapStateToProps = state => {
     return {
         notes: state.notes,
-        annotations: state.annotations
+        annotations: state.annotations,
+        tags: state.tags
     }
 }
 
