@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Annotation from './Annotation'
 import 'semantic-ui-css/semantic.min.css'
 // import { useSpring, useTransition, animated } from "react-spring"
 import { Transition, Keyframes, animated } from 'react-spring/renderprops'
+import { connect } from 'react-redux'
+import {
+    addNote,
+    addAnnotation,
+    updateNote,
+    updateAnnotation
+} from '../../actions'
 
 
 import './AnnotationContainer.css'
@@ -25,19 +33,33 @@ const OpenPanelHalf = {
 	border: '10px solid #2D3747'
 }
 
+const AnnotationWrapper = styled.div`
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding: 30px 50px 30px 50px;
+    overflow-y: auto;
+    height: 100%;
+
+    &::after {
+        flex: auto;
+    }
+`
+
 const Sidebar = Keyframes.Spring({
 	
 	// single items,
-    full: { x: 0, w: 95, },
+    full: { x: 0, w: 100, },
     half: { x: 0, w: 51 },
 	// or async functions with side-effects
 	close: { x: -100, w: 50 }
 })
 
-export default class AnnotationContainer extends Component {
+class AnnotationContainer extends Component {
     state = { annoOpen: true, noteOpen: true }
     
 	render() {
+        console.log(this.props)
         let state = 'close'
         if (this.props.isOpen) {
             if (this.props.notesOpen) state = 'half'
@@ -56,38 +78,37 @@ export default class AnnotationContainer extends Component {
 								),
                                 width: props.w.interpolate(w => `${w}rem`)
 							}}
-						></animated.div>
+						>
+                        <AnnotationWrapper>
+                        {this.props.annotations.map((el, i) => {
+                            console.log(el)
+                            return <Annotation 
+                                        startTime={el.start_time}
+                                        endTime={el.end_time} 
+                                        text={el.text}
+
+                                    />
+                        })}
+                        </AnnotationWrapper>
+                        
+                        
+                        
+                        
+                        
+                        </animated.div>
 					)}
 				</Sidebar>
-                {/* <Spring
-                    from={ClosedPanel}
-                    to={OpenPanelHalf}>
-                    {props => (
-                        <animated.div style={props}>
-
-                        </animated.div>
-                    )}
-                </Spring>  */}
 			</div>
 		)
-
-		// let openClass = 'annotation-drawer'
-		// if (this.props.isOpen) {
-		//     if (this.props.notesOpen) {
-		//         openClass = 'annotation-drawer half'
-		//     } else {
-		//         openClass = 'annotation-drawer full'
-		//     }
-		// }
-
-		// return(
-		//     <div className={openClass}>
-		//         <h1>Hello World</h1>
-		//     </div>
-		// )
-
-		
-			
 		
 	}
 }
+
+const mapStateToProps = state => {
+    return {
+        notes: state.notes,
+        annotations: state.annotations
+    }
+}
+
+export default connect(mapStateToProps)(AnnotationContainer)
