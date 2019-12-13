@@ -75,7 +75,6 @@ class Waveform extends React.Component {
         wavesurfer.load(this.props.src)
         waveform.addEventListener('mousemove', event => {
             const { handleCursorMove } = this.props
-            debugger
             let cursorTime =
                 ((event.pageX - waveform.offsetLeft) / waveform.clientWidth) *
                 wavesurfer.getDuration()
@@ -100,10 +99,14 @@ class Waveform extends React.Component {
                     this.setState({
                         regionExists: true
                     })
+                    handleCursor({
+                        currentTime: currentTime,
+                        region: false
+                    })
                 }
                 handleCursor({
                     currentTime: currentTime,
-                    region: this.state.regionExists
+                    region: true
                 })
             }, 20)
         })

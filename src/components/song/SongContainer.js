@@ -46,6 +46,7 @@ class SongContainer extends Component {
 
     handleCursor = data => {
         let curr = parseInt(data.currentTime)
+        debugger
         if (data.region) {
             this.setState({
                 currentTime: curr
