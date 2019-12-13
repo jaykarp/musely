@@ -24,6 +24,7 @@ const SongHeader = styled.h1`
 const SongWrapper = styled.div`
     position: relative;
     height: 100%;
+    background-color: rgb(233, 233, 233);
 `
 
 class SongContainer extends Component {
@@ -62,8 +63,8 @@ class SongContainer extends Component {
             selected_groups: [],
             playing: false,
             pos: 0,
-            annotationDrawerIsOpen: false,
-            notesDrawerIsOpen: false,
+            annotationDrawerIsOpen: true,
+            notesDrawerIsOpen: true,
         }
     }
 
