@@ -20,8 +20,25 @@ const Background = styled.div`
 const NoteHeader = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     margin-bottom: 0.2rem;
+`
+
+const TagWrapper = styled.div`
+    height: auto;
+    width: 4rem;
+    margin-left: 0.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 2px;
+    background-color: ${props => props.color};
+    border-radius: 2px;
+`
+
+const Tag = styled.div`
+    margin: auto;
+    font-size: 10px;
 `
 
 const NoteButtonContainer = styled.div`
@@ -49,7 +66,9 @@ class Annotation extends Component {
             <div>
                 <Background>
                     <NoteHeader>
-                        {/* <NoteTitle>{this.props.title}</NoteTitle> */}
+                        <TagWrapper color={this.props.color || 'blue'}>
+                            <Tag>{this.props.tag}</Tag>
+                        </TagWrapper>
                         <MiniWindowTime
                             start_time={this.props.startTime}
                             end_time={this.props.endTime}
