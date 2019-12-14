@@ -36,6 +36,10 @@ class TagTimeline extends Component {
         this.measure()
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        this.updateTagState(nextProps.tags)
+    }
+
     saveRef = ref => (this.containerNode = ref)
 
     measure = () => {
@@ -56,21 +60,25 @@ class TagTimeline extends Component {
 
     updateTagState = tags => {
         let colors = this.state.colors
+        let tempColors = {}
         tags.forEach(tag => {
             if (colors[tag.name] === undefined) {
-                colors[tag.name] = this.randomHSL()
+                tempColors[tag.name] = this.randomHSL()
+                this.setState({
+                    colors: Object.assign(colors, tempColors)
+                })
+                //colors[tag.name] = this.randomHSL()
             }
         })
     }
 
-    addColorForTag = () => {}
-
     render() {
         const { tags, annotations, duration } = this.props
         const { colors } = this.state
-        this.updateTagState(tags)
+
         let pixpersec = this.state.width / duration
         pixpersec = Number.isNaN(pixpersec) ? 0 : pixpersec
+        //TODO fix this so that on window size change it still works
         return (
             <div ref={this.saveRef}>
                 {tags.map((tag, i) => {
@@ -85,7 +93,6 @@ class TagTimeline extends Component {
                                     end_time,
                                     tag: anntag
                                 } = ann
-                                console.log(tag, anntag, tag === anntag)
                                 if (tag.name === anntag) {
                                     return (
                                         <TimelineBubble
@@ -99,6 +106,7 @@ class TagTimeline extends Component {
                                         />
                                     )
                                 }
+                                return null
                             })}
                         </TimelineTagWrapper>
                     )

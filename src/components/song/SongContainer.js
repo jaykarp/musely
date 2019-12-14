@@ -8,14 +8,7 @@ import NotesContainer from './NotesContainer'
 import EditAnnotation from './EditAnnotation'
 import TimelineTag from './TimelineTag'
 import { connect } from 'react-redux'
-import {
-    addNote,
-    addAnnotation,
-    updateNote,
-    updateAnnotation,
-    addTag,
-    deleteTag
-} from '../../actions'
+import { addAnnotation, addTag } from '../../actions'
 
 const SongHeader = styled.h1`
     padding-left: 3rem;
@@ -34,7 +27,6 @@ const TagTimelineWrapper = styled.div`
     width: 80%;
     height: 7rem;
     margin: auto;
-    background-color: grey;
 `
 
 class SongContainer extends Component {
@@ -59,7 +51,7 @@ class SongContainer extends Component {
             cursorTime: 0,
             currentTime: 0,
             tag: '',
-            songDuration: 0
+            songDuration: 1
         }
     }
 

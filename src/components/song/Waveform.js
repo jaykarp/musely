@@ -123,7 +123,6 @@ class Waveform extends React.Component {
 
     handleRegion = e => {
         const { handleRegion } = this.props
-        const currentTime = this.wavesurfer.getCurrentTime()
         if (e.start + 3 < e.end) {
             handleRegion(e)
         } else {
@@ -162,7 +161,7 @@ class Waveform extends React.Component {
     buildRegionsByTag = ({ tag = null }) => {
         const { annotations } = this.props
         this.wavesurfer.clearRegions()
-        annotations.map(ann => {
+        annotations.forEach(ann => {
             if (ann.tag === tag) {
                 this.wavesurfer.addRegion({
                     id: ann.id,

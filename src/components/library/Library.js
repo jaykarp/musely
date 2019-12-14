@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
-import { Transition, animated } from 'react-spring/renderprops'
 
 const Container = styled.div`
     height: 100px;
