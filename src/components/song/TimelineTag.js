@@ -119,6 +119,7 @@ class TagTimeline extends Component {
 									hoverIndex: 0
 								})
 							}}
+                            onClick={() => {this.props.chooseTag(tag.name)}}
 						>
 							<Spring
 								native

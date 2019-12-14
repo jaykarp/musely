@@ -51,7 +51,8 @@ class SongContainer extends Component {
             cursorTime: 0,
             currentTime: 0,
             tag: '',
-            songDuration: 1
+            songDuration: 1,
+            selectedTag: 'Afghanistan'
         }
     }
 
@@ -137,6 +138,13 @@ class SongContainer extends Component {
         })
     }
 
+    chooseTag = (tag) => {
+        console.log('Choose Tag', tag);
+        this.setState({
+            selectedTag: tag
+        })
+    }
+
     render() {
         const { name } = this.props.match.params
         return (
@@ -154,7 +162,10 @@ class SongContainer extends Component {
                     getSongDuration={this.getSongDuration}
                 />
                 <TagTimelineWrapper>
-                    <TimelineTag duration={this.state.songDuration} />
+                    <TimelineTag 
+                    duration={this.state.songDuration}
+                    chooseTag={this.chooseTag}
+                    />
                 </TagTimelineWrapper>
                 <EditAnnotation
                     handleSave={this.handleSave}
@@ -195,6 +206,7 @@ class SongContainer extends Component {
                     <AnnotationContainer
                         isOpen={this.state.annotationDrawerIsOpen}
                         notesOpen={this.state.notesDrawerIsOpen}
+                        selectedTag={this.state.selectedTag}
                     />
                     <NotesContainer
                         isOpen={this.state.notesDrawerIsOpen}
