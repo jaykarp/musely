@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Sidebar, Segment } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 // import Note from './Note'
 import Waveform from './Waveform'
@@ -45,6 +46,7 @@ class SongContainer extends Component {
             playing: false,
             annotationDrawerIsOpen: true,
             notesDrawerIsOpen: true,
+            isEditingAnnotation: false,
             text: '',
             start_time: 0,
             end_time: 0,
@@ -167,14 +169,31 @@ class SongContainer extends Component {
                     chooseTag={this.chooseTag}
                     />
                 </TagTimelineWrapper>
-                <EditAnnotation
-                    handleSave={this.handleSave}
-                    handleTagChange={this.handleTagChange}
-                    handleTextChange={this.handleTextChange}
-                    start_time={this.state.start_time}
-                    end_time={this.state.end_time}
-                />
+                <Sidebar
+                    as={Segment}
+                    direction='bottom'
+                    visible={this.state.isEditingAnnotation}
+                    animation='push'
+                >
+                    <EditAnnotation
+                        handleSave={this.handleSave}
+                        handleTagChange={this.handleTagChange}
+                        handleTextChange={this.handleTextChange}
+                        start_time={this.state.start_time}
+                        end_time={this.state.end_time}
+                    />
+                </Sidebar>
+                
                 <SongHeader>Notes</SongHeader>
+                <button
+                    onClick={() => {
+                        this.setState({
+                            isEditingAnnotation: !this.state.isEditingAnnotation
+                        })
+                    }}
+                >
+                    Edit Annotation
+                </button>
                 <button
                     onClick={() => {
                         this.setState({
