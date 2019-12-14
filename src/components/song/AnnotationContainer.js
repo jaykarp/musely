@@ -87,7 +87,7 @@ class AnnotationContainer extends Component {
                                                     endTime={el.end_time}
                                                     text={el.text}
                                                     tag={el.tag}
-                                                    color={'grey'}
+                                                    color={'green'}
                                                     isSelected={true}
                                                 />
                                         )

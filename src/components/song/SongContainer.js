@@ -138,6 +138,13 @@ class SongContainer extends Component {
         })
     }
 
+    chooseTag = (tag) => {
+        console.log('Choose Tag', tag);
+        this.setState({
+            selectedTag: tag
+        })
+    }
+
     render() {
         const { name } = this.props.match.params
         return (
@@ -155,7 +162,10 @@ class SongContainer extends Component {
                     getSongDuration={this.getSongDuration}
                 />
                 <TagTimelineWrapper>
-                    <TimelineTag duration={this.state.songDuration} />
+                    <TimelineTag 
+                    duration={this.state.songDuration}
+                    chooseTag={this.chooseTag}
+                    />
                 </TagTimelineWrapper>
                 <EditAnnotation
                     handleSave={this.handleSave}
