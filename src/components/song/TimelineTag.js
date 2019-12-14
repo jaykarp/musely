@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Keyframes, Spring, animated } from 'react-spring/renderprops'
 import { connect } from 'react-redux'
 import 'semantic-ui-css/semantic.min.css'
 
@@ -28,7 +29,9 @@ class TagTimeline extends Component {
 
         this.state = {
             width: null,
-            colors: {}
+            colors: {},
+            hovered: false,
+            hoverIndex: 0,
         }
     }
 
@@ -83,10 +86,39 @@ class TagTimeline extends Component {
             <div ref={this.saveRef}>
                 {tags.map((tag, i) => {
                     return (
-                        <TimelineTagWrapper
-                            key={i}
-                            color={colors[tag.name].bar}
+                        <Spring 
+                            from={{
+                                height: '1rem',
+                                width: '100%',
+                                marginLeft: 0,
+                                marginRight: 0,
+                                marginBottom: '0.5em',
+                                backgroundColor: `${colors[tag.name].bar}`,
+                                borderRadius: '30px',
+                            }}
+                            to={{
+                                height: this.state.hovered && this.state.hoverIndex === i ? '3rem' : '1rem',
+                                width: '100%',
+                                marginLeft: 0,
+                                marginRight: 0,
+                                marginBottom: '0.5em',
+                                backgroundColor: `${colors[tag.name].bar}`,
+                                borderRadius: '30px',
+                            }}
                         >
+                        {props => (
+                            <animated.div 
+                                style={{...props}} 
+                                onMouseOver={() => {this.setState({
+                                    hovered: true,
+                                    hoverIndex: i
+                                })}}
+                                onMouseOut={() => {this.setState({
+                                    hovered: false,
+                                    hoverIndex: i,
+                                })}}
+                                key={i}
+                            >
                             {annotations.map((ann, i) => {
                                 const {
                                     start_time,
@@ -108,7 +140,9 @@ class TagTimeline extends Component {
                                 }
                                 return null
                             })}
-                        </TimelineTagWrapper>
+                            </animated.div>
+                        )}
+                        </Spring>
                     )
                 })}
             </div>
