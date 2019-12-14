@@ -15,11 +15,12 @@ const Background = styled.div`
     height: 13rem;
 
     border-radius: 5px;
-    ${props => props.isSelected && ({
-        borderRadius: '3px',
-        borderColor: props.color,
-        borderStyle: 'solid'    
-    })}
+    ${props =>
+        props.isSelected && {
+            borderRadius: '3px',
+            borderColor: props.color,
+            borderStyle: 'solid'
+        }}
 `
 
 const NoteHeader = styled.div`
@@ -69,7 +70,10 @@ class Annotation extends Component {
     render() {
         return (
             <div>
-                <Background isSelected={this.props.isSelected} color={this.props.color || 'blue'}>
+                <Background
+                    isSelected={this.props.isSelected}
+                    color={this.props.color || 'blue'}
+                >
                     <NoteHeader>
                         <TagWrapper color={this.props.color || 'blue'}>
                             <Tag>{this.props.tag}</Tag>
