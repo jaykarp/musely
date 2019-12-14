@@ -58,7 +58,7 @@ class Waveform extends React.Component {
             waveColor: 'grey',
             progressColor: 'black',
             height: 200,
-            barHeight: 8,
+            barHeight: 1,
             barWidth: 1,
             cursorWidth: 3,
             scrollParent: false,
@@ -69,6 +69,13 @@ class Waveform extends React.Component {
                 }),
                 WS.cursor.create({
                     opacity: 5
+                }),
+                WS.timeline.create({
+                    container: "#wave-timeline",
+                    height: 30,
+                    notchPercentHeight: 50,
+                    primaryColor: '#010103',
+                    secondaryColor: 'green'
                 })
             ]
         })
@@ -195,6 +202,7 @@ class Waveform extends React.Component {
         const { currentTime, cursorTime } = this.props
         return (
             <WaveContainer>
+                <div id="wave-timeline"></div>
                 <div id="wave" style={{ position: 'relative' }}></div>
                 <MediaControlsContainer>
                     <ButtonBox>
