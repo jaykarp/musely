@@ -1,6 +1,6 @@
 // WindowTime.js
 
-import React, { Component, StyleSheet } from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const WTWrapper = styled.div`
@@ -13,13 +13,6 @@ const RowLayout = styled.div`
     display: flex;
     flex-direction: row;
 `
-
-const singleInput = {
-    textAlign: 'center',
-    border: '0',
-    fontSize: '25px'
-}
-
 const Line = styled.hr`
     display: block;
     width: 3rem;
@@ -42,35 +35,9 @@ const TimeField = styled.div`
     padding: 5px;
 `
 
-// const lineBreak = {
-//     display: 'block',
-//     marginTop: '0.5em',
-//     marginBottom: '0.5em',
-//     marginLeft: 'auto',
-//     margin-right: auto;
-//     border-style: inset;
-//     border-width: 1px;
-// }
-// const SingleInputField = styled.input`
-
-// `
-
 export default class WindowTime extends Component {
-    constructor(props) {
-        super(props)
-
-        //const { start_time, end_time } = this.props
-
-        //this.state = {
-        //sm: this.sec_toMS(start_time).minutes,
-        //ss: this.sec_toMS(start_time).seconds,
-        //em: this.sec_toMS(end_time).minutes,
-        //es: this.sec_toMS(end_time).seconds
-        //}
-    }
-
     sec_toMS = time => {
-        if (time === NaN) return 0
+        if (Number.isNaN(time)) return 0
         let curr = parseInt(time)
         let minutes = Math.floor(curr / 60)
         let seconds = curr - minutes * 60
@@ -83,7 +50,6 @@ export default class WindowTime extends Component {
 
     render() {
         const { start_time, end_time } = this.props
-        const { handleTimeChange } = this.props
         return (
             <WTWrapper>
                 <RowLayout>

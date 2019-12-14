@@ -28,6 +28,7 @@ export const updateAnnotation = data => ({
     start_time: data.start_time,
     end_time: data.end_time,
     tag: data.tag
+
 })
 
 export const addTag = data => ({

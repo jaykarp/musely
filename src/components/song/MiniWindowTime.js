@@ -1,4 +1,4 @@
-import React, { Component, StyleSheet } from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const WTWrapper = styled.div`
@@ -38,7 +38,7 @@ const TimeField = styled.div`
 
 export default class MiniWindowTime extends Component {
     sec_toMS = time => {
-        if (time === NaN) return 0
+        if (Number.isNaN(time)) return 0
         let curr = parseInt(time)
         let minutes = Math.floor(curr / 60)
         let seconds = curr - minutes * 60
@@ -51,7 +51,6 @@ export default class MiniWindowTime extends Component {
 
     render() {
         const { start_time, end_time } = this.props
-        console.log(start_time, end_time)
         return (
             <WTWrapper>
                 <RowLayout>
@@ -68,3 +67,4 @@ export default class MiniWindowTime extends Component {
         )
     }
 }
+

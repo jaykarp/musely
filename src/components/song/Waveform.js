@@ -11,6 +11,7 @@ const WaveContainer = styled.div`
     width: 80%;
     margin: auto;
     height: 15rem;
+    margin-bottom: 3rem;
 `
 
 const MediaControlsContainer = styled.div`
@@ -73,6 +74,13 @@ class Waveform extends React.Component {
         })
 
         wavesurfer.load(this.props.src)
+
+        // Passing duration to SongContainer
+        wavesurfer.on('ready', () => {
+            const { getSongDuration } = this.props
+            getSongDuration(wavesurfer.getDuration())
+        })
+
         waveform.addEventListener('mousemove', event => {
             const { handleCursorMove } = this.props
             let cursorTime =
@@ -115,7 +123,6 @@ class Waveform extends React.Component {
 
     handleRegion = e => {
         const { handleRegion } = this.props
-        const currentTime = this.wavesurfer.getCurrentTime()
         if (e.start + 3 < e.end) {
             handleRegion(e)
         } else {
@@ -140,7 +147,7 @@ class Waveform extends React.Component {
     buildEditableRegion = ({
         start_time = 0,
         end_time = 10,
-        color = 'blue'
+        color = 'hsla(211, 96%, 72%, 0.5)'
     }) => {
         this.wavesurfer.clearRegions()
         this.wavesurfer.addRegion({
@@ -154,7 +161,7 @@ class Waveform extends React.Component {
     buildRegionsByTag = ({ tag = null }) => {
         const { annotations } = this.props
         this.wavesurfer.clearRegions()
-        annotations.map(ann => {
+        annotations.forEach(ann => {
             if (ann.tag === tag) {
                 this.wavesurfer.addRegion({
                     id: ann.id,
