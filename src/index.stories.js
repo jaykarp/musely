@@ -16,4 +16,4 @@ export const note = () => (
 );
 export const miniTime = () => (
     <MiniWindowTime start_time={250.38} end_time={316.37666666666667} />
-)
+);

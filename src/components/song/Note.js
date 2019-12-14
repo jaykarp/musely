@@ -45,7 +45,11 @@ export default class Note extends Component {
           />
 
             <Form>
-                <TextArea placeholder='Add Note Here' style={{ minHeight: 200}} />
+                <TextArea placeholder='Add Note Here' 
+                  style={{ 
+                    minHeight: 200,
+                    width: 290
+                  }} />
             </Form>
           <Card.Content extra>
             <ButtonWrapper>
