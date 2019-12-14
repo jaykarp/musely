@@ -3,7 +3,10 @@ import styled from 'styled-components'
 import MiniWindowTime from './MiniWindowTime'
 import { Button, Icon } from 'semantic-ui-react'
 import DotDotDot from 'react-dotdotdot'
+import { connect } from 'react-redux'
+import { toggleAnnotation, updateAnnotation } from '../../actions'
 import 'semantic-ui-css/semantic.min.css'
+import toggle from '../../reducers/toggle'
 
 const Background = styled.div`
     position: relative;
@@ -67,25 +70,33 @@ const TextDisplay = styled.div`
 `
 
 class Annotation extends Component {
+    handleEdit = () => {
+        const { dispatch, id, toggle } = this.props
+        dispatch(
+            toggleAnnotation({
+                isEditing: !toggle.isEditing,
+                id: id
+            })
+        )
+    }
+
     render() {
+        const { isSelected, color, startTime, endTime, tag, text } = this.props
         return (
             <div>
-                <Background
-                    isSelected={this.props.isSelected}
-                    color={this.props.color || 'blue'}
-                >
+                <Background isSelected={isSelected} color={color || 'blue'}>
                     <NoteHeader>
-                        <TagWrapper color={this.props.color || 'blue'}>
-                            <Tag>{this.props.tag}</Tag>
+                        <TagWrapper color={color || 'blue'}>
+                            <Tag>{tag}</Tag>
                         </TagWrapper>
                         <MiniWindowTime
-                            start_time={this.props.startTime}
-                            end_time={this.props.endTime}
+                            start_time={startTime}
+                            end_time={endTime}
                         />
                     </NoteHeader>
                     <TextDisplay>
                         <DotDotDot clamp={6}>
-                            <p>{this.props.text}</p>
+                            <p>{text}</p>
                         </DotDotDot>
                     </TextDisplay>
                     <NoteButtonContainer>
@@ -93,7 +104,12 @@ class Annotation extends Component {
                             content="Add note to group"
                             trigger={<Button icon="add" />}
                         /> */}
-                        <Button icon size="mini" labelPosition="right">
+                        <Button
+                            icon
+                            onClick={this.handleEdit}
+                            size="mini"
+                            labelPosition="right"
+                        >
                             Edit
                             <Icon name="edit" />
                         </Button>
@@ -104,4 +120,10 @@ class Annotation extends Component {
     }
 }
 
-export default Annotation
+const mapStateToProps = state => {
+    return {
+        toggle: state.toggle
+    }
+}
+
+export default connect(mapStateToProps)(Annotation)

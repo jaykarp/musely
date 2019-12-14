@@ -9,7 +9,8 @@ import NotesContainer from './NotesContainer'
 import EditAnnotation from './EditAnnotation'
 import TimelineTag from './TimelineTag'
 import { connect } from 'react-redux'
-import { addAnnotation, addTag } from '../../actions'
+import { addAnnotation, addTag, toggleAnnotation } from '../../actions'
+import toggle from '../../reducers/toggle'
 
 const SongHeader = styled.h1`
     padding-left: 3rem;
@@ -121,16 +122,15 @@ class SongContainer extends Component {
         }
     }
 
-    handleTagChange = (e, data) => {
+    handleTagChange = tag => {
         this.setState({
-            tag: data.value
+            tag: tag
         })
     }
 
-    handleTextChange = (e, data) => {
-        e.preventDefault()
+    handleTextChange = text => {
         this.setState({
-            text: data.value
+            text: text
         })
     }
 
@@ -171,9 +171,9 @@ class SongContainer extends Component {
                 </TagTimelineWrapper>
                 <Sidebar
                     as={Segment}
-                    direction='bottom'
-                    visible={this.state.isEditingAnnotation}
-                    animation='push'
+                    direction="bottom"
+                    visible={this.props.toggle.isEditing}
+                    animation="push"
                 >
                     <EditAnnotation
                         handleSave={this.handleSave}
@@ -183,10 +183,17 @@ class SongContainer extends Component {
                         end_time={this.state.end_time}
                     />
                 </Sidebar>
-                
+
                 <SongHeader>Notes</SongHeader>
                 <button
                     onClick={() => {
+                        const { dispatch, toggle } = this.props
+                        dispatch(
+                            toggleAnnotation({
+                                isEditing: !toggle.isEditing,
+                                id: null
+                            })
+                        )
                         this.setState({
                             isEditingAnnotation: !this.state.isEditingAnnotation
                         })
@@ -240,7 +247,8 @@ const mapStateToProps = state => {
     return {
         notes: state.notes,
         annotations: state.annotations,
-        tags: state.tags
+        tags: state.tags,
+        toggle: state.toggle
     }
 }
 
