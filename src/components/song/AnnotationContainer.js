@@ -58,6 +58,8 @@ class AnnotationContainer extends Component {
                                             startTime={el.start_time}
                                             endTime={el.end_time}
                                             text={el.text}
+                                            tag={el.tag}
+                                            color={'grey'}
                                         />
                                     )
                                 })}
