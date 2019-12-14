@@ -11,6 +11,7 @@ const WaveContainer = styled.div`
     width: 80%;
     margin: auto;
     height: 15rem;
+    margin-bottom: 3rem;
 `
 
 const MediaControlsContainer = styled.div`
@@ -73,6 +74,13 @@ class Waveform extends React.Component {
         })
 
         wavesurfer.load(this.props.src)
+
+        // Passing duration to SongContainer
+        wavesurfer.on('ready', () => {
+            const { getSongDuration } = this.props
+            getSongDuration(wavesurfer.getDuration())
+        })
+
         waveform.addEventListener('mousemove', event => {
             const { handleCursorMove } = this.props
             let cursorTime =
@@ -140,7 +148,7 @@ class Waveform extends React.Component {
     buildEditableRegion = ({
         start_time = 0,
         end_time = 10,
-        color = 'blue'
+        color = 'hsla(211, 96%, 72%, 0.5)'
     }) => {
         this.wavesurfer.clearRegions()
         this.wavesurfer.addRegion({

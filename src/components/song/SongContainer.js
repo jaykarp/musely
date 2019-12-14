@@ -6,6 +6,7 @@ import Waveform from './Waveform'
 import AnnotationContainer from './AnnotationContainer'
 import NotesContainer from './NotesContainer'
 import EditAnnotation from './EditAnnotation'
+import TimelineTag from './TimelineTag'
 import { connect } from 'react-redux'
 import {
     addNote,
@@ -29,11 +30,16 @@ const SongWrapper = styled.div`
     background-color: rgb(233, 233, 233);
 `
 
+const TagTimelineWrapper = styled.div`
+    width: 80%;
+    height: 7rem;
+    margin: auto;
+    background-color: grey;
+`
+
 class SongContainer extends Component {
     constructor(props) {
         super(props)
-        const { dispatch } = this.props
-
         this.handleCursor = this.handleCursor.bind(this)
         this.handleCursorMove = this.handleCursorMove.bind(this)
         this.handleRegion = this.handleRegion.bind(this)
@@ -41,7 +47,7 @@ class SongContainer extends Component {
         this.handleSave = this.handleSave.bind(this)
         this.handleTagChange = this.handleTagChange.bind(this)
         this.handleTextChange = this.handleTextChange.bind(this)
-        //this.handleTimeChange = this.handleTimeChange.bind(this)
+        this.getSongDuration = this.getSongDuration.bind(this)
 
         dispatch(
             addTag({
@@ -74,7 +80,8 @@ class SongContainer extends Component {
             end_time: 0,
             cursorTime: 0,
             currentTime: 0,
-            tag: ''
+            tag: '',
+            songDuration: 0
         }
     }
 
@@ -149,65 +156,11 @@ class SongContainer extends Component {
         })
     }
 
-    //methods for attempting to do input
-    //handleTimeChange = timeFields => {
-    //console.log(timeFields)
-    //if (timeFields.sm !== NaN || timeFields.ss !== NaN) {
-    //this.setState({
-    //start_time: this.formatTime(timeFields)
-    //})
-    //} else if (timeFields.em !== NaN || timeFields.es !== NaN) {
-    //this.setState({
-    //end_time: this.formatTime(timeFields)
-    //})
-    //}
-    //}
-
-    //formatTime = ({ sm, ss, em, es }) => {
-    //let { minutes: currsm, seconds: currss } = this.sec_toMS(
-    //this.state.start_time
-    //)
-    //let { minutes: currem, seconds: curres } = this.sec_toMS(
-    //this.state.end_time
-    //)
-
-    //if (sm !== undefined) {
-    //return this.ms_toSec({
-    //minutes: Math.abs(parseInt(currsm) - parseInt(sm)),
-    //seconds: parseInt(currss)
-    //})
-    //} else if (ss !== undefined) {
-    //return this.ms_toSec({
-    //minutes: Math.abs(parseInt(currss) - parseInt(ss)),
-    //seconds: parseInt(currss)
-    //})
-    //} else if (em !== undefined) {
-    //return this.ms_toSec({
-    //minutes: Math.abs(parseInt(currem) - parseInt(em)),
-    //seconds: parseInt(currss)
-    //})
-    //} else if (es !== undefined) {
-    //return this.ms_toSec({
-    //minutes: Math.abs(parseInt(curres) - parseInt(es)),
-    //seconds: parseInt(currss)
-    //})
-    //}
-    //}
-
-    //sec_toMS = time => {
-    //let curr = parseInt(time)
-    //let minutes = Math.floor(curr / 60)
-    //let seconds = curr - minutes * 60
-    //let min_str = minutes.toString()
-    //if (min_str.length < 2) min_str = '0' + min_str
-    //let sec_str = seconds.toString()
-    //if (sec_str.length < 2) sec_str = '0' + sec_str
-    //return { minutes: min_str, seconds: sec_str }
-    //}
-
-    //ms_toSec = ({ minutes, seconds }) => {
-    //return minutes * 60 + seconds
-    //}
+    getSongDuration = data => {
+        this.setState({
+            songDuration: data
+        })
+    }
 
     render() {
         const { name } = this.props.match.params
@@ -215,14 +168,19 @@ class SongContainer extends Component {
             <SongWrapper>
                 <SongHeader>{name}</SongHeader>
                 <Waveform
-                    src={`/${this.props.match.params.name}.mp3`}
+                    //src={`/${name}.mp3`}
+                    src={'/jeneregretterien.mp3'}
                     currentTime={this.state.currentTime}
                     cursorTime={this.state.cursorTime}
                     handlePlay={this.handlePlay}
                     handleCursor={this.handleCursor}
                     handleCursorMove={this.handleCursorMove}
                     handleRegion={this.handleRegion}
+                    getSongDuration={this.getSongDuration}
                 />
+                <TagTimelineWrapper>
+                    <TimelineTag duration={this.state.songDuration} />
+                </TagTimelineWrapper>
                 <EditAnnotation
                     handleSave={this.handleSave}
                     handleTagChange={this.handleTagChange}
@@ -267,9 +225,6 @@ class SongContainer extends Component {
                         isOpen={this.state.notesDrawerIsOpen}
                         annoOpen={this.state.annotationDrawerIsOpen}
                     />
-                </div>
-
-                {/* <EditAnnotation /> */}
             </SongWrapper>
         )
     }
