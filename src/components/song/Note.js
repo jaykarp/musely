@@ -3,67 +3,124 @@ import styled from 'styled-components';
 import { Button, Icon, TextArea, Form, Dropdown, Card} from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 
-const ButtonWrapper = styled.div`
-    float: right;
+
+
+const EditNoteWrapper = styled.div`
+    width: 95%;
+    margin: auto;
+    height: 22rem;
+    /* border-radius: 10px; */
+    border-width: 2px;
+    border-color: black;
+    /* background-color: rgb(161, 161, 161); */
+
+    padding: 10px 10px 10px 10px;
 `
-const options = [
-  { key: 'Crescendo', text: 'Crescendo', value: 'Crescendo' },
-  { key: 'Chord', text: 'Chord', value: 'Chord' },
-  { key: 'Allegro', text: 'Allegro', value: 'Allegro' },
-  { key: 'Cadence', text: 'Cadence', value: 'Cadence' },
-]
+
+const SideBySideWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 85%;
+`
+
+const TextFieldWrapper = styled.div`
+    padding-bottom: 10px;
+    width: 100rem;
+    height: 100%;
+`
+
+const OptionsWrapper = styled.div`
+    width: 100%;
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+`
+
+const EditNoteTitle = styled.h2``
+
+const OptionsText = styled.h2`
+    width: auto;
+`
+
+const OptionsButton = styled.button`
+    background-color: ${props => props.background};
+`
+
+const ButtonWrapper = styled.div`
+    position: absolute;
+    bottom: 1rem;
+    left: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 50%;
+`
 
 export default class Note extends Component {
 	constructor(props) {
 		super(props)
   } 
-  state = { options }
-
-  handleAddition = (e, { value }) => {
-    this.setState((prevState) => ({
-      options: [{ text: value, value }, ...prevState.options],
-    }))
-  }
-
-  handleChange = (e, { value }) => this.setState({ currentValue: value })
-
+  
   render(){  
-    const { currentValue } = this.state
+
+    const {
+      handleSave,
+      handleTagChange,
+      handleTextChange,
+      handleTimeChange
+     } = this.props
+    const { start_time, end_time } = this.props
+
     return(
- 
-        <Card color = 'red'>
-          <Dropdown
-            options={this.state.options}
-            placeholder='Choose or Input Tag'
-            search
-            selection
-            fluid
-            allowAdditions
-            value={currentValue}
-            onAddItem={this.handleAddition}
-            onChange={this.handleChange}
-          />
 
-            <Form>
-                <TextArea placeholder='Add Note Here' 
-                  style={{ 
-                    minHeight: 200,
-                    width: 290
-                  }} />
-            </Form>
-          <Card.Content extra>
-            <ButtonWrapper>
-              <Button animated>
-              <Button.Content visible>Exit</Button.Content>
-              <Button.Content hidden>
-                  <Icon name='arrow right' />
-              </Button.Content>
-              </Button>
-            
-            </ButtonWrapper>
-          </Card.Content>
-        </Card>
+      <EditNoteWrapper>
+                <EditNoteTitle>Edit Note</EditNoteTitle>
+                <SideBySideWrapper>
+                    <TextFieldWrapper>
+                        <Form>
+                            <TextArea
+                                placeholder="Edit Note here..."
+                                onChange={handleTextChange}
+                                style={{
+                                    height: 240,
+                                    resize: 'none',
+                                    paddingLeft: 20,
+                                    paddingTop: 20,
+                                    paddingRight: 20,
+                                    paddingBottom: 20,
+                                    fontSize: 20
+                                }}
+                            />
+                        </Form>
+                    </TextFieldWrapper>
 
+                    <OptionsWrapper>
+                        <ButtonWrapper>
+                            <Button size="huge" animated>
+                                <Button.Content visible>Discard</Button.Content>
+                                <Button.Content hidden>
+                                    <Icon name="trash" />
+                                </Button.Content>
+                            </Button>
+
+                            <Button
+                                positive
+                                size="huge"
+                                animated
+                                onClick={handleSave}
+                            >
+                                <Button.Content visible>Save</Button.Content>
+                                <Button.Content hidden>
+                                    <Icon name="save" />
+                                </Button.Content>
+                            </Button>
+                        </ButtonWrapper>
+                    </OptionsWrapper>
+                </SideBySideWrapper>
+            </EditNoteWrapper>
     );
   }
 }
