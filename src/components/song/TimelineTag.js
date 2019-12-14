@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Keyframes, Spring, animated } from 'react-spring/renderprops'
+import { Transition, Spring, animated } from 'react-spring/renderprops'
 import { connect } from 'react-redux'
 import 'semantic-ui-css/semantic.min.css'
 
-const TimelineTagWrapper = styled.div`
-    height: 3rem;
+const TimelineTagWrapper = styled(animated.div)`
+    height: ${props => props.height};
     width: 100%;
     margin-left: 0;
     margin-right: 0;
@@ -14,14 +14,34 @@ const TimelineTagWrapper = styled.div`
     border-radius: 30px;
 `
 
-const TimelineBubble = styled.div`
+const TimelineTagWrapperStatic = styled.div`
+    height: 1rem;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0.5em;
+    background-color: ${props => props.color};
+    border-radius: 30px;    
+`
+
+const TimelineBubble = styled(animated.div)`
     width: ${props => props.width}px;
     position: absolute;
     margin-left: ${props => props.position}px;
-    height: 3rem;
+    height: ${props => props.height};
     background-color: ${props => props.color};
     border-radius: 30px;
 `
+
+const TimelineBubbleStatic = styled.div`
+    width: ${props => props.width}px;
+    position: absolute;
+    margin-left: ${props => props.position}px;
+    height: 1rem;
+    background-color: ${props => props.color};
+    border-radius: 30px;
+`
+
 
 class TagTimeline extends Component {
     constructor(props) {
@@ -85,38 +105,34 @@ class TagTimeline extends Component {
         return (
             <div ref={this.saveRef}>
                 {tags.map((tag, i) => {
-                    return (
+                return (    
+                <div 
+                    key={i}
+                    onMouseOver={() => {this.setState({
+                        hovered: true,
+                        hoverIndex: i
+                    })}}
+                    onMouseOut={() => {this.setState({
+                        hovered: false,
+                        hoverIndex: 0,
+                    })}}
+                >
+                    {this.state.hovered && this.state.hoverIndex === i ? (
+
                         <Spring 
+                            native
                             from={{
                                 height: '1rem',
-                                width: '100%',
-                                marginLeft: 0,
-                                marginRight: 0,
-                                marginBottom: '0.5em',
-                                backgroundColor: `${colors[tag.name].bar}`,
-                                borderRadius: '30px',
                             }}
                             to={{
-                                height: this.state.hovered && this.state.hoverIndex === i ? '3rem' : '1rem',
-                                width: '100%',
-                                marginLeft: 0,
-                                marginRight: 0,
-                                marginBottom: '0.5em',
-                                backgroundColor: `${colors[tag.name].bar}`,
-                                borderRadius: '30px',
+                                height: '3rem'
                             }}
                         >
                         {props => (
-                            <animated.div 
-                                style={{...props}} 
-                                onMouseOver={() => {this.setState({
-                                    hovered: true,
-                                    hoverIndex: i
-                                })}}
-                                onMouseOut={() => {this.setState({
-                                    hovered: false,
-                                    hoverIndex: i,
-                                })}}
+                            <TimelineTagWrapper
+                                style={props}
+                                color={colors[tag.name].bar}
+                                
                                 key={i}
                             >
                             {annotations.map((ann, i) => {
@@ -128,6 +144,7 @@ class TagTimeline extends Component {
                                 if (tag.name === anntag) {
                                     return (
                                         <TimelineBubble
+                                            style={props}
                                             key={i}
                                             position={start_time * pixpersec}
                                             width={
@@ -140,11 +157,49 @@ class TagTimeline extends Component {
                                 }
                                 return null
                             })}
-                            </animated.div>
+                            </TimelineTagWrapper>
                         )}
                         </Spring>
-                    )
-                })}
+                    ) : (<TimelineTagWrapperStatic
+                                
+                                color={colors[tag.name].bar}
+                                onMouseOver={() => {this.setState({
+                                    hovered: true,
+                                    hoverIndex: i
+                                })}}
+                                onMouseOut={() => {this.setState({
+                                    hovered: false,
+                                    hoverIndex: 0,
+                                })}}
+                                key={i}
+                            >
+                            {annotations.map((ann, i) => {
+                                const {
+                                    start_time,
+                                    end_time,
+                                    tag: anntag
+                                } = ann
+                                if (tag.name === anntag) {
+                                    
+                                    return (
+                                        <TimelineBubbleStatic
+                                    
+                                            key={i}
+                                            position={start_time * pixpersec}
+                                            width={
+                                                (end_time - start_time) *
+                                                pixpersec
+                                            }
+                                            color={colors[tag.name].bubble}
+                                        />
+                                    )
+                                }
+                                return null
+                            })}
+                            </TimelineTagWrapperStatic>
+                        )}
+                </div>
+                 )})}
             </div>
         )
     }
@@ -157,3 +212,11 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps)(TagTimeline)
+
+
+// width: '100%',
+//                                 marginLeft: 0,
+//                                 marginRight: 0,
+//                                 marginBottom: '0.5em',
+//                                 backgroundColor: `${colors[tag.name].bar}`,
+//                                 borderRadius: '30px',
