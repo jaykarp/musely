@@ -75,9 +75,10 @@ class Waveform extends React.Component {
 
         wavesurfer.load(this.props.src)
 
-        // Passing duration to SongContainer 
+        // Passing duration to SongContainer
         wavesurfer.on('ready', () => {
-            this.props.getSongDuration(wavesurfer.getDuration())
+            const { getSongDuration } = this.props
+            getSongDuration(wavesurfer.getDuration())
         })
 
         waveform.addEventListener('mousemove', event => {

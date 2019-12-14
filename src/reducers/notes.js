@@ -9,15 +9,21 @@ const notes = (state = [], action) => {
                 }
             ]
         case 'UPDATE_NOTE':
-            //const id = state.findIndex(e => e.id === action.id)
-            return state.map((ann, i) => {
-                if (i !== action.id) {
-                    return ann
+            return state.map(note => {
+                if (note.id !== action.id) {
+                    return note
                 }
                 return {
                     id: action.id,
-                    text: action.text || ann.text
+                    text: action.text || note.text
                 }
+            })
+        case 'DELETE_NOTE':
+            return state.filter(note => {
+                if (note.id === action.id) {
+                    return false
+                }
+                return true
             })
         default:
             return state
