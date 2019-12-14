@@ -3,15 +3,7 @@ import styled from 'styled-components'
 import WindowTime from './WindowTime'
 import { Button, Icon, TextArea, Form, Dropdown } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
-
-import { useSelector, useDispatch, connect } from 'react-redux'
-
-import {
-    addNote,
-    addAnnotation,
-    updateNote,
-    updateAnnotation
-} from '../../actions'
+import { connect } from 'react-redux'
 
 const EditAnnotationWrapper = styled.div`
     width: 95%;
@@ -52,11 +44,6 @@ const EditAnnotationTitle = styled.h2``
 const OptionsText = styled.h2`
     width: auto;
 `
-
-const OptionsButton = styled.button`
-    background-color: ${props => props.background};
-`
-
 const WindowWrapper = styled.div`
     display: flex;
     flex-direction: row;
@@ -88,7 +75,45 @@ const DropDownBox = styled.div`
 class EditAnnotation extends Component {
     constructor(props) {
         super(props)
-        const { dispatch } = this.props
+
+        this.state = {
+            text: '',
+            tag: {}
+        }
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (
+            nextProps.annotations.findIndex(
+                ann => nextProps.toggle.id === ann.id
+            ) !== -1
+        ) {
+            const idx = nextProps.annotations.findIndex(
+                ann => nextProps.toggle.id === ann.id
+            )
+            const text = nextProps.annotations[idx].text
+            const tag = nextProps.annotations[idx].tag
+            this.setState({
+                text: text,
+                tag: tag
+            })
+        }
+    }
+
+    handleTextChange = (e, data) => {
+        const { handleTextChange } = this.props
+        this.setState({
+            text: e.target.value
+        })
+        handleTextChange(e.target.value)
+    }
+
+    handleTagChange = (e, data) => {
+        const { handleTagChange } = this.props
+        this.setState({
+            tag: e.target.value
+        })
+        handleTagChange(e.target.value)
     }
 
     render() {
@@ -98,36 +123,17 @@ class EditAnnotation extends Component {
             handleTextChange,
             handleTimeChange
         } = this.props
-        const { start_time, end_time } = this.props
+
+        let { start_time, end_time, annotations, toggle } = this.props
+
+        if (annotations.findIndex(ann => toggle.id === ann.id) !== -1) {
+            const idx = annotations.findIndex(ann => toggle.id === ann.id)
+            start_time = annotations[idx].start_time
+            end_time = annotations[idx].end_time
+        }
         const countryOptions = [
-            {
-                key: 'af',
-                value: 'Afghanistan',
-                flag: 'af',
-                text: 'Afghanistan'
-            },
             { key: 'ax', value: 'ax', flag: 'ax', text: 'Aland Islands' },
-            { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
-            { key: 'dz', value: 'dz', flag: 'dz', text: 'Algeria' },
-            { key: 'as', value: 'as', flag: 'as', text: 'American Samoa' },
-            { key: 'ad', value: 'ad', flag: 'ad', text: 'Andorra' },
-            { key: 'ao', value: 'ao', flag: 'ao', text: 'Angola' },
-            { key: 'ai', value: 'ai', flag: 'ai', text: 'Anguilla' },
-            { key: 'ag', value: 'ag', flag: 'ag', text: 'Antigua' },
-            { key: 'ar', value: 'ar', flag: 'ar', text: 'Argentina' },
-            { key: 'am', value: 'am', flag: 'am', text: 'Armenia' },
-            { key: 'aw', value: 'aw', flag: 'aw', text: 'Aruba' },
-            { key: 'au', value: 'au', flag: 'au', text: 'Australia' },
-            { key: 'at', value: 'at', flag: 'at', text: 'Austria' },
-            { key: 'az', value: 'az', flag: 'az', text: 'Azerbaijan' },
-            { key: 'bs', value: 'bs', flag: 'bs', text: 'Bahamas' },
-            { key: 'bh', value: 'bh', flag: 'bh', text: 'Bahrain' },
-            { key: 'bd', value: 'bd', flag: 'bd', text: 'Bangladesh' },
-            { key: 'bb', value: 'bb', flag: 'bb', text: 'Barbados' },
-            { key: 'by', value: 'by', flag: 'by', text: 'Belarus' },
-            { key: 'be', value: 'be', flag: 'be', text: 'Belgium' },
-            { key: 'bz', value: 'bz', flag: 'bz', text: 'Belize' },
-            { key: 'bj', value: 'bj', flag: 'bj', text: 'Benin' }
+            { key: 'al', value: 'al', flag: 'al', text: 'Albania' }
         ]
 
         return (
@@ -138,7 +144,8 @@ class EditAnnotation extends Component {
                         <Form>
                             <TextArea
                                 placeholder="Edit annotation here..."
-                                onChange={handleTextChange}
+                                value={this.state.text}
+                                onChange={this.handleTextChange}
                                 style={{
                                     height: 240,
                                     resize: 'none',
@@ -171,7 +178,7 @@ class EditAnnotation extends Component {
                                     selection
                                     clearable
                                     options={countryOptions}
-                                    onChange={handleTagChange}
+                                    onChange={this.handleTagChange}
                                 />
                             </DropDownBox>
                         </TagsWrapper>
@@ -203,12 +210,11 @@ class EditAnnotation extends Component {
     }
 }
 
-const mapDispatchToProps = {
-    addNote,
-    addAnnotation,
-    updateNote,
-    updateAnnotation
+const mapStateToProps = state => {
+    return {
+        annotations: state.annotations,
+        toggle: state.toggle
+    }
 }
 
-export default connect()(EditAnnotation)
-// null,mapDispatchToProps
+export default connect(mapStateToProps)(EditAnnotation)

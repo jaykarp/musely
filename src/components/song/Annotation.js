@@ -1,48 +1,62 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import MiniWindowTime from './MiniWindowTime'
-import { Button, Icon, Popup } from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react'
 import DotDotDot from 'react-dotdotdot'
+import { connect } from 'react-redux'
+import { toggleAnnotation, updateAnnotation } from '../../actions'
 import 'semantic-ui-css/semantic.min.css'
+import toggle from '../../reducers/toggle'
 
 const Background = styled.div`
-	position: relative;
-	margin: 5px 5px 5px 5px;
-	padding: 0.7rem 0.7rem 0.7rem 0.7rem;
-	background-color: #eeeeee;
-	/* box-shadow: 5px 5px 5px; */
-	width: 20rem;
+    position: relative;
+    margin: 5px 5px 5px 5px;
+    padding: 0.7rem 0.7rem 0.7rem 0.7rem;
+    background-color: #eeeeee;
+    /* box-shadow: 5px 5px 5px; */
+    width: 20rem;
     height: 13rem;
-    
+
     border-radius: 5px;
-`
-
-const NoteTitle = styled.h3`
-	/* padding-top: 1rem;
-    padding-left: 0.5rem; */
-	color: black;
-	margin: 0 0 0 0;
-`
-
-const TimeStamp = styled.h3`
-	color: black;
-	margin: 0 0 0 0;
+    ${props =>
+        props.isSelected && {
+            borderRadius: '3px',
+            borderColor: props.color,
+            borderStyle: 'solid'
+        }}
 `
 
 const NoteHeader = styled.div`
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-	margin-bottom: 0.2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 0.2rem;
+`
+
+const TagWrapper = styled.div`
+    height: auto;
+    width: 4rem;
+    margin-left: 0.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 2px;
+    background-color: ${props => props.color};
+    border-radius: 2px;
+`
+
+const Tag = styled.div`
+    margin: auto;
+    font-size: 10px;
 `
 
 const NoteButtonContainer = styled.div`
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	position: absolute;
-	bottom: 5px;
-	right: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
 `
 
 const TextDisplay = styled.div`
@@ -56,38 +70,60 @@ const TextDisplay = styled.div`
 `
 
 class Annotation extends Component {
-	constructor(props) {
-		super(props)
-	}
+    handleEdit = () => {
+        const { dispatch, id, toggle } = this.props
+        dispatch(
+            toggleAnnotation({
+                isEditing: !toggle.isEditing,
+                id: id
+            })
+        )
+    }
 
-	render() {
-		console.log('TITLE:', this.props.text)
-		return (
-			<div>
-				<Background>
-					<NoteHeader>
-						{/* <NoteTitle>{this.props.title}</NoteTitle> */}
-						<MiniWindowTime start_time={this.props.startTime} end_time={this.props.endTime}/>
-					</NoteHeader>
-					<TextDisplay>
+    render() {
+        const { isSelected, color, startTime, endTime, tag, text } = this.props
+        return (
+            <div>
+                <Background isSelected={isSelected} color={color || 'blue'}>
+                    <NoteHeader>
+                        <TagWrapper color={color || 'blue'}>
+                            <Tag>{tag}</Tag>
+                        </TagWrapper>
+                        <MiniWindowTime
+                            start_time={startTime}
+                            end_time={endTime}
+                        />
+                    </NoteHeader>
+                    <TextDisplay>
                         <DotDotDot clamp={6}>
-                            <p>{this.props.text}</p>
+                            <p>{text}</p>
                         </DotDotDot>
                     </TextDisplay>
-					<NoteButtonContainer>
-						{/* <Popup
+                    <NoteButtonContainer>
+                        {/* <Popup
                             content="Add note to group"
                             trigger={<Button icon="add" />}
                         /> */}
-						<Button icon size='mini' labelPosition="right">
-							Edit
-							<Icon name="edit" />
-						</Button>
-					</NoteButtonContainer>
-				</Background>
-			</div>
-		)
-	}
+                        <Button
+                            icon
+                            onClick={this.handleEdit}
+                            size="mini"
+                            labelPosition="right"
+                        >
+                            Edit
+                            <Icon name="edit" />
+                        </Button>
+                    </NoteButtonContainer>
+                </Background>
+            </div>
+        )
+    }
 }
 
-export default Annotation
+const mapStateToProps = state => {
+    return {
+        toggle: state.toggle
+    }
+}
+
+export default connect(mapStateToProps)(Annotation)

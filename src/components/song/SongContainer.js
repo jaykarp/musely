@@ -1,20 +1,16 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Sidebar, Segment } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 // import Note from './Note'
 import Waveform from './Waveform'
 import AnnotationContainer from './AnnotationContainer'
 import NotesContainer from './NotesContainer'
 import EditAnnotation from './EditAnnotation'
+import TimelineTag from './TimelineTag'
 import { connect } from 'react-redux'
-import {
-    addNote,
-    addAnnotation,
-    updateNote,
-    updateAnnotation,
-    addTag,
-    deleteTag
-} from '../../actions'
+import { addAnnotation, addTag, toggleAnnotation } from '../../actions'
+import toggle from '../../reducers/toggle'
 
 const SongHeader = styled.h1`
     padding-left: 3rem;
@@ -29,11 +25,15 @@ const SongWrapper = styled.div`
     background-color: rgb(233, 233, 233);
 `
 
+const TagTimelineWrapper = styled.div`
+    width: 80%;
+    height: auto;
+    margin: auto;
+`
+
 class SongContainer extends Component {
     constructor(props) {
         super(props)
-        const { dispatch } = this.props
-
         this.handleCursor = this.handleCursor.bind(this)
         this.handleCursorMove = this.handleCursorMove.bind(this)
         this.handleRegion = this.handleRegion.bind(this)
@@ -41,40 +41,21 @@ class SongContainer extends Component {
         this.handleSave = this.handleSave.bind(this)
         this.handleTagChange = this.handleTagChange.bind(this)
         this.handleTextChange = this.handleTextChange.bind(this)
-        //this.handleTimeChange = this.handleTimeChange.bind(this)
-
-        dispatch(
-            addTag({
-                name: 'crescendo'
-            })
-        )
-
-        dispatch(
-            addTag({
-                name: 'crescendo'
-            })
-        )
-        dispatch(
-            deleteTag({
-                name: 'crescendo'
-            })
-        )
-        dispatch(
-            deleteTag({
-                name: 'crescendo'
-            })
-        )
+        this.getSongDuration = this.getSongDuration.bind(this)
 
         this.state = {
             playing: false,
             annotationDrawerIsOpen: true,
             notesDrawerIsOpen: true,
+            isEditingAnnotation: false,
             text: '',
             start_time: 0,
             end_time: 0,
             cursorTime: 0,
             currentTime: 0,
-            tag: ''
+            tag: '',
+            songDuration: 1,
+            selectedTag: 'Afghanistan'
         }
     }
 
@@ -133,81 +114,38 @@ class SongContainer extends Component {
                     tag: this.state.tag
                 })
             )
+            dispatch(
+                addTag({
+                    name: this.state.tag
+                })
+            )
         }
     }
 
-    handleTagChange = (e, data) => {
+    handleTagChange = tag => {
         this.setState({
-            tag: data.value
+            tag: tag
         })
     }
 
-    handleTextChange = (e, data) => {
-        e.preventDefault()
+    handleTextChange = text => {
         this.setState({
-            text: data.value
+            text: text
         })
     }
 
-    //methods for attempting to do input
-    //handleTimeChange = timeFields => {
-    //console.log(timeFields)
-    //if (timeFields.sm !== NaN || timeFields.ss !== NaN) {
-    //this.setState({
-    //start_time: this.formatTime(timeFields)
-    //})
-    //} else if (timeFields.em !== NaN || timeFields.es !== NaN) {
-    //this.setState({
-    //end_time: this.formatTime(timeFields)
-    //})
-    //}
-    //}
+    getSongDuration = data => {
+        this.setState({
+            songDuration: data
+        })
+    }
 
-    //formatTime = ({ sm, ss, em, es }) => {
-    //let { minutes: currsm, seconds: currss } = this.sec_toMS(
-    //this.state.start_time
-    //)
-    //let { minutes: currem, seconds: curres } = this.sec_toMS(
-    //this.state.end_time
-    //)
-
-    //if (sm !== undefined) {
-    //return this.ms_toSec({
-    //minutes: Math.abs(parseInt(currsm) - parseInt(sm)),
-    //seconds: parseInt(currss)
-    //})
-    //} else if (ss !== undefined) {
-    //return this.ms_toSec({
-    //minutes: Math.abs(parseInt(currss) - parseInt(ss)),
-    //seconds: parseInt(currss)
-    //})
-    //} else if (em !== undefined) {
-    //return this.ms_toSec({
-    //minutes: Math.abs(parseInt(currem) - parseInt(em)),
-    //seconds: parseInt(currss)
-    //})
-    //} else if (es !== undefined) {
-    //return this.ms_toSec({
-    //minutes: Math.abs(parseInt(curres) - parseInt(es)),
-    //seconds: parseInt(currss)
-    //})
-    //}
-    //}
-
-    //sec_toMS = time => {
-    //let curr = parseInt(time)
-    //let minutes = Math.floor(curr / 60)
-    //let seconds = curr - minutes * 60
-    //let min_str = minutes.toString()
-    //if (min_str.length < 2) min_str = '0' + min_str
-    //let sec_str = seconds.toString()
-    //if (sec_str.length < 2) sec_str = '0' + sec_str
-    //return { minutes: min_str, seconds: sec_str }
-    //}
-
-    //ms_toSec = ({ minutes, seconds }) => {
-    //return minutes * 60 + seconds
-    //}
+    chooseTag = tag => {
+        console.log('Choose Tag', tag)
+        this.setState({
+            selectedTag: tag
+        })
+    }
 
     render() {
         const { name } = this.props.match.params
@@ -215,22 +153,54 @@ class SongContainer extends Component {
             <SongWrapper>
                 <SongHeader>{name}</SongHeader>
                 <Waveform
-                    src={`/${this.props.match.params.name}.mp3`}
+                    //src={`/${name}.mp3`}
+                    src={'/jeneregretterien.mp3'}
                     currentTime={this.state.currentTime}
                     cursorTime={this.state.cursorTime}
                     handlePlay={this.handlePlay}
                     handleCursor={this.handleCursor}
                     handleCursorMove={this.handleCursorMove}
                     handleRegion={this.handleRegion}
+                    getSongDuration={this.getSongDuration}
                 />
-                <EditAnnotation
-                    handleSave={this.handleSave}
-                    handleTagChange={this.handleTagChange}
-                    handleTextChange={this.handleTextChange}
-                    start_time={this.state.start_time}
-                    end_time={this.state.end_time}
-                />
+                <TagTimelineWrapper>
+                    <TimelineTag
+                        duration={this.state.songDuration}
+                        chooseTag={this.chooseTag}
+                    />
+                </TagTimelineWrapper>
+                <Sidebar
+                    as={Segment}
+                    direction="bottom"
+                    visible={this.props.toggle.isEditing}
+                    animation="push"
+                >
+                    <EditAnnotation
+                        handleSave={this.handleSave}
+                        handleTagChange={this.handleTagChange}
+                        handleTextChange={this.handleTextChange}
+                        start_time={this.state.start_time}
+                        end_time={this.state.end_time}
+                    />
+                </Sidebar>
+
                 <SongHeader>Notes</SongHeader>
+                <button
+                    onClick={() => {
+                        const { dispatch, toggle } = this.props
+                        dispatch(
+                            toggleAnnotation({
+                                isEditing: !toggle.isEditing,
+                                id: null
+                            })
+                        )
+                        this.setState({
+                            isEditingAnnotation: !this.state.isEditingAnnotation
+                        })
+                    }}
+                >
+                    Edit Annotation
+                </button>
                 <button
                     onClick={() => {
                         this.setState({
@@ -262,14 +232,13 @@ class SongContainer extends Component {
                     <AnnotationContainer
                         isOpen={this.state.annotationDrawerIsOpen}
                         notesOpen={this.state.notesDrawerIsOpen}
+                        selectedTag={this.state.selectedTag}
                     />
                     <NotesContainer
                         isOpen={this.state.notesDrawerIsOpen}
                         annoOpen={this.state.annotationDrawerIsOpen}
                     />
                 </div>
-
-                {/* <EditAnnotation /> */}
             </SongWrapper>
         )
     }
@@ -278,7 +247,8 @@ const mapStateToProps = state => {
     return {
         notes: state.notes,
         annotations: state.annotations,
-        tags: state.tags
+        tags: state.tags,
+        toggle: state.toggle
     }
 }
 
