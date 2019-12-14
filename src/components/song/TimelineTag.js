@@ -14,30 +14,11 @@ const TimelineTagWrapper = styled(animated.div)`
 	border-radius: 30px;
 `
 
-const TimelineTagWrapperStatic = styled.div`
-	height: 1rem;
-	width: 100%;
-	margin-left: 0;
-	margin-right: 0;
-	margin-bottom: 0.5em;
-	background-color: ${props => props.color};
-	border-radius: 30px;
-`
-
 const TimelineBubble = styled(animated.div)`
 	width: ${props => props.width}px;
 	position: absolute;
 	margin-left: ${props => props.position}px;
 	height: ${props => props.height};
-	background-color: ${props => props.color};
-	border-radius: 30px;
-`
-
-const TimelineBubbleStatic = styled.div`
-	width: ${props => props.width}px;
-	position: absolute;
-	margin-left: ${props => props.position}px;
-	height: 1rem;
 	background-color: ${props => props.color};
 	border-radius: 30px;
 `
