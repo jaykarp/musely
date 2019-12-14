@@ -49,28 +49,6 @@ class SongContainer extends Component {
         this.handleTextChange = this.handleTextChange.bind(this)
         this.getSongDuration = this.getSongDuration.bind(this)
 
-        dispatch(
-            addTag({
-                name: 'crescendo'
-            })
-        )
-
-        dispatch(
-            addTag({
-                name: 'crescendo'
-            })
-        )
-        dispatch(
-            deleteTag({
-                name: 'crescendo'
-            })
-        )
-        dispatch(
-            deleteTag({
-                name: 'crescendo'
-            })
-        )
-
         this.state = {
             playing: false,
             annotationDrawerIsOpen: true,
@@ -138,6 +116,11 @@ class SongContainer extends Component {
                     start_time: this.state.start_time,
                     end_time: this.state.end_time,
                     tag: this.state.tag
+                })
+            )
+            dispatch(
+                addTag({
+                    name: this.state.tag
                 })
             )
         }
@@ -225,6 +208,7 @@ class SongContainer extends Component {
                         isOpen={this.state.notesDrawerIsOpen}
                         annoOpen={this.state.annotationDrawerIsOpen}
                     />
+                </div>
             </SongWrapper>
         )
     }

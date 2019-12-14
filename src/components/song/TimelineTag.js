@@ -51,10 +51,7 @@ class TagTimeline extends Component {
         const { tags, annotations, duration } = this.props
         let pixpersec = this.state.width / duration
         pixpersec = Number.isNaN(pixpersec) ? 0 : pixpersec
-        //let annotations = [
-        //{ start_time: 0, end_time: 10, tag: 'crescendo' },
-        //{ start_time: 20, end_time: 40, tag: 'crescendo' }
-        //]
+        console.log(tags, annotations, duration)
         return (
             <div ref={this.saveRef}>
                 {tags.map((tag, i) => {
@@ -71,7 +68,8 @@ class TagTimeline extends Component {
                                     end_time,
                                     tag: anntag
                                 } = ann
-                                if (tag === anntag) {
+                                console.log(tag, anntag, tag === anntag)
+                                if (tag.name === anntag) {
                                     return (
                                         <TimelineBubble
                                             key={i}
