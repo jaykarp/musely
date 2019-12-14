@@ -1,5 +1,3 @@
-// WindowTime.js
-
 import React, { Component, StyleSheet } from 'react'
 import styled from 'styled-components'
 
@@ -14,61 +12,31 @@ const RowLayout = styled.div`
     flex-direction: row;
 `
 
-const singleInput = {
-    textAlign: 'center',
-    border: '0',
-    fontSize: '25px'
-}
-
 const Line = styled.hr`
     display: block;
-    width: 3rem;
-    margin-top: 1em;
+    width: 1rem;
+    margin-top: 0.7em;
     margin-bottom: 0.5em;
-    margin-left: 1em;
-    margin-right: 1em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
     border-style: inset;
     border: 1px solid black;
 `
 
 const Colon = styled.p`
-    font-size: 25px;
+    font-size: 15px;
     /* padding-bottom: 0.5em; */
+    padding-left: 5px;
+    padding-right: 5px;
     margin: 0;
 `
 
 const TimeField = styled.div`
-    font-size: 30px;
-    padding: 5px;
+    font-size: 15px;
+    /* padding: 5px; */
 `
 
-// const lineBreak = {
-//     display: 'block',
-//     marginTop: '0.5em',
-//     marginBottom: '0.5em',
-//     marginLeft: 'auto',
-//     margin-right: auto;
-//     border-style: inset;
-//     border-width: 1px;
-// }
-// const SingleInputField = styled.input`
-
-// `
-
-export default class WindowTime extends Component {
-    constructor(props) {
-        super(props)
-
-        //const { start_time, end_time } = this.props
-
-        //this.state = {
-        //sm: this.sec_toMS(start_time).minutes,
-        //ss: this.sec_toMS(start_time).seconds,
-        //em: this.sec_toMS(end_time).minutes,
-        //es: this.sec_toMS(end_time).seconds
-        //}
-    }
-
+export default class MiniWindowTime extends Component {
     sec_toMS = time => {
         if (time === NaN) return 0
         let curr = parseInt(time)
@@ -83,7 +51,7 @@ export default class WindowTime extends Component {
 
     render() {
         const { start_time, end_time } = this.props
-        const { handleTimeChange } = this.props
+        console.log(start_time, end_time)
         return (
             <WTWrapper>
                 <RowLayout>
