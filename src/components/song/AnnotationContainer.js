@@ -44,7 +44,6 @@ class AnnotationContainer extends Component {
     state = { annoOpen: true, noteOpen: true }
 
     render() {
-
         var annotationGroups = {
             selected: [],
             unselected: []
@@ -79,33 +78,35 @@ class AnnotationContainer extends Component {
                         >
                             <Container>
                                 <SelectedAnnotationWrapper>
-                                    {annotationGroups.selected.map((el, i) => {
+                                    {annotationGroups.selected.map(el => {
                                         return (
                                             <Annotation
-                                                    key={i}
-                                                    startTime={el.start_time}
-                                                    endTime={el.end_time}
-                                                    text={el.text}
-                                                    tag={el.tag}
-                                                    color={'green'}
-                                                    isSelected={true}
-                                                />
+                                                key={el.id}
+                                                id={el.id}
+                                                startTime={el.start_time}
+                                                endTime={el.end_time}
+                                                text={el.text}
+                                                tag={el.tag}
+                                                color={'green'}
+                                                isSelected={true}
+                                            />
                                         )
                                     })}
                                 </SelectedAnnotationWrapper>
 
                                 <AnnotationWrapper>
-                                    {annotationGroups.unselected.map((el, i) => {
+                                    {annotationGroups.unselected.map(el => {
                                         return (
                                             <Annotation
-                                                    key={i}
-                                                    startTime={el.start_time}
-                                                    endTime={el.end_time}
-                                                    text={el.text}
-                                                    tag={el.tag}
-                                                    color={'grey'}
-                                                    isSelected={false}
-                                                />
+                                                key={el.id}
+                                                id={el.id}
+                                                startTime={el.start_time}
+                                                endTime={el.end_time}
+                                                text={el.text}
+                                                tag={el.tag}
+                                                color={'grey'}
+                                                isSelected={false}
+                                            />
                                         )
                                     })}
                                 </AnnotationWrapper>
@@ -144,9 +145,7 @@ class AnnotationContainer extends Component {
                                         )
                                     }
                                 })} */}
-                                
                             </Container>
-                            
                         </animated.div>
                     )}
                 </Sidebar>
