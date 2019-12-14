@@ -14,7 +14,7 @@ import {
     updateNote,
     updateAnnotation,
     addTag,
-    incrementTag
+    deleteTag
 } from '../../actions'
 
 const SongHeader = styled.h1`
@@ -48,6 +48,28 @@ class SongContainer extends Component {
         this.handleTagChange = this.handleTagChange.bind(this)
         this.handleTextChange = this.handleTextChange.bind(this)
         this.getSongDuration = this.getSongDuration.bind(this)
+
+        dispatch(
+            addTag({
+                name: 'crescendo'
+            })
+        )
+
+        dispatch(
+            addTag({
+                name: 'crescendo'
+            })
+        )
+        dispatch(
+            deleteTag({
+                name: 'crescendo'
+            })
+        )
+        dispatch(
+            deleteTag({
+                name: 'crescendo'
+            })
+        )
 
         this.state = {
             playing: false,
@@ -203,7 +225,6 @@ class SongContainer extends Component {
                         isOpen={this.state.notesDrawerIsOpen}
                         annoOpen={this.state.annotationDrawerIsOpen}
                     />
-                </div>
             </SongWrapper>
         )
     }
