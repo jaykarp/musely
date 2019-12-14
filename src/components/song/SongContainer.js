@@ -51,7 +51,8 @@ class SongContainer extends Component {
             cursorTime: 0,
             currentTime: 0,
             tag: '',
-            songDuration: 1
+            songDuration: 1,
+            selectedTag: 'Afghanistan'
         }
     }
 
@@ -195,6 +196,7 @@ class SongContainer extends Component {
                     <AnnotationContainer
                         isOpen={this.state.annotationDrawerIsOpen}
                         notesOpen={this.state.notesDrawerIsOpen}
+                        selectedTag={this.state.selectedTag}
                     />
                     <NotesContainer
                         isOpen={this.state.notesDrawerIsOpen}
