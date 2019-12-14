@@ -25,7 +25,7 @@ const SongWrapper = styled.div`
 
 const TagTimelineWrapper = styled.div`
     width: 80%;
-    height: 7rem;
+    height: auto;
     margin: auto;
 `
 
