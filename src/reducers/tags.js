@@ -30,6 +30,7 @@ const tags = (state = [], action) => {
                             return true
                         }
                     }
+                    return true
                 })
                 .map(tag => {
                     if (tag.name === action.name) {

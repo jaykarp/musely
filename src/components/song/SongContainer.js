@@ -8,14 +8,7 @@ import NotesContainer from './NotesContainer'
 import EditAnnotation from './EditAnnotation'
 import TimelineTag from './TimelineTag'
 import { connect } from 'react-redux'
-import {
-    addNote,
-    addAnnotation,
-    updateNote,
-    updateAnnotation,
-    addTag,
-    deleteTag
-} from '../../actions'
+import { addAnnotation, addTag } from '../../actions'
 
 const SongHeader = styled.h1`
     padding-left: 3rem;
@@ -34,7 +27,6 @@ const TagTimelineWrapper = styled.div`
     width: 80%;
     height: 7rem;
     margin: auto;
-    background-color: grey;
 `
 
 class SongContainer extends Component {
@@ -49,28 +41,6 @@ class SongContainer extends Component {
         this.handleTextChange = this.handleTextChange.bind(this)
         this.getSongDuration = this.getSongDuration.bind(this)
 
-        dispatch(
-            addTag({
-                name: 'crescendo'
-            })
-        )
-
-        dispatch(
-            addTag({
-                name: 'crescendo'
-            })
-        )
-        dispatch(
-            deleteTag({
-                name: 'crescendo'
-            })
-        )
-        dispatch(
-            deleteTag({
-                name: 'crescendo'
-            })
-        )
-
         this.state = {
             playing: false,
             annotationDrawerIsOpen: true,
@@ -81,7 +51,7 @@ class SongContainer extends Component {
             cursorTime: 0,
             currentTime: 0,
             tag: '',
-            songDuration: 0
+            songDuration: 1
         }
     }
 
@@ -138,6 +108,11 @@ class SongContainer extends Component {
                     start_time: this.state.start_time,
                     end_time: this.state.end_time,
                     tag: this.state.tag
+                })
+            )
+            dispatch(
+                addTag({
+                    name: this.state.tag
                 })
             )
         }
@@ -225,6 +200,7 @@ class SongContainer extends Component {
                         isOpen={this.state.notesDrawerIsOpen}
                         annoOpen={this.state.annotationDrawerIsOpen}
                     />
+                </div>
             </SongWrapper>
         )
     }

@@ -3,15 +3,7 @@ import styled from 'styled-components'
 import WindowTime from './WindowTime'
 import { Button, Icon, TextArea, Form, Dropdown } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
-
-import { useSelector, useDispatch, connect } from 'react-redux'
-
-import {
-    addNote,
-    addAnnotation,
-    updateNote,
-    updateAnnotation
-} from '../../actions'
+import { connect } from 'react-redux'
 
 const EditAnnotationWrapper = styled.div`
     width: 95%;
@@ -52,11 +44,6 @@ const EditAnnotationTitle = styled.h2``
 const OptionsText = styled.h2`
     width: auto;
 `
-
-const OptionsButton = styled.button`
-    background-color: ${props => props.background};
-`
-
 const WindowWrapper = styled.div`
     display: flex;
     flex-direction: row;
@@ -86,11 +73,6 @@ const DropDownBox = styled.div`
 `
 
 class EditAnnotation extends Component {
-    constructor(props) {
-        super(props)
-        const { dispatch } = this.props
-    }
-
     render() {
         const {
             handleSave,
@@ -203,12 +185,12 @@ class EditAnnotation extends Component {
     }
 }
 
-const mapDispatchToProps = {
-    addNote,
-    addAnnotation,
-    updateNote,
-    updateAnnotation
-}
+//const mapDispatchToProps = {
+//addNote,
+//addAnnotation,
+//updateNote,
+//updateAnnotation
+//}
 
 export default connect()(EditAnnotation)
 // null,mapDispatchToProps

@@ -1,10 +1,9 @@
 // NotesContainer.js
 
 import React, { Component } from 'react'
-import styled from 'styled-components'
 import 'semantic-ui-css/semantic.min.css'
 // import { useSpring, useTransition, animated } from "react-spring"
-import { Transition, Keyframes, animated } from 'react-spring/renderprops'
+import { Keyframes, animated } from 'react-spring/renderprops'
 
 import './NotesContainer.css'
 
