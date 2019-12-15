@@ -23,3 +23,7 @@
     
   }
   
+
+.ui.top.attached.label:first-child+:not(.attached) {
+    margin-top: 3.6rem!important;
+}

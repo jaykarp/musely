@@ -30,7 +30,8 @@ const SelectedAnnotationWrapper = styled.div`
 const Container = styled.div`
     overflow-y: auto;
     height: 100%;
-    padding: 30px 50px 30px 50px;
+    padding: 20px 50px 30px 50px;
+    box-sizing: border-box;
 `
 
 const TitleHeader = styled.div`
@@ -125,7 +126,7 @@ class AnnotationContainer extends Component {
                                                 endTime={el.end_time}
                                                 text={el.text}
                                                 tag={el.tag}
-                                                color={'grey'}
+                                                color={'orange'}
                                                 isSelected={false}
                                             />
                                         )

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import MiniWindowTime from './MiniWindowTime'
-import { Button, Icon, Grid} from 'semantic-ui-react'
+import { Button, Icon, Label} from 'semantic-ui-react'
 import DotDotDot from 'react-dotdotdot'
 import { connect } from 'react-redux'
 import { toggleAnnotation, updateAnnotation } from '../../actions'
@@ -53,6 +53,7 @@ const TagWrapper = styled.div`
 const Tag = styled.div`
     margin: auto;
     font-size: 10px;
+    color: white;
 `
 
 const NoteButtonContainer = styled.div`
