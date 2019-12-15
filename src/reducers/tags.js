@@ -24,12 +24,12 @@ const tags = (state = [], action) => {
             return state
                 .map(tag => {
                     if (tag.name === action.name) {
-                        if (tag.count >= 0)
-                            return {
-                                name: tag.name,
-                                count: --tag.count
-                            }
+                        return {
+                            name: tag.name,
+                            count: --tag.count
+                        }
                     }
+                    return tag
                 })
                 .filter((tag) => (
                     tag.count > 0
