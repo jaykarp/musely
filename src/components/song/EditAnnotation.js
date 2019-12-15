@@ -78,7 +78,9 @@ class EditAnnotation extends Component {
 
         this.state = {
             text: '',
-            tag: {}
+            tag: {},
+            start_time: 0,
+            end_time: 0
         }
     }
 
@@ -93,11 +95,17 @@ class EditAnnotation extends Component {
             )
             const text = nextProps.annotations[idx].text
             const tag = nextProps.annotations[idx].tag
+            const start_time = nextProps.annotations[idx].start_time
+            const end_time = nextProps.annotations[idx].end_time
             this.setState({
                 text: text,
                 tag: tag
             })
         }
+        this.setState({
+            start_time: nextProps.start_time,
+            end_time: nextProps.end_time
+        })
     }
 
     handleTextChange = (e, data) => {
@@ -126,11 +134,11 @@ class EditAnnotation extends Component {
 
         let { start_time, end_time, annotations, toggle } = this.props
 
-        if (annotations.findIndex(ann => toggle.id === ann.id) !== -1) {
-            const idx = annotations.findIndex(ann => toggle.id === ann.id)
-            start_time = annotations[idx].start_time
-            end_time = annotations[idx].end_time
-        }
+        //if (annotations.findIndex(ann => toggle.id === ann.id) !== -1) {
+        //const idx = annotations.findIndex(ann => toggle.id === ann.id)
+        //start_time = annotations[idx].start_time
+        //end_time = annotations[idx].end_time
+        //}
 
         const countryOptions = [
             { key: 'ax', value: 'ax', flag: 'ax', text: 'Aland Islands' },
@@ -164,9 +172,8 @@ class EditAnnotation extends Component {
                         <WindowWrapper>
                             <OptionsText>Window</OptionsText>
                             <WindowTime
-                                start_time={start_time}
-                                end_time={end_time}
-                                handleTimeChange={handleTimeChange}
+                                start_time={this.state.start_time}
+                                end_time={this.state.end_time}
                             />
                         </WindowWrapper>
 

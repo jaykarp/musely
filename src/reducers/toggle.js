@@ -1,4 +1,4 @@
-const toggle = (state = {}, action) => {
+const toggle = (state = { isEditing: false, id: null }, action) => {
     switch (action.type) {
         case 'TOGGLE_ANNOTATION':
             return Object.assign(

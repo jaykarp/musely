@@ -60,17 +60,22 @@ class SongContainer extends Component {
     }
 
     handleCursor = data => {
+        const { toggle, annotations } = this.props
         let curr = parseInt(data.currentTime)
-        if (data.region) {
-            this.setState({
-                currentTime: curr
-            })
-        } else {
+        if (toggle.id === null) {
             this.setState({
                 start_time: curr,
                 end_time: curr + 10,
                 currentTime: curr
             })
+        } else {
+            const idx = annotations.findIndex(ann => ann.id === toggle.id)
+            if (idx !== -1) {
+                this.setState({
+                    start_time: annotations[idx].start_time,
+                    end_time: annotations[idx].end_time
+                })
+            }
         }
     }
 
@@ -141,7 +146,6 @@ class SongContainer extends Component {
     }
 
     chooseTag = tag => {
-        console.log('Choose Tag', tag)
         this.setState({
             selectedTag: tag
         })
