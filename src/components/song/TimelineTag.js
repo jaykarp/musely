@@ -23,6 +23,14 @@ const TimelineBubble = styled(animated.div)`
 	border-radius: 30px;
 `
 
+
+// const TimlineSpring = Keyframes.Spring({
+//     // single items,
+//     selected: { x: 0, w: 100 },
+//     unselected: { x: 0, w: 51 },
+// })
+
+
 class TagTimeline extends Component {
 	constructor(props) {
 		super(props)
@@ -31,7 +39,9 @@ class TagTimeline extends Component {
 			width: null,
 			colors: {},
 			hovered: false,
-			hoverIndex: 0
+			hoverIndex: 0,
+			tagSelected: false,
+			selectedIndex: 0,
 		}
 	}
 
@@ -75,6 +85,16 @@ class TagTimeline extends Component {
 		})
 	}
 
+	selectTag = (tagName, tagIdx) => {
+		console.log(tagIdx)
+		this.props.chooseTag(tagName)
+		this.setState({
+			tagSelected: this.state.hovered ? true : !this.state.tagSelected,
+			selectedIndex: tagIdx
+		})
+		console.log(this.state)
+	}
+
 	render() {
 		const { tags, annotations, duration } = this.props
 		const { colors } = this.state
@@ -100,7 +120,7 @@ class TagTimeline extends Component {
 									hoverIndex: 0
 								})
 							}}
-                            onClick={() => {this.props.chooseTag(tag.name)}}
+                            onClick={() => {this.selectTag(tag.name, i)}}
 						>
 							<Spring
 								native
@@ -109,11 +129,14 @@ class TagTimeline extends Component {
 								}}
 								to={{
 									height:
-										this.state.hovered &&
+										this.state.tagSelected && this.state.selectedIndex === i 
+											? '3rem' 
+											: this.state.hovered &&
 										this.state.hoverIndex === i
 											? '3rem'
 											: '1rem'
 								}}
+								immediate={this.state.tagSelected && this.state.selectedIndex === i}
 							>
 								{props => (
 									<TimelineTagWrapper
