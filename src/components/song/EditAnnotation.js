@@ -85,7 +85,13 @@ class EditAnnotation extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.annotations.length > 0) {
+        const { toggle } = this.props
+        if (!toggle.id && !toggle.isEditing) {
+            this.setState({
+                text: '',
+                tag: {}
+            })
+        } else if (nextProps.annotations.length > 0) {
             if (
                 nextProps.annotations.findIndex(
                     ann => nextProps.toggle.id === ann.id
@@ -96,15 +102,13 @@ class EditAnnotation extends Component {
                 )
                 const text = nextProps.annotations[idx].text
                 const tag = nextProps.annotations[idx].tag
-                const start_time = nextProps.annotations[idx].start_time
-                const end_time = nextProps.annotations[idx].end_time
                 this.setState({
                     text: text,
                     tag: tag
                 })
             }
         }
-        
+
         this.setState({
             start_time: nextProps.start_time,
             end_time: nextProps.end_time
@@ -127,7 +131,6 @@ class EditAnnotation extends Component {
         handleTagChange(data.value)
     }
 
-    
     render() {
         const {
             handleSave,
@@ -139,8 +142,6 @@ class EditAnnotation extends Component {
 
         let { start_time, end_time, annotations, toggle } = this.props
 
-
-
         //if (annotations.findIndex(ann => toggle.id === ann.id) !== -1) {
         //const idx = annotations.findIndex(ann => toggle.id === ann.id)
         //start_time = annotations[idx].start_time
@@ -151,7 +152,7 @@ class EditAnnotation extends Component {
             { key: 'ax', value: 'ax', flag: 'ax', text: 'Aland Islands' },
             { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
             { key: 'dz', value: 'dz', text: 'Algeria' },
-            { key: 'as', value: 'as', text: 'American Samoa' },
+            { key: 'as', value: 'as', text: 'American Samoa' }
         ]
 
         return (
@@ -201,8 +202,8 @@ class EditAnnotation extends Component {
                         </TagsWrapper>
 
                         <ButtonWrapper>
-                            <Button 
-                                size="huge" 
+                            <Button
+                                size="huge"
                                 animated
                                 onClick={handleDiscard}
                             >
