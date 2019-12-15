@@ -79,6 +79,7 @@ class SongContainer extends Component {
             end_time: 0,
             cursorTime: 0,
             currentTime: 0,
+            currentEditColor: '',
             tag: '',
             songDuration: 1,
             selectedTag: 'Afghanistan'
@@ -177,7 +178,7 @@ class SongContainer extends Component {
             dispatch(
                 addTag({
                     name: this.state.tag,
-                    color: this.randomHSL()
+                    color: this.state.currentEditColor
                 })
             )
         }
@@ -286,6 +287,7 @@ class SongContainer extends Component {
                     isPlaying={this.state.playing}
                     currentTime={this.state.currentTime}
                     cursorTime={this.state.cursorTime}
+                    regionColor={this.state.currentEditColor}
                     getCurrentTime={this.getCurrentTime}
                     handleCursor={this.handleCursor}
                     handleCursorMove={this.handleCursorMove}
@@ -353,7 +355,8 @@ class SongContainer extends Component {
                                     )
                                     this.setState({
                                         isEditingAnnotation: !this.state
-                                            .isEditingAnnotation
+                                            .isEditingAnnotation,
+                                        currentEditColor: this.randomHSL()
                                     })
                                 }}
                             />

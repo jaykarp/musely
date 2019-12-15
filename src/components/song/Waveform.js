@@ -51,7 +51,7 @@ class Waveform extends React.Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        const { toggle, handleCursor, currentTime, annotations, isPlaying } = nextProps
+        const { toggle, handleCursor, currentTime, annotations, isPlaying, regionColor } = nextProps
         isPlaying ? this.wavesurfer.play() : this.wavesurfer.pause()
         const idx = this.findIndex(toggle.id, annotations)
         let start_time = currentTime
@@ -63,7 +63,8 @@ class Waveform extends React.Component {
         if (toggle.isEditing && !this.state.regionExists) {
             this.buildEditableRegion({
                 start_time: start_time,
-                end_time: end_time
+                end_time: end_time,
+                color: regionColor
             })
             handleCursor({
                 currentTime: currentTime,
