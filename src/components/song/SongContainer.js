@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { Sidebar, Segment } from 'semantic-ui-react'
+import { Sidebar, Segment, Button, Icon, Label } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 // import Note from './Note'
 import Waveform from './Waveform'
@@ -17,6 +17,17 @@ const SongHeader = styled.h1`
     padding-top: 2rem;
     font-size: 50px;
     color: black;
+`
+
+const MediaButtonsWrapper = styled.div`
+    height: auto;
+    margin-bottom: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 `
 
 const SongWrapper = styled.div`
@@ -37,7 +48,7 @@ class SongContainer extends Component {
         this.handleCursor = this.handleCursor.bind(this)
         this.handleCursorMove = this.handleCursorMove.bind(this)
         this.handleRegion = this.handleRegion.bind(this)
-        this.handlePlay = this.handlePlay.bind(this)
+        this.getCurrentTime = this.getCurrentTime.bind(this)
         this.handleSave = this.handleSave.bind(this)
         this.handleDiscard = this.handleDiscard.bind(this)
         this.handleTagChange = this.handleTagChange.bind(this)
@@ -94,7 +105,7 @@ class SongContainer extends Component {
         })
     }
 
-    handlePlay = currentTime => {
+    getCurrentTime = currentTime => {
         this.setState({
             currentTime: currentTime
         })
@@ -186,17 +197,44 @@ class SongContainer extends Component {
         })
     }
 
+    sec_toMS = time => {
+        let curr = parseInt(time)
+        let minutes = Math.floor(curr / 60)
+        let seconds = curr - minutes * 60
+        let min_str = minutes.toString()
+        if (min_str.length < 2) min_str = '0' + min_str
+        let sec_str = seconds.toString()
+        if (sec_str.length < 2) sec_str = '0' + sec_str
+        return { minutes: min_str, seconds: sec_str }
+    }
+
+    formatTime = time => {
+        let curr = this.sec_toMS(time)
+        return `${curr.minutes}:${curr.seconds}`
+    }
+
     render() {
         const { name } = this.props.match.params
         return (
             <SongWrapper>
-                <SongHeader>{name}</SongHeader>
+                {/* <SongHeader>{name}</SongHeader> */}
+                <MediaButtonsWrapper>
+                    <Button circular icon={this.state.playing ? 'pause' : 'play'} onClick={this.handleTogglePlay}/>
+                    <Label>
+                        Current Time: {this.formatTime(this.state.currentTime)}
+                    </Label>
+                    <Label>
+                        Cursor: {this.formatTime(this.state.cursorTime)}
+                    </Label>
+                </MediaButtonsWrapper>
+                
                 <Waveform
                     //src={`/${name}.mp3`}
                     src={'/jeneregretterien.mp3'}
+                    isPlaying={this.state.playing}
                     currentTime={this.state.currentTime}
                     cursorTime={this.state.cursorTime}
-                    handlePlay={this.handlePlay}
+                    getCurrentTime={this.getCurrentTime}
                     handleCursor={this.handleCursor}
                     handleCursorMove={this.handleCursorMove}
                     handleRegion={this.handleRegion}
