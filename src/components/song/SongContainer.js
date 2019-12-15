@@ -181,7 +181,6 @@ class SongContainer extends Component {
                 })
             )
         }
-        debugger
         dispatch(
             toggleAnnotation({
                 isEditing: !toggle.isEditing,
