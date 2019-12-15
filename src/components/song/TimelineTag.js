@@ -13,7 +13,15 @@ const TimelineTagWrapper = styled(animated.div)`
 	background-color: ${props => props.color};
 	border: 0.1px;
 	border-radius: 30px;
-	box-shadow: 0px 3px 3px 4px rgba(0,0,0,0.5);
+	/* box-shadow: 0px 3px 3px 4px rgba(0,0,0,0.5); */
+	/* background-image: linear-gradient( 
+    hsla(0, 0%, 100%, 0.5), hsla(0, 0%, 100%, 0) 70%,
+    hsla(0, 0%, 0%, 0.2) 100%, hsla(0, 0%, 100%, 0.2)
+	); */
+	  
+	/* background: linear-gradient(
+	hsla(0, 0%, 100%, 0.9), hsla(0, 0%, 100%, 0.1) ); */
+	
 	
 `
 

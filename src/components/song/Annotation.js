@@ -9,11 +9,11 @@ import 'semantic-ui-css/semantic.min.css'
 import toggle from '../../reducers/toggle'
 
 const Background = styled.div`
-    box-shadow:
-    inset 0 -5px 4px hsla(0, 0%, 0%, 0.4), /* top light */
+    /* box-shadow:
+    inset 0 -5px 4px hsla(0, 0%, 0%, 0.4), 
     inset 0 5px 4px hsla(0, 0%, 100%, 0.4),
-    -8px 4px 5px hsla(0, 0%, 0%, 0.05), /* drop shadow 1 */
-    5px 9px 10px hsla(0, 0%, 0%, 0.05);
+    -8px 4px 5px hsla(0, 0%, 0%, 0.05), 
+    5px 9px 10px hsla(0, 0%, 0%, 0.05); */
     position: relative;
     margin: 5px 5px 5px 5px;
     padding: 0.7rem 0.7rem 0.7rem 0.7rem;
