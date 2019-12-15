@@ -11,10 +11,20 @@ const TimelineTagWrapper = styled(animated.div)`
 	margin-right: 0;
 	margin-bottom: 0.5em;
 	background-color: ${props => props.color};
+	border: 0.1px;
 	border-radius: 30px;
+	box-shadow: 0px 3px 3px 4px rgba(0,0,0,0.5);
+	
 `
 
 const TimelineBubble = styled(animated.div)`
+	background: linear-gradient(
+	hsla(0, 0%, 100%, 0.9), hsla(0, 0%, 100%, 0.1) );
+	
+	background-image: linear-gradient( /* chrome */git
+    hsla(0, 0%, 100%, 0.5), hsla(0, 0%, 100%, 0) 70%,
+    hsla(0, 0%, 0%, 0.2) 100%, hsla(0, 0%, 100%, 0.2)
+  	);
 	width: ${props => props.width}px;
 	position: absolute;
 	margin-left: ${props => props.position}px;
@@ -56,6 +66,7 @@ class TagTimeline extends Component {
 	randomHSL = () => {
 		const random = Math.floor(Math.random() * (360 - 10 + 1)) + 10
 		return {
+
 			bar: `hsla(${~~random},70%,60%,1)`,
 			bubble: `hsla(${~~random},70%,80%,1)`
 		}
