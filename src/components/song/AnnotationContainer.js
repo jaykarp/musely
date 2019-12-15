@@ -52,7 +52,6 @@ class AnnotationContainer extends Component {
     state = { annoOpen: true, noteOpen: true }
 
     render() {
-
         const { annotations } = this.props
 
         var annotationGroups = {
@@ -62,16 +61,16 @@ class AnnotationContainer extends Component {
 
         if (annotations.length > 0) {
             annotations.forEach((el, i) => {
-                if (this.props.selectedTag && this.props.selectedTag === el.tag) {
+                if (
+                    this.props.selectedTag &&
+                    this.props.selectedTag === el.tag
+                ) {
                     annotationGroups['selected'].push(el)
                 } else {
                     annotationGroups['unselected'].push(el)
                 }
             })
         }
-        
-
-        console.log(annotationGroups)
 
         let state = 'close'
         if (this.props.isOpen) {
@@ -91,10 +90,7 @@ class AnnotationContainer extends Component {
                                 width: props.w.interpolate(w => `${w}rem`)
                             }}
                         >
-                            <Label 
-                                attached='top'
-                                size='huge'
-                            >
+                            <Label attached="top" size="huge">
                                 Annotations
                             </Label>
                             <Container>
