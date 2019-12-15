@@ -116,7 +116,6 @@ class SongContainer extends Component {
     handleSave = () => {
         const { dispatch, annotations, toggle } = this.props
         if (toggle.id) {
-            debugger
             const tag = annotations.find(ann => ann.id === toggle.id).tag
             dispatch(
                 updateAnnotation({

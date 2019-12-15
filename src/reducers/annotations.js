@@ -12,7 +12,6 @@ const annotations = (state = [], action) => {
                 }
             ]
         case 'UPDATE_ANNOTATION':
-            console.log(action)
             return state.map((ann, i) => {
                 if (ann.id !== action.id) {
                     return ann
