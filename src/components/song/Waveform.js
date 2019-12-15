@@ -227,8 +227,8 @@ class Waveform extends React.Component {
             <WaveContainer>
                 <div id="wave-timeline"></div>
                 <div id="wave" style={{ position: 'relative' }}></div>
-                <MediaControlsContainer>
-                    {/* <ButtonBox>
+                {/* <MediaControlsContainer>
+                    <ButtonBox>
                         <Button
                             icon
                             color="green"
@@ -247,16 +247,16 @@ class Waveform extends React.Component {
                         >
                             <Icon name="pause" />
                         </Button>
-                    </ButtonBox> */}
-                    {/* <TimeBox>
+                    </ButtonBox>
+                    <TimeBox>
                         <Time>current:</Time>
                         <Time>{this.formatTime(currentTime)}</Time>
                     </TimeBox>
                     <TimeBox>
                         <Time>cursor:</Time>
                         <Time>{this.formatTime(cursorTime)}</Time>
-                    </TimeBox> */}
-                </MediaControlsContainer>
+                    </TimeBox>
+                </MediaControlsContainer> */}
             </WaveContainer>
         )
     }
