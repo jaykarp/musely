@@ -44,17 +44,24 @@ class AnnotationContainer extends Component {
     state = { annoOpen: true, noteOpen: true }
 
     render() {
+
+        const { annotations } = this.props
+
         var annotationGroups = {
             selected: [],
             unselected: []
         }
-        this.props.annotations.forEach((el, i) => {
-            if (this.props.selectedTag && this.props.selectedTag === el.tag) {
-                annotationGroups['selected'].push(el)
-            } else {
-                annotationGroups['unselected'].push(el)
-            }
-        })
+
+        if (annotations.length > 0) {
+            annotations.forEach((el, i) => {
+                if (this.props.selectedTag && this.props.selectedTag === el.tag) {
+                    annotationGroups['selected'].push(el)
+                } else {
+                    annotationGroups['unselected'].push(el)
+                }
+            })
+        }
+        
 
         console.log(annotationGroups)
 
@@ -110,41 +117,6 @@ class AnnotationContainer extends Component {
                                         )
                                     })}
                                 </AnnotationWrapper>
-                                {/* {this.props.annotations.map((el, i) => {
-                                    if (this.props.selectedTag && this.props.selectedTag === el.tag) {
-                                        // put selected annotations in a separate div up top
-                                        return (
-                                            <SelectedAnnotationWrapper>
-                                                <Annotation
-                                                    key={i}
-                                                    startTime={el.start_time}
-                                                    endTime={el.end_time}
-                                                    text={el.text}
-                                                    tag={el.tag}
-                                                    color={'grey'}
-                                                    isSelected={true}
-                                                />
-                                            </SelectedAnnotationWrapper>
-                                        )
-
-                                    } else {
-                                        // put the rest of the tags below
-                                        return (
-                                            <AnnotationWrapper>
-
-                                                <Annotation
-                                                    key={i}
-                                                    startTime={el.start_time}
-                                                    endTime={el.end_time}
-                                                    text={el.text}
-                                                    tag={el.tag}
-                                                    color={'grey'}
-                                                    isSelected={false}
-                                                />
-                                            </AnnotationWrapper>
-                                        )
-                                    }
-                                })} */}
                             </Container>
                         </animated.div>
                     )}

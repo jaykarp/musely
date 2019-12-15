@@ -83,21 +83,24 @@ class EditAnnotation extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (
-            nextProps.annotations.findIndex(
-                ann => nextProps.toggle.id === ann.id
-            ) !== -1
-        ) {
-            const idx = nextProps.annotations.findIndex(
-                ann => nextProps.toggle.id === ann.id
-            )
-            const text = nextProps.annotations[idx].text
-            const tag = nextProps.annotations[idx].tag
-            this.setState({
-                text: text,
-                tag: tag
-            })
+        if (nextProps.annotations.length > 0) {
+            if (
+                nextProps.annotations.findIndex(
+                    ann => nextProps.toggle.id === ann.id
+                ) !== -1
+            ) {
+                const idx = nextProps.annotations.findIndex(
+                    ann => nextProps.toggle.id === ann.id
+                )
+                const text = nextProps.annotations[idx].text
+                const tag = nextProps.annotations[idx].tag
+                this.setState({
+                    text: text,
+                    tag: tag
+                })
+            }
         }
+        
     }
 
     handleTextChange = (e, data) => {
@@ -116,22 +119,11 @@ class EditAnnotation extends Component {
         handleTagChange(data.value)
     }
 
-    // handleSave = () => {
-    //     const { dispatch, toggle, handleSave } = this.props
-    //     dispatch(
-    //         toggleAnnotation({
-    //             isEditing: !toggle.isEditing,
-    //             id: toggle.id
-    //         })
-    //     )
-    //     handleSave()
-    // }
-
     
-
     render() {
         const {
             handleSave,
+            handleDiscard,
             handleTagChange,
             handleTextChange,
             handleTimeChange
@@ -139,7 +131,7 @@ class EditAnnotation extends Component {
 
         let { start_time, end_time, annotations, toggle } = this.props
 
-        if (annotations.findIndex(ann => toggle.id === ann.id) !== -1) {
+        if (annotations.length > 0 && annotations.findIndex(ann => toggle.id === ann.id) !== -1) {
             const idx = annotations.findIndex(ann => toggle.id === ann.id)
             start_time = annotations[idx].start_time
             end_time = annotations[idx].end_time
@@ -201,7 +193,7 @@ class EditAnnotation extends Component {
                             <Button 
                                 size="huge" 
                                 animated
-                                
+                                onClick={handleDiscard}
                             >
                                 <Button.Content visible>Discard</Button.Content>
                                 <Button.Content hidden>

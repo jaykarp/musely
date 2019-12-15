@@ -9,7 +9,7 @@ import NotesContainer from './NotesContainer'
 import EditAnnotation from './EditAnnotation'
 import TimelineTag from './TimelineTag'
 import { connect } from 'react-redux'
-import { addAnnotation, addTag, toggleAnnotation } from '../../actions'
+import { addAnnotation, addTag, toggleAnnotation, deleteAnnotation } from '../../actions'
 import toggle from '../../reducers/toggle'
 
 const SongHeader = styled.h1`
@@ -39,6 +39,7 @@ class SongContainer extends Component {
         this.handleRegion = this.handleRegion.bind(this)
         this.handlePlay = this.handlePlay.bind(this)
         this.handleSave = this.handleSave.bind(this)
+        this.handleDiscard = this.handleDiscard.bind(this)
         this.handleTagChange = this.handleTagChange.bind(this)
         this.handleTextChange = this.handleTextChange.bind(this)
         this.getSongDuration = this.getSongDuration.bind(this)
@@ -129,6 +130,22 @@ class SongContainer extends Component {
         )
     }
 
+    handleDiscard = () => {
+        const { dispatch, toggle } = this.props
+        console.log(toggle.id)
+        dispatch(
+            deleteAnnotation({
+                id: toggle.id
+            })
+        )
+        dispatch(
+            toggleAnnotation({
+                isEditing: !toggle.isEditing,
+                id: null
+            })
+        )
+    }
+
     handleTagChange = tag => {
         this.setState({
             tag: tag
@@ -184,6 +201,7 @@ class SongContainer extends Component {
                 >
                     <EditAnnotation
                         handleSave={this.handleSave}
+                        handleDiscard={this.handleDiscard}
                         handleTagChange={this.handleTagChange}
                         handleTextChange={this.handleTextChange}
                         start_time={this.state.start_time}

@@ -25,6 +25,11 @@ const annotations = (state = [], action) => {
                     tag: action.tag || ann.tag
                 }
             })
+        case 'DELETE_ANNOTATION':
+            return state.filter((a) => (
+                a.id !== action.id
+            ))
+            
         default:
             return state
     }
