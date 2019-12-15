@@ -9,10 +9,10 @@ import './NotesContainer.css'
 
 const Sidebar = Keyframes.Spring({
     // single items,
-    full: { x: -45, w: 100 },
+    full: { x: -48, w: 105 },
     half: { x: 1, w: 60 },
-    close: { x: 55, w: 60 },
-    closeHalf: { x: 9, w: 60 }
+    close: { x: 90, w: 60 },
+    closeHalf: { x: 15, w: 60 }
 })
 
 export default class AnnotationContainer extends Component {
