@@ -15,7 +15,7 @@ const tags = (state = [], action) => {
                 if (tag.name === action.name) {
                     return {
                         count: ++tag.count,
-                        color: action.color,
+                        color: tag.color,
                         name: action.name
                     }
                 }
@@ -25,9 +25,10 @@ const tags = (state = [], action) => {
             return state
                 .map(tag => {
                     if (tag.name === action.name) {
+                        console.log(action.color)
                         return {
                             name: tag.name,
-                            color: action.color,
+                            color: tag.color,
                             count: --tag.count
                         }
                     }
