@@ -111,9 +111,9 @@ class EditAnnotation extends Component {
     handleTagChange = (e, data) => {
         const { handleTagChange } = this.props
         this.setState({
-            tag: e.target.value
+            tag: data.value
         })
-        handleTagChange(e.target.value)
+        handleTagChange(data.value)
     }
 
     render() {
@@ -131,6 +131,7 @@ class EditAnnotation extends Component {
             start_time = annotations[idx].start_time
             end_time = annotations[idx].end_time
         }
+
         const countryOptions = [
             { key: 'ax', value: 'ax', flag: 'ax', text: 'Aland Islands' },
             { key: 'al', value: 'al', flag: 'al', text: 'Albania' }
