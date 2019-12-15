@@ -361,6 +361,11 @@ class SongContainer extends Component {
 										? 'right arrow'
 										: 'left arrow'}/>
                             </Button>
+                            <Button
+                                color='green'
+								content="Add Note"
+								floated="right"
+							/>
 						</Segment>
 					</Segment.Group>
 				</InteractiveButtonWrapper>
