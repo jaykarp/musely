@@ -40,12 +40,12 @@ const NoteHeader = styled.div`
 
 const TagWrapper = styled.div`
     height: auto;
-    width: 4rem;
+    width: auto;
     margin-left: 0.5em;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    padding: 2px;
+    padding: 5px;
     background-color: ${props => props.color};
     border-radius: 2px;
 `
@@ -53,6 +53,7 @@ const TagWrapper = styled.div`
 const Tag = styled.div`
     margin: auto;
     font-size: 10px;
+    font-weight: bold;
     color: white;
 `
 
@@ -89,6 +90,7 @@ class Annotation extends Component {
 
     render() {
         const { isSelected, color, startTime, endTime, tag, text } = this.props
+        console.log('TAG NAME TO BE RENDERED', tag)
         return (
             <div>
                 <Background isSelected={isSelected} color={color || 'blue'}>
