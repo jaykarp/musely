@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import MiniWindowTime from './MiniWindowTime'
-import { Button, Icon } from 'semantic-ui-react'
+import { Button, Icon, Grid} from 'semantic-ui-react'
 import DotDotDot from 'react-dotdotdot'
 import { connect } from 'react-redux'
 import { toggleAnnotation, updateAnnotation } from '../../actions'
@@ -9,6 +9,11 @@ import 'semantic-ui-css/semantic.min.css'
 import toggle from '../../reducers/toggle'
 
 const Background = styled.div`
+    box-shadow:
+    inset 0 -5px 4px hsla(0, 0%, 0%, 0.4), /* top light */
+    inset 0 5px 4px hsla(0, 0%, 100%, 0.4),
+    -8px 4px 5px hsla(0, 0%, 0%, 0.05), /* drop shadow 1 */
+    5px 9px 10px hsla(0, 0%, 0%, 0.05);
     position: relative;
     margin: 5px 5px 5px 5px;
     padding: 0.7rem 0.7rem 0.7rem 0.7rem;
@@ -51,11 +56,12 @@ const Tag = styled.div`
 `
 
 const NoteButtonContainer = styled.div`
+    position: absolute;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     position: absolute;
-    bottom: 5px;
+    bottom: 8px;
     right: 5px;
 `
 
@@ -104,6 +110,7 @@ class Annotation extends Component {
                             content="Add note to group"
                             trigger={<Button icon="add" />}
                         /> */}
+
                         <Button
                             icon
                             onClick={this.handleEdit}

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Button, Icon, TextArea, Form, Dropdown, Card} from 'semantic-ui-react'
+import WindowTime from './WindowTime'
+import { Button, Icon, TextArea, Form} from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
-
-
 
 const EditNoteWrapper = styled.div`
     width: 95%;
@@ -50,7 +49,6 @@ const OptionsButton = styled.button`
 `
 
 const ButtonWrapper = styled.div`
-    position: absolute;
     bottom: 1rem;
     left: 2rem;
     display: flex;
