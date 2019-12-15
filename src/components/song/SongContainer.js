@@ -101,8 +101,9 @@ class SongContainer extends Component {
     }
 
     handleSave = () => {
+        console.log('HANDLE SAVE')
         let hasAnnotation = false
-        const { dispatch } = this.props
+        const { dispatch, toggle } = this.props
         if (hasAnnotation) {
             // TODO: Implement update annotation
         } else {
@@ -120,6 +121,12 @@ class SongContainer extends Component {
                 })
             )
         }
+        dispatch(
+            toggleAnnotation({
+                isEditing: !toggle.isEditing,
+                id: toggle.id
+            })
+        )
     }
 
     handleTagChange = tag => {

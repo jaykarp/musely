@@ -116,6 +116,19 @@ class EditAnnotation extends Component {
         handleTagChange(data.value)
     }
 
+    // handleSave = () => {
+    //     const { dispatch, toggle, handleSave } = this.props
+    //     dispatch(
+    //         toggleAnnotation({
+    //             isEditing: !toggle.isEditing,
+    //             id: toggle.id
+    //         })
+    //     )
+    //     handleSave()
+    // }
+
+    
+
     render() {
         const {
             handleSave,
@@ -185,7 +198,11 @@ class EditAnnotation extends Component {
                         </TagsWrapper>
 
                         <ButtonWrapper>
-                            <Button size="huge" animated>
+                            <Button 
+                                size="huge" 
+                                animated
+                                
+                            >
                                 <Button.Content visible>Discard</Button.Content>
                                 <Button.Content hidden>
                                     <Icon name="trash" />
