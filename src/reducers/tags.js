@@ -20,6 +20,7 @@ const tags = (state = [], action) => {
                 return tag
             })
         case 'DELETE_TAG':
+            // return state.filter((tag) => (tag.name !== action.name))
             return state
                 .map(tag => {
                     if (tag.name === action.name) {
@@ -30,7 +31,7 @@ const tags = (state = [], action) => {
                             }
                     }
                 })
-                .filter(tag => (
+                .filter((tag) => (
                     tag.count > 0
                 ))
         default:

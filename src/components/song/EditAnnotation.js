@@ -85,24 +85,26 @@ class EditAnnotation extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-
-        if (
-            nextProps.annotations.findIndex(
-                ann => nextProps.toggle.id === ann.id
-            ) !== -1
-        ) {
-            const idx = nextProps.annotations.findIndex(
-                ann => nextProps.toggle.id === ann.id
-            )
-            const text = nextProps.annotations[idx].text
-            const tag = nextProps.annotations[idx].tag
-            const start_time = nextProps.annotations[idx].start_time
-            const end_time = nextProps.annotations[idx].end_time
-            this.setState({
-                text: text,
-                tag: tag
-            })
+        if (nextProps.annotations.length > 0) {
+            if (
+                nextProps.annotations.findIndex(
+                    ann => nextProps.toggle.id === ann.id
+                ) !== -1
+            ) {
+                const idx = nextProps.annotations.findIndex(
+                    ann => nextProps.toggle.id === ann.id
+                )
+                const text = nextProps.annotations[idx].text
+                const tag = nextProps.annotations[idx].tag
+                const start_time = nextProps.annotations[idx].start_time
+                const end_time = nextProps.annotations[idx].end_time
+                this.setState({
+                    text: text,
+                    tag: tag
+                })
+            }
         }
+        
         this.setState({
             start_time: nextProps.start_time,
             end_time: nextProps.end_time
