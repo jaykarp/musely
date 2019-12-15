@@ -5,22 +5,38 @@ import { connect } from 'react-redux'
 import 'semantic-ui-css/semantic.min.css'
 
 const TimelineTagWrapper = styled(animated.div)`
-    height: ${props => props.height};
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 0.5em;
-    background-color: ${props => props.color};
-    border-radius: 30px;
+	height: ${props => props.height};
+	width: 100%;
+	margin-left: 0;
+	margin-right: 0;
+	margin-bottom: 0.5em;
+	background-color: ${props => props.color};
+	border: 0.1px;
+	border-radius: 30px;
+	/* box-shadow: 0px 3px 3px 4px rgba(0,0,0,0.5); */
+	/* background-image: linear-gradient( 
+    hsla(0, 0%, 100%, 0.5), hsla(0, 0%, 100%, 0) 70%,
+    hsla(0, 0%, 0%, 0.2) 100%, hsla(0, 0%, 100%, 0.2)
+	); */
+	  
+	/* background: linear-gradient(
+	hsla(0, 0%, 100%, 0.9), hsla(0, 0%, 100%, 0.1) ); */
 `
 
 const TimelineBubble = styled(animated.div)`
-    width: ${props => props.width}px;
-    position: absolute;
-    margin-left: ${props => props.position}px;
-    height: ${props => props.height};
-    background-color: ${props => props.color};
-    border-radius: 30px;
+	background: linear-gradient(
+	hsla(0, 0%, 100%, 0.9), hsla(0, 0%, 100%, 0.1) );
+	
+	background-image: linear-gradient( /* chrome */git
+    hsla(0, 0%, 100%, 0.5), hsla(0, 0%, 100%, 0) 70%,
+    hsla(0, 0%, 0%, 0.2) 100%, hsla(0, 0%, 100%, 0.2)
+  	);
+	width: ${props => props.width}px;
+	position: absolute;
+	margin-left: ${props => props.position}px;
+	height: ${props => props.height};
+	background-color: ${props => props.color};
+	border-radius: 30px;
 `
 
 // const TimlineSpring = Keyframes.Spring({
