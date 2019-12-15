@@ -51,7 +51,8 @@ class Waveform extends React.Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        const { toggle, handleCursor, currentTime, annotations } = nextProps
+        const { toggle, handleCursor, currentTime, annotations, isPlaying } = nextProps
+        isPlaying ? this.wavesurfer.play() : this.wavesurfer.pause()
         const idx = this.findIndex(toggle.id, annotations)
         let start_time = currentTime
         let end_time = currentTime + 10
@@ -128,8 +129,8 @@ class Waveform extends React.Component {
 
         wavesurfer.on('region-updated', this.handleRegion)
         wavesurfer.on('audioprocess', () => {
-            const { handlePlay } = this.props
-            handlePlay(wavesurfer.getCurrentTime())
+            const { getCurrentTime } = this.props
+            getCurrentTime(wavesurfer.getCurrentTime())
         })
 
         waveform.addEventListener('click', () => {
@@ -203,31 +204,31 @@ class Waveform extends React.Component {
     //})
     //}
 
-    sec_toMS = time => {
-        let curr = parseInt(time)
-        let minutes = Math.floor(curr / 60)
-        let seconds = curr - minutes * 60
-        let min_str = minutes.toString()
-        if (min_str.length < 2) min_str = '0' + min_str
-        let sec_str = seconds.toString()
-        if (sec_str.length < 2) sec_str = '0' + sec_str
-        return { minutes: min_str, seconds: sec_str }
-    }
+    // sec_toMS = time => {
+    //     let curr = parseInt(time)
+    //     let minutes = Math.floor(curr / 60)
+    //     let seconds = curr - minutes * 60
+    //     let min_str = minutes.toString()
+    //     if (min_str.length < 2) min_str = '0' + min_str
+    //     let sec_str = seconds.toString()
+    //     if (sec_str.length < 2) sec_str = '0' + sec_str
+    //     return { minutes: min_str, seconds: sec_str }
+    // }
 
-    formatTime = time => {
-        let curr = this.sec_toMS(time)
-        return `${curr.minutes}:${curr.seconds}`
-    }
+    // formatTime = time => {
+    //     let curr = this.sec_toMS(time)
+    //     return `${curr.minutes}:${curr.seconds}`
+    // }
 
     render() {
-        const { currentTime, cursorTime, handleCursor, toggle } = this.props
+        // const { currentTime, cursorTime, handleCursor, toggle } = this.props
 
         return (
             <WaveContainer>
                 <div id="wave-timeline"></div>
                 <div id="wave" style={{ position: 'relative' }}></div>
                 <MediaControlsContainer>
-                    <ButtonBox>
+                    {/* <ButtonBox>
                         <Button
                             icon
                             color="green"
@@ -246,15 +247,15 @@ class Waveform extends React.Component {
                         >
                             <Icon name="pause" />
                         </Button>
-                    </ButtonBox>
-                    <TimeBox>
+                    </ButtonBox> */}
+                    {/* <TimeBox>
                         <Time>current:</Time>
                         <Time>{this.formatTime(currentTime)}</Time>
                     </TimeBox>
                     <TimeBox>
                         <Time>cursor:</Time>
                         <Time>{this.formatTime(cursorTime)}</Time>
-                    </TimeBox>
+                    </TimeBox> */}
                 </MediaControlsContainer>
             </WaveContainer>
         )

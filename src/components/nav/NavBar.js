@@ -26,28 +26,31 @@ class NavBar extends Component {
     const { activeItem } = this.state;
     // const { name } = this.props.match.params;
     return (
-      <Menu
-        inverted
-        color={"teal"}
-        pointing
-        // size="massive"
-        style={largeText}
-      >
-        <Menu.Item name="home" active={activeItem === "home"}>
-          <Link to="/library">Musely</Link>
-        </Menu.Item>
-        <MenuItem style={largerText}>Ave Maria</MenuItem>
-        <Menu.Menu position="right">
-          <Input
-            style={searchBar}
-            action={{ type: "submit", content: "Go" }}
-            placeholder="Search for Songs..."
-          />
-          <Menu.Item name="login" active={activeItem === "login"}>
-            <Link to="/login">Login</Link>
+      <div style={{marginBottom: '0px'}}>
+        <Menu
+          inverted
+          color={"teal"}
+          pointing
+          // size="massive"
+          style={largeText}
+        >
+          <Menu.Item name="home" active={activeItem === "home"}>
+            <Link to="/library">Musely</Link>
           </Menu.Item>
-        </Menu.Menu>
-      </Menu>
+          <MenuItem style={largerText}>Ave Maria</MenuItem>
+          <Menu.Menu position="right">
+            <Input
+              style={searchBar}
+              action={{ type: "submit", content: "Go" }}
+              placeholder="Search for Songs..."
+            />
+            <Menu.Item name="login" active={activeItem === "login"}>
+              <Link to="/login">Login</Link>
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+      </div>
+      
     );
   }
 }
