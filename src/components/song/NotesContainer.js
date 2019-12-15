@@ -1,6 +1,8 @@
 // NotesContainer.js
 
 import React, { Component } from 'react'
+import styled from 'styled-components'
+import { Segment, Button, Icon, Label } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 // import { useSpring, useTransition, animated } from "react-spring"
 import { Keyframes, animated } from 'react-spring/renderprops'
@@ -15,7 +17,14 @@ const Sidebar = Keyframes.Spring({
     closeHalf: { x: 15, w: 60 }
 })
 
-export default class AnnotationContainer extends Component {
+const Container = styled.div`
+    overflow-y: auto;
+    height: 100%;
+    padding: 30px 50px 30px 50px;
+`
+
+
+export default class NotesContainer extends Component {
     state = { annoOpen: true, noteOpen: true }
 
     render() {
@@ -38,7 +47,18 @@ export default class AnnotationContainer extends Component {
                                 ),
                                 width: props.w.interpolate(w => `${w}rem`)
                             }}
-                        ></animated.div>
+                        >
+                        <Label 
+                            attached='top'
+                            
+                            size='huge'
+                        >
+                            Notes
+                        </Label>
+                        <Container>
+
+                        </Container>
+                        </animated.div>
                     )}
                 </Sidebar>
             </div>
