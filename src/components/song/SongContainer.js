@@ -354,8 +354,6 @@ class SongContainer extends Component {
                                         })
                                     )
                                     this.setState({
-                                        isEditingAnnotation: !this.state
-                                            .isEditingAnnotation,
                                         currentEditColor: this.randomHSL()
                                     })
                                 }}
