@@ -9,7 +9,14 @@ import NotesContainer from './NotesContainer'
 import EditAnnotation from './EditAnnotation'
 import TimelineTag from './TimelineTag'
 import { connect } from 'react-redux'
-import { addAnnotation, addTag, deleteTag, toggleAnnotation, deleteAnnotation } from '../../actions'
+import {
+    addAnnotation,
+    updateAnnotation,
+    addTag,
+    deleteTag,
+    toggleAnnotation,
+    deleteAnnotation
+} from '../../actions'
 import toggle from '../../reducers/toggle'
 
 const SongHeader = styled.h1`
@@ -118,11 +125,28 @@ class SongContainer extends Component {
     }
 
     handleSave = () => {
-        console.log('HANDLE SAVE')
-        let hasAnnotation = false
-        const { dispatch, toggle } = this.props
-        if (hasAnnotation) {
-            // TODO: Implement update annotation
+        const { dispatch, annotations, toggle } = this.props
+        if (toggle.id) {
+            const tag = annotations.find(ann => ann.id === toggle.id).tag
+            dispatch(
+                updateAnnotation({
+                    id: toggle.id,
+                    text: this.state.text,
+                    start_time: this.state.start_time,
+                    end_time: this.state.end_time,
+                    tag: this.state.tag
+                })
+            )
+            dispatch(
+                addTag({
+                    name: this.state.tag
+                })
+            )
+            dispatch(
+                deleteTag({
+                    name: tag
+                })
+            )
         } else {
             dispatch(
                 addAnnotation({
