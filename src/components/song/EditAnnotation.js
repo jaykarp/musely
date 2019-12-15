@@ -132,14 +132,14 @@ class EditAnnotation extends Component {
         if (nextProps.tags.length > 0) {
             this.props.tags.forEach(tag => {
                 const t = {
-                    key: `${this.state.tagOptions.length + 1}`,
+                    key: uuid.v4(),
                     value: tag.name,
                     text: tag.name
                 }
                 newTags.push(t)
             })
             this.setState({
-                tagOptions: this.state.tagOptions.concat(newTags)
+                tagOptions: newTags
             })
         }
 
