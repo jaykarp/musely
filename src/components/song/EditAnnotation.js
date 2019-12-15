@@ -85,6 +85,7 @@ class EditAnnotation extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
+
         if (
             nextProps.annotations.findIndex(
                 ann => nextProps.toggle.id === ann.id
@@ -124,15 +125,19 @@ class EditAnnotation extends Component {
         handleTagChange(data.value)
     }
 
+    
     render() {
         const {
             handleSave,
+            handleDiscard,
             handleTagChange,
             handleTextChange,
             handleTimeChange
         } = this.props
 
         let { start_time, end_time, annotations, toggle } = this.props
+
+
 
         //if (annotations.findIndex(ann => toggle.id === ann.id) !== -1) {
         //const idx = annotations.findIndex(ann => toggle.id === ann.id)
@@ -192,7 +197,11 @@ class EditAnnotation extends Component {
                         </TagsWrapper>
 
                         <ButtonWrapper>
-                            <Button size="huge" animated>
+                            <Button 
+                                size="huge" 
+                                animated
+                                onClick={handleDiscard}
+                            >
                                 <Button.Content visible>Discard</Button.Content>
                                 <Button.Content hidden>
                                     <Icon name="trash" />

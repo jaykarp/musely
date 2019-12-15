@@ -30,6 +30,11 @@ export const updateAnnotation = data => ({
     tag: data.tag
 })
 
+export const deleteAnnotation = data => ({
+    type: 'DELETE_ANNOTATION',
+    id: data.id
+})
+
 export const toggleAnnotation = data => ({
     type: 'TOGGLE_ANNOTATION',
     isEditing: data.isEditing,

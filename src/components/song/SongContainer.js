@@ -9,7 +9,7 @@ import NotesContainer from './NotesContainer'
 import EditAnnotation from './EditAnnotation'
 import TimelineTag from './TimelineTag'
 import { connect } from 'react-redux'
-import { addAnnotation, addTag, toggleAnnotation } from '../../actions'
+import { addAnnotation, addTag, deleteTag, toggleAnnotation, deleteAnnotation } from '../../actions'
 import toggle from '../../reducers/toggle'
 
 const SongHeader = styled.h1`
@@ -39,6 +39,7 @@ class SongContainer extends Component {
         this.handleRegion = this.handleRegion.bind(this)
         this.handlePlay = this.handlePlay.bind(this)
         this.handleSave = this.handleSave.bind(this)
+        this.handleDiscard = this.handleDiscard.bind(this)
         this.handleTagChange = this.handleTagChange.bind(this)
         this.handleTextChange = this.handleTextChange.bind(this)
         this.getSongDuration = this.getSongDuration.bind(this)
@@ -106,8 +107,9 @@ class SongContainer extends Component {
     }
 
     handleSave = () => {
+        console.log('HANDLE SAVE')
         let hasAnnotation = false
-        const { dispatch } = this.props
+        const { dispatch, toggle } = this.props
         if (hasAnnotation) {
             // TODO: Implement update annotation
         } else {
@@ -125,6 +127,39 @@ class SongContainer extends Component {
                 })
             )
         }
+        dispatch(
+            toggleAnnotation({
+                isEditing: !toggle.isEditing,
+                id: toggle.id
+            })
+        )
+    }
+
+    handleDiscard = () => {
+        const { dispatch, toggle, annotations } = this.props
+        console.log(toggle.id)
+        // find tag of annotation with this id
+        let name = ''
+        annotations.forEach(a => {
+            if (a.id === toggle.id) name = a.tag
+        })
+        console.log('delete name', name)
+        dispatch(
+            deleteTag({
+                name: name
+            })
+        )
+        dispatch(
+            deleteAnnotation({
+                id: toggle.id
+            })
+        )
+        dispatch(
+            toggleAnnotation({
+                isEditing: !toggle.isEditing,
+                id: null
+            })
+        )
     }
 
     handleTagChange = tag => {
@@ -181,6 +216,7 @@ class SongContainer extends Component {
                 >
                     <EditAnnotation
                         handleSave={this.handleSave}
+                        handleDiscard={this.handleDiscard}
                         handleTagChange={this.handleTagChange}
                         handleTextChange={this.handleTextChange}
                         start_time={this.state.start_time}

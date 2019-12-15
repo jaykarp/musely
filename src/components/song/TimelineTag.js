@@ -121,7 +121,7 @@ class TagTimeline extends Component {
 										color={colors[tag.name].bar}
 										key={i}
 									>
-										{annotations.map((ann, i) => {
+										{annotations.length > 0 && annotations.map((ann, i) => {
 											const {
 												start_time,
 												end_time,
