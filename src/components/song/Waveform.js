@@ -50,6 +50,37 @@ class Waveform extends React.Component {
         this.wavesurfer = this.buildWave()
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        const { toggle, handleCursor, currentTime, annotations, isPlaying } = nextProps
+        isPlaying ? this.wavesurfer.play() : this.wavesurfer.pause()
+        const idx = this.findIndex(toggle.id, annotations)
+        let start_time = currentTime
+        let end_time = currentTime + 10
+        if (idx !== -1) {
+            start_time = annotations[idx].start_time
+            end_time = annotations[idx].end_time
+        }
+        if (toggle.isEditing && !this.state.regionExists) {
+            this.buildEditableRegion({
+                start_time: start_time,
+                end_time: end_time
+            })
+            handleCursor({
+                currentTime: currentTime,
+                region: this.state.regionExists
+            })
+        } else if (!toggle.isEditing) {
+            this.wavesurfer.clearRegions()
+            this.setState({
+                regionExists: false
+            })
+        }
+    }
+
+    findIndex(id, annotations) {
+        return annotations.findIndex(ann => ann.id === id)
+    }
+
     buildWave() {
         const el = ReactDOM.findDOMNode(this)
         const waveform = el.querySelector('#wave')
@@ -71,7 +102,7 @@ class Waveform extends React.Component {
                     opacity: 5
                 }),
                 WS.timeline.create({
-                    container: "#wave-timeline",
+                    container: '#wave-timeline',
                     height: 30,
                     notchPercentHeight: 50,
                     primaryColor: '#010103',
@@ -95,33 +126,23 @@ class Waveform extends React.Component {
                 wavesurfer.getDuration()
             handleCursorMove(cursorTime)
         })
+
+        wavesurfer.on('region-updated', this.handleRegion)
+        wavesurfer.on('audioprocess', () => {
+            const { getCurrentTime } = this.props
+            getCurrentTime(wavesurfer.getCurrentTime())
+        })
+
         waveform.addEventListener('click', () => {
-            const { handleCursor, handlePlay } = this.props
+            const { handleCursor } = this.props
             this.setState({
                 currentTime: wavesurfer.getCurrentTime()
             })
-            wavesurfer.on('region-updated', this.handleRegion)
-            wavesurfer.on('audioprocess', () =>
-                handlePlay(wavesurfer.getCurrentTime())
-            )
             setTimeout(() => {
                 const currentTime = wavesurfer.getCurrentTime()
-                if (!this.state.regionExists) {
-                    this.buildEditableRegion({
-                        start_time: currentTime,
-                        end_time: currentTime + 10
-                    })
-                    this.setState({
-                        regionExists: true
-                    })
-                    handleCursor({
-                        currentTime: currentTime,
-                        region: false
-                    })
-                }
                 handleCursor({
                     currentTime: currentTime,
-                    region: true
+                    region: this.state.regionExists
                 })
             }, 20)
         })
@@ -141,8 +162,6 @@ class Waveform extends React.Component {
         }
     }
 
-    handleHover = () => {}
-
     handlePlay = () => {
         this.wavesurfer.play()
     }
@@ -157,6 +176,9 @@ class Waveform extends React.Component {
         color = 'hsla(211, 96%, 72%, 0.5)'
     }) => {
         this.wavesurfer.clearRegions()
+        this.setState({
+            regionExists: true
+        })
         this.wavesurfer.addRegion({
             id: 0,
             start: start_time,
@@ -165,46 +187,47 @@ class Waveform extends React.Component {
         })
     }
 
-    buildRegionsByTag = ({ tag = null }) => {
-        const { annotations } = this.props
-        this.wavesurfer.clearRegions()
-        annotations.forEach(ann => {
-            if (ann.tag === tag) {
-                this.wavesurfer.addRegion({
-                    id: ann.id,
-                    start: ann.start_time,
-                    end: ann.end_time,
-                    drag: false,
-                    resize: false,
-                    color: ann.color || 'rgba(101, 145, 202, 0.87)'
-                })
-            }
-        })
-    }
+    //buildRegionsByTag = ({ tag = null }) => {
+    //const { annotations } = this.props
+    //this.wavesurfer.clearRegions()
+    //annotations.forEach(ann => {
+    //if (ann.tag === tag) {
+    //this.wavesurfer.addRegion({
+    //id: ann.id,
+    //start: ann.start_time,
+    //end: ann.end_time,
+    //drag: false,
+    //resize: false,
+    //color: ann.color || 'rgba(101, 145, 202, 0.87)'
+    //})
+    //}
+    //})
+    //}
 
-    sec_toMS = time => {
-        let curr = parseInt(time)
-        let minutes = Math.floor(curr / 60)
-        let seconds = curr - minutes * 60
-        let min_str = minutes.toString()
-        if (min_str.length < 2) min_str = '0' + min_str
-        let sec_str = seconds.toString()
-        if (sec_str.length < 2) sec_str = '0' + sec_str
-        return { minutes: min_str, seconds: sec_str }
-    }
+    // sec_toMS = time => {
+    //     let curr = parseInt(time)
+    //     let minutes = Math.floor(curr / 60)
+    //     let seconds = curr - minutes * 60
+    //     let min_str = minutes.toString()
+    //     if (min_str.length < 2) min_str = '0' + min_str
+    //     let sec_str = seconds.toString()
+    //     if (sec_str.length < 2) sec_str = '0' + sec_str
+    //     return { minutes: min_str, seconds: sec_str }
+    // }
 
-    formatTime = time => {
-        let curr = this.sec_toMS(time)
-        return `${curr.minutes}:${curr.seconds}`
-    }
+    // formatTime = time => {
+    //     let curr = this.sec_toMS(time)
+    //     return `${curr.minutes}:${curr.seconds}`
+    // }
 
     render() {
-        const { currentTime, cursorTime } = this.props
+        // const { currentTime, cursorTime, handleCursor, toggle } = this.props
+
         return (
             <WaveContainer>
                 <div id="wave-timeline"></div>
                 <div id="wave" style={{ position: 'relative' }}></div>
-                <MediaControlsContainer>
+                {/* <MediaControlsContainer>
                     <ButtonBox>
                         <Button
                             icon
@@ -233,7 +256,7 @@ class Waveform extends React.Component {
                         <Time>cursor:</Time>
                         <Time>{this.formatTime(cursorTime)}</Time>
                     </TimeBox>
-                </MediaControlsContainer>
+                </MediaControlsContainer> */}
             </WaveContainer>
         )
     }
@@ -245,7 +268,8 @@ Waveform.defaultProps = {
 
 const mapStateToProps = state => {
     return {
-        annotations: state.annotations
+        annotations: state.annotations,
+        toggle: state.toggle
     }
 }
 

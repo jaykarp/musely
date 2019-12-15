@@ -1,58 +1,58 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
-import { Button } from 'semantic-ui-react'
-import 'semantic-ui-css/semantic.min.css'
-import { Link } from 'react-router-dom'
+import React, { Component } from "react";
+import styled from "styled-components";
+import { Button, Menu, Container, Input, MenuItem } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
+import { Link } from "react-router-dom";
 
-let NavContainer = styled.div`
-  background-color: black;
-  display: flex;
-  flex-direction: row;
-  height: 60px;
-  width: 100vw;
-  margin-bottom: 1rem;
-
-  /* ${({ fixed }) =>
-      fixed &&
-      `
-    left: 0;
-    position: fixed;
-    top: 0;
-    z-index: 2;
-  `} */
-`
+const largeText = {
+  height: "85px",
+  fontSize: "2rem"
+};
+const largerText = {
+  fontSize: "2.5rem",
+  color: "black"
+};
+const searchBar = {
+  marginTop: "20px",
+  height: "50px"
+};
 
 class NavBar extends Component {
-    render() {
-        return (
-            <div>
-                <NavContainer>
-                    <Button
-                        style={{
-                            color: 'white',
-                            paddingTop: '1rem',
-                            paddingLeft: '2rem'
-                        }}
-                    >
-                        <Link
-                            to="/library"
-                            style={{ color: 'black', textDecoration: 'none' }}
-                        >
-                            Musely
-                        </Link>
-                    </Button>
-                    <Button style={{ marginLeft: 'auto' }}>
-                        <Link
-                            to="/songs"
-                            style={{ color: 'black', textDecoration: 'none' }}
-                        >
-                            Notes
-                        </Link>
-                    </Button>
-                </NavContainer>
-            </div>
-        )
-    }
+  constructor(props) {
+    super(props);
+  }
+  state = { activeItem: "home" };
+  render() {
+    const { activeItem } = this.state;
+    // const { name } = this.props.match.params;
+    return (
+      <div style={{marginBottom: '0px'}}>
+        <Menu
+          inverted
+          color={"teal"}
+          pointing
+          // size="massive"
+          style={largeText}
+        >
+          <Menu.Item name="home" active={activeItem === "home"}>
+            <Link to="/library">Musely</Link>
+          </Menu.Item>
+          <MenuItem style={largerText}>Ave Maria</MenuItem>
+          <Menu.Menu position="right">
+            <Input
+              style={searchBar}
+              action={{ type: "submit", content: "Go" }}
+              placeholder="Search for Songs..."
+            />
+            <Menu.Item name="login" active={activeItem === "login"}>
+              <Link to="/login">Login</Link>
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+      </div>
+      
+    );
+  }
 }
 
-export default NavBar
+export default NavBar;

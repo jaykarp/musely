@@ -1,13 +1,13 @@
 .notes_sidebar {
     position: relative;
     overflow: hidden;
-    height: 30rem;
+    height: 40rem;
     width: 280px;
     background: rgb(255, 255, 255);
     padding: 20px;
     font-size: 15px;
     float: right;
     
-    border-radius: 35px 0px 0px 0px;
-    box-shadow: -4px 13px 6px 3px rgba(89,89,89,0.88);
+    border-radius: 15px 0px 0px 0px;
+    /* box-shadow: -4px 13px 6px 3px rgba(89,89,89,0.88); */
   }

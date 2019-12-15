@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import Annotation from './Annotation'
+import { Segment, Button, Icon, Label } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 // import { useSpring, useTransition, animated } from "react-spring"
 import { Keyframes, animated } from 'react-spring/renderprops'
@@ -32,9 +33,16 @@ const Container = styled.div`
     padding: 30px 50px 30px 50px;
 `
 
+const TitleHeader = styled.div`
+    padding-left: 3rem;
+    padding-top: 2rem;
+    font-size: 40px;
+    color: black;
+`
+
 const Sidebar = Keyframes.Spring({
     // single items,
-    full: { x: 0, w: 100 },
+    full: { x: 0, w: 103 },
     half: { x: 0, w: 51 },
     // or async functions with side-effects
     close: { x: -100, w: 50 }
@@ -44,17 +52,24 @@ class AnnotationContainer extends Component {
     state = { annoOpen: true, noteOpen: true }
 
     render() {
+
+        const { annotations } = this.props
+
         var annotationGroups = {
             selected: [],
             unselected: []
         }
-        this.props.annotations.forEach((el, i) => {
-            if (this.props.selectedTag && this.props.selectedTag === el.tag) {
-                annotationGroups['selected'].push(el)
-            } else {
-                annotationGroups['unselected'].push(el)
-            }
-        })
+
+        if (annotations.length > 0) {
+            annotations.forEach((el, i) => {
+                if (this.props.selectedTag && this.props.selectedTag === el.tag) {
+                    annotationGroups['selected'].push(el)
+                } else {
+                    annotationGroups['unselected'].push(el)
+                }
+            })
+        }
+        
 
         console.log(annotationGroups)
 
@@ -76,6 +91,12 @@ class AnnotationContainer extends Component {
                                 width: props.w.interpolate(w => `${w}rem`)
                             }}
                         >
+                            <Label 
+                                attached='top'
+                                size='huge'
+                            >
+                                Annotations
+                            </Label>
                             <Container>
                                 <SelectedAnnotationWrapper>
                                     {annotationGroups.selected.map(el => {
@@ -110,41 +131,6 @@ class AnnotationContainer extends Component {
                                         )
                                     })}
                                 </AnnotationWrapper>
-                                {/* {this.props.annotations.map((el, i) => {
-                                    if (this.props.selectedTag && this.props.selectedTag === el.tag) {
-                                        // put selected annotations in a separate div up top
-                                        return (
-                                            <SelectedAnnotationWrapper>
-                                                <Annotation
-                                                    key={i}
-                                                    startTime={el.start_time}
-                                                    endTime={el.end_time}
-                                                    text={el.text}
-                                                    tag={el.tag}
-                                                    color={'grey'}
-                                                    isSelected={true}
-                                                />
-                                            </SelectedAnnotationWrapper>
-                                        )
-
-                                    } else {
-                                        // put the rest of the tags below
-                                        return (
-                                            <AnnotationWrapper>
-
-                                                <Annotation
-                                                    key={i}
-                                                    startTime={el.start_time}
-                                                    endTime={el.end_time}
-                                                    text={el.text}
-                                                    tag={el.tag}
-                                                    color={'grey'}
-                                                    isSelected={false}
-                                                />
-                                            </AnnotationWrapper>
-                                        )
-                                    }
-                                })} */}
                             </Container>
                         </animated.div>
                     )}

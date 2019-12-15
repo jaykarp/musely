@@ -12,9 +12,8 @@ const annotations = (state = [], action) => {
                 }
             ]
         case 'UPDATE_ANNOTATION':
-            //const id = state.findIndex(e => e.id === action.id)
             return state.map((ann, i) => {
-                if (i !== action.id) {
+                if (ann.id !== action.id) {
                     return ann
                 }
                 return {
@@ -25,6 +24,8 @@ const annotations = (state = [], action) => {
                     tag: action.tag || ann.tag
                 }
             })
+        case 'DELETE_ANNOTATION':
+            return state.filter(a => a.id !== action.id)
         default:
             return state
     }

@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import WindowTime from './WindowTime'
-import { Button, Icon, TextArea, Form, Dropdown } from 'semantic-ui-react'
+import { Button, Icon, TextArea, Form, Dropdown, Input, Label } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
+import './EditAnnotation.css'
 import { connect } from 'react-redux'
+import uuid from 'uuid'
 
 const EditAnnotationWrapper = styled.div`
     width: 95%;
@@ -70,47 +72,152 @@ const ButtonWrapper = styled.div`
 const DropDownBox = styled.div`
     margin-right: 5px;
     margin-left: 1.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+    height: auto;
 `
 
 class EditAnnotation extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            text: '',
+            tag: {},
+            start_time: 0,
+            end_time: 0,
+            userTag: '',
+            tagOptions: [
+                { key: uuid.v4(), value: 'Favorites', text: 'Favorites' },
+            ]
+        }
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        const { toggle } = this.props
+        if (!toggle.id && !toggle.isEditing) {
+            this.setState({
+                text: '',
+                tag: {}
+            })
+        } else if (nextProps.annotations.length > 0) {
+            if (
+                nextProps.annotations.findIndex(
+                    ann => nextProps.toggle.id === ann.id
+                ) !== -1
+            ) {
+                const idx = nextProps.annotations.findIndex(
+                    ann => nextProps.toggle.id === ann.id
+                )
+                const text = nextProps.annotations[idx].text
+                const tag = nextProps.annotations[idx].tag
+                this.setState({
+                    text: text,
+                    tag: tag
+                })
+            }
+        }
+
+        let newTags = []
+        console.log('NEXT TAGS', nextProps.tags)
+        if (nextProps.tags.length > 0) {
+            this.props.tags.forEach((tag) => {
+                console.log('TAG TAG', tag)
+                const t = {
+                    key: `${this.state.tagOptions.length+1}`,
+                    value: tag.name,
+                    text: tag.name
+                }
+                newTags.push(t)
+            });
+            this.setState({
+                tagOptions: this.state.tagOptions.concat(newTags)
+            })
+        }
+
+        this.setState({
+            start_time: nextProps.start_time,
+            end_time: nextProps.end_time,
+        })
+    }
+
+    handleTextChange = (e, data) => {
+        const { handleTextChange } = this.props
+        this.setState({
+            text: e.target.value
+        })
+        handleTextChange(e.target.value)
+    }
+
+    handleTagChange = (e, data) => {
+        const { handleTagChange } = this.props
+        this.setState({
+            tag: data.value
+        })
+        handleTagChange(data.value)
+    }
+
+    userAddTag = () => {
+        console.log('USER ADDED TAG')
+        const newTag = {
+            key: uuid.v4(),
+            value: this.state.userTag,
+            text: this.state.userTag
+        }
+        this.setState({
+            tagOptions: [...this.state.tagOptions, newTag]
+        })
+    }
+
+    updateUserTag = (e, data) => {
+        this.setState({
+            userTag: data.value
+        })
+    }
+
     render() {
         const {
             handleSave,
+            handleDiscard,
             handleTagChange,
             handleTextChange,
             handleTimeChange
         } = this.props
-        const { start_time, end_time } = this.props
+
+        let { start_time, end_time, annotations, toggle } = this.props
+
+        //if (annotations.findIndex(ann => toggle.id === ann.id) !== -1) {
+        //const idx = annotations.findIndex(ann => toggle.id === ann.id)
+        //start_time = annotations[idx].start_time
+        //end_time = annotations[idx].end_time
+        //}
+
         const countryOptions = [
-            {
-                key: 'af',
-                value: 'Afghanistan',
-                flag: 'af',
-                text: 'Afghanistan'
-            },
             { key: 'ax', value: 'ax', flag: 'ax', text: 'Aland Islands' },
             { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
-            { key: 'dz', value: 'dz', flag: 'dz', text: 'Algeria' },
-            { key: 'as', value: 'as', flag: 'as', text: 'American Samoa' },
-            { key: 'ad', value: 'ad', flag: 'ad', text: 'Andorra' },
-            { key: 'ao', value: 'ao', flag: 'ao', text: 'Angola' },
-            { key: 'ai', value: 'ai', flag: 'ai', text: 'Anguilla' },
-            { key: 'ag', value: 'ag', flag: 'ag', text: 'Antigua' },
-            { key: 'ar', value: 'ar', flag: 'ar', text: 'Argentina' },
-            { key: 'am', value: 'am', flag: 'am', text: 'Armenia' },
-            { key: 'aw', value: 'aw', flag: 'aw', text: 'Aruba' },
-            { key: 'au', value: 'au', flag: 'au', text: 'Australia' },
-            { key: 'at', value: 'at', flag: 'at', text: 'Austria' },
-            { key: 'az', value: 'az', flag: 'az', text: 'Azerbaijan' },
-            { key: 'bs', value: 'bs', flag: 'bs', text: 'Bahamas' },
-            { key: 'bh', value: 'bh', flag: 'bh', text: 'Bahrain' },
-            { key: 'bd', value: 'bd', flag: 'bd', text: 'Bangladesh' },
-            { key: 'bb', value: 'bb', flag: 'bb', text: 'Barbados' },
-            { key: 'by', value: 'by', flag: 'by', text: 'Belarus' },
-            { key: 'be', value: 'be', flag: 'be', text: 'Belgium' },
-            { key: 'bz', value: 'bz', flag: 'bz', text: 'Belize' },
-            { key: 'bj', value: 'bj', flag: 'bj', text: 'Benin' }
+            { key: 'dz', value: 'dz', text: 'Algeria' },
+            { key: 'as', value: 'as', text: 'American Samoa' },
+            { key: 'df', value: 'dz', text: 'Algeria' },
+            { key: 'zz', value: 'as', text: 'American Samoa' }
         ]
+
+        // var tagOptions = []
+        // var i = 0;
+        
+
+        // this.state.userTags.forEach((tag) => {
+        //     const t = {
+        //         key: i++,
+        //         value: tag.name
+        //     }
+        //     tagOptions.push(t)
+        // })
+        console.log(this.state.tagOptions)
+        console.log(countryOptions)
+
+        
 
         return (
             <EditAnnotationWrapper>
@@ -120,7 +227,8 @@ class EditAnnotation extends Component {
                         <Form>
                             <TextArea
                                 placeholder="Edit annotation here..."
-                                onChange={handleTextChange}
+                                value={this.state.text}
+                                onChange={this.handleTextChange}
                                 style={{
                                     height: 240,
                                     resize: 'none',
@@ -138,9 +246,8 @@ class EditAnnotation extends Component {
                         <WindowWrapper>
                             <OptionsText>Window</OptionsText>
                             <WindowTime
-                                start_time={start_time}
-                                end_time={end_time}
-                                handleTimeChange={handleTimeChange}
+                                start_time={this.state.start_time}
+                                end_time={this.state.end_time}
                             />
                         </WindowWrapper>
 
@@ -152,14 +259,29 @@ class EditAnnotation extends Component {
                                     search
                                     selection
                                     clearable
-                                    options={countryOptions}
-                                    onChange={handleTagChange}
+                                    options={this.state.tagOptions}
+                                    onChange={this.handleTagChange}
+                                />
+                                <Input
+                                    label={
+                                        <Button 
+                                            content='Add New Tag'
+                                            onClick={this.userAddTag}
+                                        />}
+                                    labelPosition='right'
+                                    placeholder='Type here...'
+                                    onChange={this.updateUserTag}
                                 />
                             </DropDownBox>
+                            
                         </TagsWrapper>
 
                         <ButtonWrapper>
-                            <Button size="huge" animated>
+                            <Button
+                                size="huge"
+                                animated
+                                onClick={handleDiscard}
+                            >
                                 <Button.Content visible>Discard</Button.Content>
                                 <Button.Content hidden>
                                     <Icon name="trash" />
@@ -185,12 +307,12 @@ class EditAnnotation extends Component {
     }
 }
 
-//const mapDispatchToProps = {
-//addNote,
-//addAnnotation,
-//updateNote,
-//updateAnnotation
-//}
+const mapStateToProps = state => {
+    return {
+        annotations: state.annotations,
+        tags: state.tags,
+        toggle: state.toggle
+    }
+}
 
-export default connect()(EditAnnotation)
-// null,mapDispatchToProps
+export default connect(mapStateToProps)(EditAnnotation)
