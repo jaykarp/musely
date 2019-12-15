@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import MiniWindowTime from './MiniWindowTime'
 import { Button, Icon, Label} from 'semantic-ui-react'
+
 import DotDotDot from 'react-dotdotdot'
 import { connect } from 'react-redux'
 import { toggleAnnotation, updateAnnotation } from '../../actions'
@@ -9,11 +10,6 @@ import 'semantic-ui-css/semantic.min.css'
 import toggle from '../../reducers/toggle'
 
 const Background = styled.div`
-    /* box-shadow:
-    inset 0 -5px 4px hsla(0, 0%, 0%, 0.4), 
-    inset 0 5px 4px hsla(0, 0%, 100%, 0.4),
-    -8px 4px 5px hsla(0, 0%, 0%, 0.05), 
-    5px 9px 10px hsla(0, 0%, 0%, 0.05); */
     position: relative;
     margin: 5px 5px 5px 5px;
     padding: 0.7rem 0.7rem 0.7rem 0.7rem;
@@ -58,12 +54,11 @@ const Tag = styled.div`
 `
 
 const NoteButtonContainer = styled.div`
-    position: absolute;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     position: absolute;
-    bottom: 8px;
+    bottom: 5px;
     right: 5px;
 `
 
@@ -89,13 +84,26 @@ class Annotation extends Component {
     }
 
     render() {
-        const { isSelected, color, startTime, endTime, tag, text } = this.props
-        console.log('TAG NAME TO BE RENDERED', tag)
+        const {
+            isSelected,
+            color,
+            id,
+            startTime,
+            endTime,
+            tag,
+            tags,
+            text
+        } = this.props
+        let tagColor = tags.find(t => t.name === tag).color
+
         return (
             <div>
-                <Background isSelected={isSelected} color={color || 'blue'}>
+                <Background
+                    isSelected={isSelected}
+                    color={tagColor.bubble || 'blue'}
+                >
                     <NoteHeader>
-                        <TagWrapper color={color || 'blue'}>
+                        <TagWrapper color={tagColor.bubble || 'blue'}>
                             <Tag>{tag}</Tag>
                         </TagWrapper>
                         <MiniWindowTime
@@ -113,7 +121,6 @@ class Annotation extends Component {
                             content="Add note to group"
                             trigger={<Button icon="add" />}
                         /> */}
-
                         <Button
                             icon
                             onClick={this.handleEdit}
@@ -132,7 +139,8 @@ class Annotation extends Component {
 
 const mapStateToProps = state => {
     return {
-        toggle: state.toggle
+        toggle: state.toggle,
+        tags: state.tags
     }
 }
 
