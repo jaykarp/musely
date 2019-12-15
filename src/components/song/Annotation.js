@@ -87,12 +87,25 @@ class Annotation extends Component {
     }
 
     render() {
-        const { isSelected, color, startTime, endTime, tag, text } = this.props
+        const {
+            isSelected,
+            color,
+            id,
+            startTime,
+            endTime,
+            tag,
+            tags,
+            text
+        } = this.props
+        const tagColor = tags.find(t => t.name === tag).color
         return (
             <div>
-                <Background isSelected={isSelected} color={color || 'blue'}>
+                <Background
+                    isSelected={isSelected}
+                    color={tagColor.bubble || 'blue'}
+                >
                     <NoteHeader>
-                        <TagWrapper color={color || 'blue'}>
+                        <TagWrapper color={tagColor.bubble || 'blue'}>
                             <Tag>{tag}</Tag>
                         </TagWrapper>
                         <MiniWindowTime
@@ -129,7 +142,8 @@ class Annotation extends Component {
 
 const mapStateToProps = state => {
     return {
-        toggle: state.toggle
+        toggle: state.toggle,
+        tags: state.tags
     }
 }
 

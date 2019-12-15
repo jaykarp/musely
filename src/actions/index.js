@@ -43,7 +43,8 @@ export const toggleAnnotation = data => ({
 
 export const addTag = data => ({
     type: 'ADD_TAG',
-    name: data.name
+    name: data.name,
+    color: data.color
 })
 
 export const deleteTag = data => ({
