@@ -104,7 +104,7 @@ class EditAnnotation extends Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        const { toggle } = this.props
+        const { toggle } = nextProps
         if (!toggle.id && !toggle.isEditing) {
             this.setState({
                 text: '',
