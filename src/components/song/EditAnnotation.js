@@ -149,7 +149,9 @@ class EditAnnotation extends Component {
 
         const countryOptions = [
             { key: 'ax', value: 'ax', flag: 'ax', text: 'Aland Islands' },
-            { key: 'al', value: 'al', flag: 'al', text: 'Albania' }
+            { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
+            { key: 'dz', value: 'dz', text: 'Algeria' },
+            { key: 'as', value: 'as', text: 'American Samoa' },
         ]
 
         return (
