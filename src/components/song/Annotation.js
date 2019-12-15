@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import MiniWindowTime from './MiniWindowTime'
-import { Button, Icon } from 'semantic-ui-react'
+import { Button, Icon, Label} from 'semantic-ui-react'
+
 import DotDotDot from 'react-dotdotdot'
 import { connect } from 'react-redux'
 import { toggleAnnotation, updateAnnotation } from '../../actions'
@@ -35,12 +36,12 @@ const NoteHeader = styled.div`
 
 const TagWrapper = styled.div`
     height: auto;
-    width: 4rem;
+    width: auto;
     margin-left: 0.5em;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    padding: 2px;
+    padding: 5px;
     background-color: ${props => props.color};
     border-radius: 2px;
 `
@@ -48,6 +49,8 @@ const TagWrapper = styled.div`
 const Tag = styled.div`
     margin: auto;
     font-size: 10px;
+    font-weight: bold;
+    color: white;
 `
 
 const NoteButtonContainer = styled.div`
@@ -92,6 +95,7 @@ class Annotation extends Component {
             text
         } = this.props
         let tagColor = tags.find(t => t.name === tag).color
+
         return (
             <div>
                 <Background
