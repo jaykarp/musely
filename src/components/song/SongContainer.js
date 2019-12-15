@@ -208,7 +208,16 @@ class SongContainer extends Component {
 		this.setState({
 			tag: tag
 		})
-	}
+    }
+    
+    handleUserAddTag = tag => {
+        const { dispatch } = this.props
+        dispatch(
+            addTag({
+                name: this.state.tag
+            })
+        )
+    }
 
 	handleTextChange = text => {
 		this.setState({
@@ -287,6 +296,7 @@ class SongContainer extends Component {
 						handleSave={this.handleSave}
 						handleDiscard={this.handleDiscard}
 						handleTagChange={this.handleTagChange}
+                        handleUserAddTag={this.handleUserAddTag}
 						handleTextChange={this.handleTextChange}
 						start_time={this.state.start_time}
 						end_time={this.state.end_time}

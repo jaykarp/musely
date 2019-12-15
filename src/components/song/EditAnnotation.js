@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import WindowTime from './WindowTime'
-import { Button, Icon, TextArea, Form, Dropdown } from 'semantic-ui-react'
+import { Button, Icon, TextArea, Form, Dropdown, Input, Label } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
+import './EditAnnotation.css'
 import { connect } from 'react-redux'
+import uuid from 'uuid'
 
 const EditAnnotationWrapper = styled.div`
     width: 95%;
@@ -70,6 +72,11 @@ const ButtonWrapper = styled.div`
 const DropDownBox = styled.div`
     margin-right: 5px;
     margin-left: 1.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+    height: auto;
 `
 
 class EditAnnotation extends Component {
@@ -80,7 +87,11 @@ class EditAnnotation extends Component {
             text: '',
             tag: {},
             start_time: 0,
-            end_time: 0
+            end_time: 0,
+            userTag: '',
+            tagOptions: [
+                { key: uuid.v4(), value: 'Favorites', text: 'Favorites' },
+            ]
         }
     }
 
@@ -109,9 +120,26 @@ class EditAnnotation extends Component {
             }
         }
 
+        let newTags = []
+        console.log('NEXT TAGS', nextProps.tags)
+        if (nextProps.tags.length > 0) {
+            this.props.tags.forEach((tag) => {
+                console.log('TAG TAG', tag)
+                const t = {
+                    key: `${this.state.tagOptions.length+1}`,
+                    value: tag.name,
+                    text: tag.name
+                }
+                newTags.push(t)
+            });
+            this.setState({
+                tagOptions: this.state.tagOptions.concat(newTags)
+            })
+        }
+
         this.setState({
             start_time: nextProps.start_time,
-            end_time: nextProps.end_time
+            end_time: nextProps.end_time,
         })
     }
 
@@ -129,6 +157,24 @@ class EditAnnotation extends Component {
             tag: data.value
         })
         handleTagChange(data.value)
+    }
+
+    userAddTag = () => {
+        console.log('USER ADDED TAG')
+        const newTag = {
+            key: uuid.v4(),
+            value: this.state.userTag,
+            text: this.state.userTag
+        }
+        this.setState({
+            tagOptions: [...this.state.tagOptions, newTag]
+        })
+    }
+
+    updateUserTag = (e, data) => {
+        this.setState({
+            userTag: data.value
+        })
     }
 
     render() {
@@ -152,8 +198,26 @@ class EditAnnotation extends Component {
             { key: 'ax', value: 'ax', flag: 'ax', text: 'Aland Islands' },
             { key: 'al', value: 'al', flag: 'al', text: 'Albania' },
             { key: 'dz', value: 'dz', text: 'Algeria' },
-            { key: 'as', value: 'as', text: 'American Samoa' }
+            { key: 'as', value: 'as', text: 'American Samoa' },
+            { key: 'df', value: 'dz', text: 'Algeria' },
+            { key: 'zz', value: 'as', text: 'American Samoa' }
         ]
+
+        // var tagOptions = []
+        // var i = 0;
+        
+
+        // this.state.userTags.forEach((tag) => {
+        //     const t = {
+        //         key: i++,
+        //         value: tag.name
+        //     }
+        //     tagOptions.push(t)
+        // })
+        console.log(this.state.tagOptions)
+        console.log(countryOptions)
+
+        
 
         return (
             <EditAnnotationWrapper>
@@ -195,10 +259,21 @@ class EditAnnotation extends Component {
                                     search
                                     selection
                                     clearable
-                                    options={countryOptions}
+                                    options={this.state.tagOptions}
                                     onChange={this.handleTagChange}
                                 />
+                                <Input
+                                    label={
+                                        <Button 
+                                            content='Add New Tag'
+                                            onClick={this.userAddTag}
+                                        />}
+                                    labelPosition='right'
+                                    placeholder='Type here...'
+                                    onChange={this.updateUserTag}
+                                />
                             </DropDownBox>
+                            
                         </TagsWrapper>
 
                         <ButtonWrapper>
@@ -235,6 +310,7 @@ class EditAnnotation extends Component {
 const mapStateToProps = state => {
     return {
         annotations: state.annotations,
+        tags: state.tags,
         toggle: state.toggle
     }
 }
