@@ -1,43 +1,90 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { Button } from 'semantic-ui-react'
-
-const Container = styled.div`
-    height: 100px;
-    width: 100px;
-    background-color: black;
-    margin: 20px 20px 20px 20px;
-    display: inline-block;
-`
 
 const songs = [
     {
         title: 'Ave Maria',
-        path: 'avemaria'
+        path: 'avemaria',
+        by: {
+            first_name: 'Josquin',
+            last_name: 'des Prez'
+        },
+        period: 'Renaissance'
     },
     {
-        title: 'Nessun Dorma',
-        path: 'nessundorma'
+        title: 'Messiah',
+        path: 'messiah',
+        by: {
+            first_name: 'George',
+            last_name: 'Handle'
+        },
+        period: 'Baroque'
     },
     {
-        title: 'Giant Steps',
-        path: 'giantsteps'
+        title: 'Ornithology',
+        path: 'ornithology',
+        by: {
+            first_name: 'Charlie',
+            last_name: 'Parker'
+        },
+        period: '21st Century'
     }
 ]
+
+const LibraryWrapper = styled.div`
+    width: 100%;
+    padding: 2rem;
+`
+const Bar = styled.div`
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+`
+const SongBar = styled.div`
+    height: 4rem;
+    border: 1px solid #ccc !important;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+    box-shadow: 0;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+        box-shadow: 0 0 3px #515151;
+    }
+`
+
+const Item = styled.div`
+    flex-grow: 1;
+    text-align: center;
+    font-size: ${props => props.fontSize || 15}px;
+    color: black;
+`
 
 class Library extends Component {
     render() {
         return (
-            <div>
+            <LibraryWrapper>
+                <Bar>
+                    <Item fontSize={30}> Song Title </Item>
+                    <Item fontSize={30}> Composer </Item>
+                    <Item fontSize={30}> Period </Item>
+                </Bar>
                 {songs.map((song, i) => (
-                    <Container key={i}>
-                        <Link to={`/song/${song.path}`}>
-                            <Button>{song.title}</Button>
-                        </Link>
-                    </Container>
+                    <Link key={i} to={`/song/${song.path}`}>
+                        <SongBar>
+                            <Item fontSize={25}>{song.title}</Item>
+                            <Item>
+                                {song.by.first_name + ' ' + song.by.last_name}
+                            </Item>
+                            <Item>{song.period}</Item>
+                        </SongBar>
+                    </Link>
                 ))}
-            </div>
+            </LibraryWrapper>
         )
     }
 }
