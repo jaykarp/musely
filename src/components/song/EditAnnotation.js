@@ -99,7 +99,8 @@ class EditAnnotation extends Component {
             userTag: '',
             tagOptions: [
                 { key: uuid.v4(), value: 'Favorites', text: 'Favorites' }
-            ]
+            ],
+            clearedValue: false
         }
     }
 
@@ -158,6 +159,7 @@ class EditAnnotation extends Component {
     }
 
     handleTagChange = (e, data) => {
+        console.log('HANDLE TAG CHANGE')
         const { handleTagChange } = this.props
         this.setState({
             tag: data.value
@@ -180,6 +182,14 @@ class EditAnnotation extends Component {
         this.setState({
             userTag: data.value
         })
+    }
+
+    saveAnnotation = () => {
+        const { handleSave } = this.props
+        this.setState({
+            clearedValue: true,
+        })
+        handleSave()
     }
 
     render() {

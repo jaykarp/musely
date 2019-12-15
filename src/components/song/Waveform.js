@@ -42,7 +42,8 @@ class Waveform extends React.Component {
         this.wavesurfer = null
         this.handleRegion = this.handleRegion.bind(this)
         this.state = {
-            regionExists: false
+            regionExists: false,
+            curColor: ''
         }
     }
 
@@ -52,8 +53,16 @@ class Waveform extends React.Component {
 
     componentWillReceiveProps(nextProps, nextContext) {
         const { toggle, handleCursor, currentTime, annotations, isPlaying, regionColor } = nextProps
+        console.log('RECEIVED PROPS COLOR', regionColor)
         let convertedColor = 'hsla(211, 96%, 72%, 0.5)'
+        let isNewColor = false
         if (regionColor) convertedColor = this.convertColor(regionColor)
+        if (convertedColor.localeCompare(this.state.curColor) !== 0) {
+            isNewColor = true
+            this.setState({
+                curColor: convertedColor
+            })
+        }
         isPlaying ? this.wavesurfer.play() : this.wavesurfer.pause()
         const idx = this.findIndex(toggle.id, annotations)
         let start_time = currentTime
@@ -63,6 +72,18 @@ class Waveform extends React.Component {
             end_time = annotations[idx].end_time
         }
         if (toggle.isEditing && !this.state.regionExists) {
+            this.buildEditableRegion({
+                start_time: start_time,
+                end_time: end_time,
+                color: convertedColor
+            })
+            handleCursor({
+                currentTime: currentTime,
+                region: this.state.regionExists
+            })
+        } else if (toggle.isEditing && this.state.regionExists && isNewColor) {
+            console.log('NEW REGION')
+            this.wavesurfer.clearRegions()
             this.buildEditableRegion({
                 start_time: start_time,
                 end_time: end_time,
@@ -174,12 +195,9 @@ class Waveform extends React.Component {
     }
 
     convertColor = (hsla1) => {
-        console.log(hsla1.bar)
         var bar = hsla1.bar
         const lastComma = bar && bar.lastIndexOf(",")
-        console.log(bar)
         const half = bar.substring(0, lastComma).concat(',0.5)')
-        console.log(half)
         return half
     }
 

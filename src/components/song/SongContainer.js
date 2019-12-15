@@ -82,7 +82,7 @@ class SongContainer extends Component {
             currentEditColor: '',
             tag: '',
             songDuration: 1,
-            selectedTag: 'Afghanistan'
+            selectedTag: ''
         }
     }
 
@@ -218,8 +218,18 @@ class SongContainer extends Component {
     }
 
     handleTagChange = tag => {
+        for(var i = 0; i < this.props.tags.length; i++) {
+            if (this.props.tags[i].name == tag) {
+                const curTag = this.props.tags[i]
+                console.log('CURRENT TAG COLOR', curTag.color.bar)
+                this.setState({
+                    currentEditColor: curTag.color
+                })
+                break;
+            }
+        }
         this.setState({
-            tag: tag
+            tag: tag,
         })
     }
 
