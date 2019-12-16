@@ -100,12 +100,16 @@ class EditAnnotation extends Component {
             tagOptions: [
                 { key: uuid.v4(), value: 'Favorites', text: 'Favorites' }
             ],
-            clearedValue: false
+            // clearedValue: false
         }
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        const { toggle } = this.props
+        // this.setState({
+        //     clearedValue: false,
+        // })
+        
+        const { toggle } = nextProps
         if (!toggle.id && !toggle.isEditing) {
             this.setState({
                 text: '',
@@ -117,6 +121,7 @@ class EditAnnotation extends Component {
                     ann => nextProps.toggle.id === ann.id
                 ) !== -1
             ) {
+                console.log('++++++')
                 const idx = nextProps.annotations.findIndex(
                     ann => nextProps.toggle.id === ann.id
                 )
@@ -184,13 +189,13 @@ class EditAnnotation extends Component {
         })
     }
 
-    saveAnnotation = () => {
-        const { handleSave } = this.props
-        this.setState({
-            clearedValue: true,
-        })
-        handleSave()
-    }
+    // saveAnnotation = () => {
+    //     const { handleSave } = this.props
+    //     this.setState({
+    //         clearedValue: true,
+    //     })
+    //     handleSave()
+    // }
 
     render() {
         const {
