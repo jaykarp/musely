@@ -273,7 +273,6 @@ class EditAnnotation extends Component {
                             <DropDownBox>
                                 <Dropdown
                                     placeholder="Add Tag"
-                                    defaultSearchQuery={'Favorites'}
                                     search
                                     selection
                                     clearable
