@@ -20,7 +20,7 @@ const Sidebar = Keyframes.Spring({
 const Container = styled.div`
     overflow-y: auto;
     height: 100%;
-    padding: 30px 50px 30px 50px;
+    padding: 30px 50px 70px 50px;
 `
 
 export default class NotesContainer extends Component {
