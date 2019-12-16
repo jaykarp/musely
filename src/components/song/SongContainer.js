@@ -90,13 +90,14 @@ class SongContainer extends Component {
     componentWillReceiveProps(nextProps, nextContext) {
         const { toggle, annotations, tags } = nextProps
         // find tag color
+        console.log('TOGGLE RECEIVED', toggle)
         let color = this.state.currentEditColor
         for (var i = 0; i < annotations.length; i++) {
             if (annotations[i].id === toggle.id) {
                 var selectedAnnoTag = annotations[i].tag
                 for (var j = 0; j < tags.length; j++) {
-                    if (tags[i].name === selectedAnnoTag) {
-                        color = tags[i].color
+                    if (tags[j].name === selectedAnnoTag) {
+                        color = tags[j].color
                     }
                 }
                 this.setState({
