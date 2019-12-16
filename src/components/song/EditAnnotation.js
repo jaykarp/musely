@@ -93,13 +93,15 @@ class EditAnnotation extends Component {
 
         this.state = {
             text: '',
-            tag: {},
+            tag: '',
             start_time: 0,
             end_time: 0,
             userTag: '',
+            userPrimedTag: '',
             tagOptions: [
                 { key: uuid.v4(), value: 'Favorites', text: 'Favorites' }
-            ]
+            ],
+            // clearedValue: false
         }
     }
 
@@ -116,11 +118,15 @@ class EditAnnotation extends Component {
                     ann => nextProps.toggle.id === ann.id
                 ) !== -1
             ) {
+                console.log('++++++')
+                console.log('TOGGLE ID', toggle.id)
                 const idx = nextProps.annotations.findIndex(
-                    ann => nextProps.toggle.id === ann.id
+                    ann => toggle.id === ann.id
                 )
+                console.log('INDEX', idx)
                 const text = nextProps.annotations[idx].text
                 const tag = nextProps.annotations[idx].tag
+                console.log('TAG NAME TAG NAME TAG NAME', tag)
                 this.setState({
                     text: text,
                     tag: tag
@@ -129,6 +135,7 @@ class EditAnnotation extends Component {
         }
 
         let newTags = []
+        
         if (nextProps.tags.length > 0) {
             this.props.tags.forEach(tag => {
                 const t = {
@@ -136,18 +143,27 @@ class EditAnnotation extends Component {
                     value: tag.name,
                     text: tag.name
                 }
+                console.log('TTTTT', t)
                 newTags.push(t)
             })
+            if (this.state.userPrimedTag.length > 0) {
+                console.log('USER PRIMED TAG CONCAT', this.state.userPrimedTag)
+                newTags.concat(this.state.userPrimedTag)
+            }
+            console.log('NEW TAGS', newTags)
             this.setState({
                 tagOptions: newTags
             })
         }
+
+        
 
         this.setState({
             start_time: nextProps.start_time,
             end_time: nextProps.end_time
         })
     }
+    
 
     handleTextChange = (e, data) => {
         const { handleTextChange } = this.props
@@ -158,6 +174,7 @@ class EditAnnotation extends Component {
     }
 
     handleTagChange = (e, data) => {
+        console.log('HANDLE TAG CHANGE')
         const { handleTagChange } = this.props
         this.setState({
             tag: data.value
@@ -166,20 +183,36 @@ class EditAnnotation extends Component {
     }
 
     userAddTag = () => {
+        console.log('&&&&&')
         const newTag = {
             key: uuid.v4(),
             value: this.state.userTag,
             text: this.state.userTag
         }
         this.setState({
+            userPrimedTag: newTag,
             tagOptions: [...this.state.tagOptions, newTag]
         })
     }
 
     updateUserTag = (e, data) => {
+        console.log('USER TAG UPDATED', data.value)
         this.setState({
             userTag: data.value
         })
+    }
+
+    saveAnnotation = () => {
+        console.log('SAVE ANNOTATION')
+        const { handleSave } = this.props
+        this.setState({
+            userPrimedTag: '',
+            userTag: '',
+            tagOptions: [
+                { key: uuid.v4(), value: 'Favorites', text: 'Favorites' }
+            ],
+        })
+        handleSave()
     }
 
     render() {
@@ -239,6 +272,7 @@ class EditAnnotation extends Component {
                             <DropDownBox>
                                 <Dropdown
                                     placeholder="Add Tag"
+                                    defaultSearchQuery={'Favorites'}
                                     search
                                     selection
                                     clearable
@@ -275,7 +309,7 @@ class EditAnnotation extends Component {
                                 positive
                                 size="huge"
                                 animated
-                                onClick={handleSave}
+                                onClick={this.saveAnnotation}
                             >
                                 <Button.Content visible>Save</Button.Content>
                                 <Button.Content hidden>

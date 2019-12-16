@@ -79,10 +79,31 @@ class SongContainer extends Component {
             end_time: 0,
             cursorTime: 0,
             currentTime: 0,
+            currentEditColor: '',
             tag: '',
             songDuration: 1,
-            selectedTag: 'Afghanistan'
+            selectedTag: ''
         }
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        const { toggle, annotations, tags } = nextProps
+        // find tag color
+        let color = this.state.currentEditColor
+        for (var i = 0; i < annotations.length; i++) {
+            if (annotations[i].id === toggle.id) {
+                var selectedAnnoTag = annotations[i].tag
+                for (var j = 0; j < tags.length; j++) {
+                    if (tags[i].name === selectedAnnoTag) {
+                        color = tags[i].color
+                    }
+                }
+                this.setState({
+                    currentEditColor: color
+                })
+            }
+        }
+
     }
 
     handleCursor = data => {
@@ -157,7 +178,7 @@ class SongContainer extends Component {
             dispatch(
                 addTag({
                     name: this.state.tag,
-                    color: tag.color
+                    color: this.state.currentEditColor
                 })
             )
             dispatch(
@@ -177,7 +198,7 @@ class SongContainer extends Component {
             dispatch(
                 addTag({
                     name: this.state.tag,
-                    color: this.randomHSL()
+                    color: this.state.currentEditColor
                 })
             )
         }
@@ -215,8 +236,24 @@ class SongContainer extends Component {
     }
 
     handleTagChange = tag => {
+        var i = 0
+        for(; i < this.props.tags.length; i++) {
+            if (this.props.tags[i].name == tag) {
+                const curTag = this.props.tags[i]
+                console.log('CURRENT TAG COLOR', curTag.color.bar)
+                this.setState({
+                    currentEditColor: curTag.color
+                })
+                break;
+            }
+        }
+        if (i >= this.props.tags.length && tag !== '') {
+            this.setState({
+                currentEditColor: this.randomHSL()
+            })
+        }
         this.setState({
-            tag: tag
+            tag: tag,
         })
     }
 
@@ -267,16 +304,6 @@ class SongContainer extends Component {
         const { name } = this.props.match.params
         return (
             <SongWrapper>
-                {/* <SongHeader>{name}</SongHeader> */}
-                {/* <MediaButtonsWrapper>
-                    <Button circular icon={this.state.playing ? 'pause' : 'play'} onClick={this.handleTogglePlay}/>
-                    <Label>
-                        Current Time: {this.formatTime(this.state.currentTime)}
-                    </Label>
-                    <Label>
-                        Cursor: {this.formatTime(this.state.cursorTime)}
-                    </Label>
-                </MediaButtonsWrapper> */}
 
                 <Waveform
                     //src={`/${name}.mp3`}
@@ -284,6 +311,7 @@ class SongContainer extends Component {
                     isPlaying={this.state.playing}
                     currentTime={this.state.currentTime}
                     cursorTime={this.state.cursorTime}
+                    regionColor={this.state.currentEditColor}
                     getCurrentTime={this.getCurrentTime}
                     handleCursor={this.handleCursor}
                     handleCursorMove={this.handleCursorMove}
@@ -296,6 +324,7 @@ class SongContainer extends Component {
                         chooseTag={this.chooseTag}
                     />
                 </TagTimelineWrapper>
+                
                 <Sidebar
                     as={Segment}
                     direction="bottom"
@@ -350,8 +379,7 @@ class SongContainer extends Component {
                                         })
                                     )
                                     this.setState({
-                                        isEditingAnnotation: !this.state
-                                            .isEditingAnnotation
+                                        currentEditColor: this.randomHSL()
                                     })
                                 }}
                             />
@@ -401,43 +429,6 @@ class SongContainer extends Component {
                         </Segment>
                     </Segment.Group>
                 </InteractiveButtonWrapper>
-
-                {/* <button
-					onClick={() => {
-						const { dispatch, toggle } = this.props
-						dispatch(
-							toggleAnnotation({
-								isEditing: !toggle.isEditing,
-								id: null
-							})
-						)
-						this.setState({
-							isEditingAnnotation: !this.state.isEditingAnnotation
-						})
-					}}
-				>
-					Edit Annotation
-				</button> */}
-                {/* <button
-                    onClick={() => {
-                        this.setState({
-                            annotationDrawerIsOpen: !this.state
-                                .annotationDrawerIsOpen
-                        })
-                    }}
-                >
-                    Open Annotations
-                </button>
-
-                <button
-                    onClick={() => {
-                        this.setState({
-                            notesDrawerIsOpen: !this.state.notesDrawerIsOpen
-                        })
-                    }}
-                >
-                    Open Note
-                </button> */}
 
                 <div
                     style={{
