@@ -1,13 +1,37 @@
 /* AnnotationContainer.css */
 
 
- .anno_sidebar {
+ .anno_sidebar_half {
     position: relative;
     overflow: hidden;
     height: 40rem;
     /* width: 280px; */
     background: rgb(255, 255, 255);
+    transition: 1s;
+    width: 49%;
+/* 
+    border-right-width: 2px;
+    border-right-color: black;
+    border-right-style: solid;
+
+    border-top-width: 2px;
+    border-top-color: black;
+    border-top-style: solid; */
+
+    border-radius: 0px 15px 0px 0px; 
     
+    /* box-shadow: 4px 13px 6px 3px rgba(89,89,89,0.88); */
+    
+  }
+ 
+ .anno_sidebar_full {
+    position: relative;
+    overflow: hidden;
+    height: 40rem;
+    /* width: 280px; */
+    background: rgb(255, 255, 255);
+    transition: 1s;
+    width: 98%;
 /* 
     border-right-width: 2px;
     border-right-color: black;
@@ -23,6 +47,31 @@
     
   }
   
+ .anno_sidebar_close {
+    position: relative;
+    overflow: hidden;
+    height: 40rem;
+    /* width: 280px; */
+    background: rgb(255, 255, 255);
+    transition: 1s;
+    width: 0%;
+    opacity: 0;
+/* 
+    border-right-width: 2px;
+    border-right-color: black;
+    border-right-style: solid;
+
+    border-top-width: 2px;
+    border-top-color: black;
+    border-top-style: solid; */
+
+    border-radius: 0px 15px 0px 0px; 
+    
+    /* box-shadow: 4px 13px 6px 3px rgba(89,89,89,0.88); */
+    
+  }
+  
+
 
 .ui.top.attached.label:first-child+:not(.attached) {
     margin-top: 3.6rem!important;

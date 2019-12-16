@@ -1,13 +1,62 @@
-.notes_sidebar {
-    position: relative;
+.notes_sidebar_half {
+    position: absolute;
+    right: 0;
     overflow: hidden;
     height: 40rem;
-    width: 280px;
+    width: 49%;
     background: rgb(255, 255, 255);
     padding: 20px;
     font-size: 15px;
-    float: right;
+    transition: 1s;
     
     border-radius: 15px 0px 0px 0px;
     /* box-shadow: -4px 13px 6px 3px rgba(89,89,89,0.88); */
   }
+
+.notes_sidebar_full {
+    position: absolute;
+    right: 0;
+    overflow: hidden;
+    height: 40rem;
+    width: 98%;
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    font-size: 15px;
+    transition: 1s;
+    
+    border-radius: 15px 0px 0px 0px;
+    /* box-shadow: -4px 13px 6px 3px rgba(89,89,89,0.88); */
+  }
+
+.notes_sidebar_close {
+    position: absolute;
+    right: 0;
+    overflow: hidden;
+    height: 40rem;
+    width: 0%;
+    opacity: 0;
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    font-size: 15px;
+    transition: 1s;
+    
+    border-radius: 15px 0px 0px 0px;
+    /* box-shadow: -4px 13px 6px 3px rgba(89,89,89,0.88); */
+  }
+
+.notes_sidebar_closeHalf {
+    position: absolute;
+    right: 0;
+    overflow: hidden;
+    height: 40rem;
+    width: 0%;
+    opacity: 0;
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    font-size: 15px;
+    transition: 1s;
+    
+    border-radius: 15px 0px 0px 0px;
+    /* box-shadow: -4px 13px 6px 3px rgba(89,89,89,0.88); */
+  }
+

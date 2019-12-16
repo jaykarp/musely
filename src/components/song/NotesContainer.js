@@ -35,25 +35,11 @@ export default class NotesContainer extends Component {
             if (this.props.annoOpen) state = 'closeHalf'
         }
         return (
-            <div>
-                <Sidebar native state={state}>
-                    {props => (
-                        <animated.div
-                            className="notes_sidebar"
-                            style={{
-                                transform: props.x.interpolate(x => {
-                                    return `translate3d(${x}%,0,0)`
-                                }),
-                                width: props.w.interpolate(w => `${w}rem`)
-                            }}
-                        >
-                            <Label attached="top" size="huge">
-                                Notes
-                            </Label>
-                            <Container></Container>
-                        </animated.div>
-                    )}
-                </Sidebar>
+            <div className={'notes_sidebar_' + state}>
+                <Label attached="top" size="huge">
+                    Notes
+                </Label>
+                <Container></Container>
             </div>
         )
     }
