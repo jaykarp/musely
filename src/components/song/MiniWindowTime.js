@@ -4,7 +4,6 @@ import styled from 'styled-components'
 const WTWrapper = styled.div`
     /* display: block; */
     height: auto;
-    float: right;
 `
 
 const RowLayout = styled.div`
