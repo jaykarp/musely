@@ -86,6 +86,26 @@ class SongContainer extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        const { toggle, annotations, tags } = nextProps
+        // find tag color
+        let color = this.state.currentEditColor
+        for (var i = 0; i < annotations.length; i++) {
+            if (annotations[i].id === toggle.id) {
+                var selectedAnnoTag = annotations[i].tag
+                for (var j = 0; j < tags.length; j++) {
+                    if (tags[i].name === selectedAnnoTag) {
+                        color = tags[i].color
+                    }
+                }
+                this.setState({
+                    currentEditColor: color
+                })
+            }
+        }
+
+    }
+
     handleCursor = data => {
         const { toggle, annotations } = this.props
         let curr = parseInt(data.currentTime)
@@ -158,7 +178,7 @@ class SongContainer extends Component {
             dispatch(
                 addTag({
                     name: this.state.tag,
-                    color: tag.color
+                    color: this.state.currentEditColor
                 })
             )
             dispatch(
@@ -218,7 +238,8 @@ class SongContainer extends Component {
     }
 
     handleTagChange = tag => {
-        for(var i = 0; i < this.props.tags.length; i++) {
+        var i = 0
+        for(; i < this.props.tags.length; i++) {
             if (this.props.tags[i].name == tag) {
                 const curTag = this.props.tags[i]
                 console.log('CURRENT TAG COLOR', curTag.color.bar)
@@ -227,6 +248,11 @@ class SongContainer extends Component {
                 })
                 break;
             }
+        }
+        if (i >= this.props.tags.length && tag !== '') {
+            this.setState({
+                currentEditColor: this.randomHSL()
+            })
         }
         this.setState({
             tag: tag,
@@ -280,16 +306,6 @@ class SongContainer extends Component {
         const { name } = this.props.match.params
         return (
             <SongWrapper>
-                {/* <SongHeader>{name}</SongHeader> */}
-                {/* <MediaButtonsWrapper>
-                    <Button circular icon={this.state.playing ? 'pause' : 'play'} onClick={this.handleTogglePlay}/>
-                    <Label>
-                        Current Time: {this.formatTime(this.state.currentTime)}
-                    </Label>
-                    <Label>
-                        Cursor: {this.formatTime(this.state.cursorTime)}
-                    </Label>
-                </MediaButtonsWrapper> */}
 
                 <Waveform
                     //src={`/${name}.mp3`}
@@ -310,6 +326,7 @@ class SongContainer extends Component {
                         chooseTag={this.chooseTag}
                     />
                 </TagTimelineWrapper>
+                
                 <Sidebar
                     as={Segment}
                     direction="bottom"
@@ -414,43 +431,6 @@ class SongContainer extends Component {
                         </Segment>
                     </Segment.Group>
                 </InteractiveButtonWrapper>
-
-                {/* <button
-					onClick={() => {
-						const { dispatch, toggle } = this.props
-						dispatch(
-							toggleAnnotation({
-								isEditing: !toggle.isEditing,
-								id: null
-							})
-						)
-						this.setState({
-							isEditingAnnotation: !this.state.isEditingAnnotation
-						})
-					}}
-				>
-					Edit Annotation
-				</button> */}
-                {/* <button
-                    onClick={() => {
-                        this.setState({
-                            annotationDrawerIsOpen: !this.state
-                                .annotationDrawerIsOpen
-                        })
-                    }}
-                >
-                    Open Annotations
-                </button>
-
-                <button
-                    onClick={() => {
-                        this.setState({
-                            notesDrawerIsOpen: !this.state.notesDrawerIsOpen
-                        })
-                    }}
-                >
-                    Open Note
-                </button> */}
 
                 <div
                     style={{
