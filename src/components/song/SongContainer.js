@@ -431,7 +431,8 @@ class SongContainer extends Component {
                         display: 'inline-flex',
                         marginTop: '10px',
                         width: '100%',
-                        height: '100%'
+                        display: 'flex',
+                        height: 'calc(100vh - 50px - 460px)'
                     }}
                 >
                     <AnnotationContainer
