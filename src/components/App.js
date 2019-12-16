@@ -8,8 +8,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 function App() {
     return (
         <Router>
-            <div style={{ height: '100%' }}>
-                <NavBar />
+            <NavBar />
+            <div>
                 <Switch>
                     <Route path="/song/:name" component={SongContainer} />
                     <Route path="/library" component={Library} />
