@@ -55,13 +55,13 @@ const ModalTagWrapper = styled.div`
 
 const ModalTag = styled.div`
 	margin: auto;
-	font-size: 13px;
+	font-size: 15px;
 	font-weight: bold;
 	color: white;
 `
 
 const ModalText = styled.p`
-	font-size: 16px;
+	font-size: 20px;
 `
 
 const Tag = styled.div`
@@ -141,7 +141,7 @@ class Annotation extends Component {
 						</NoteHeader>
 						<TextDisplay>
 							<DotDotDot clamp={6}>
-								<p>{text}</p>
+								<p style={{wordBreak: 'break-all'}}>{text}</p>
 							</DotDotDot>
 						</TextDisplay>
 						<NoteButtonContainer>
@@ -151,6 +151,7 @@ class Annotation extends Component {
                         /> */}
 							<Modal
 								size="tiny"
+                                dimmer='inverted'
 								closeIcon
 								trigger={
 									<Button
