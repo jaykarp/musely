@@ -41,14 +41,6 @@ const TitleHeader = styled.div`
     color: black;
 `
 
-const Sidebar = Keyframes.Spring({
-    // single items,
-    full: { x: 0, w: 103 },
-    half: { x: 0, w: 51 },
-    // or async functions with side-effects
-    close: { x: -100, w: 50 }
-})
-
 class AnnotationContainer extends Component {
     state = { annoOpen: true, noteOpen: true }
 
@@ -79,59 +71,45 @@ class AnnotationContainer extends Component {
             else state = 'full'
         }
         return (
-            <div>
-                <Sidebar native state={state}>
-                    {props => (
-                        <animated.div
-                            className="anno_sidebar"
-                            style={{
-                                transform: props.x.interpolate(
-                                    x => `translate3d(${x}%,0,0)`
-                                ),
-                                width: props.w.interpolate(w => `${w}rem`)
-                            }}
-                        >
-                            <Label attached="top" size="huge">
-                                Annotations
-                            </Label>
-                            <Container>
-                                <SelectedAnnotationWrapper>
-                                    {annotationGroups.selected.map(el => {
-                                        return (
-                                            <Annotation
-                                                key={el.id}
-                                                id={el.id}
-                                                startTime={el.start_time}
-                                                endTime={el.end_time}
-                                                text={el.text}
-                                                tag={el.tag}
-                                                color={'green'}
-                                                isSelected={true}
-                                            />
-                                        )
-                                    })}
-                                </SelectedAnnotationWrapper>
+            <div className={'anno_sidebar_' + state}>
+                <Label attached="top" size="huge">
+                    Annotations
+                </Label>
+                <Container>
+                    <SelectedAnnotationWrapper>
+                        {annotationGroups.selected.map(el => {
+                            return (
+                                <Annotation
+                                    key={el.id}
+                                    id={el.id}
+                                    startTime={el.start_time}
+                                    endTime={el.end_time}
+                                    text={el.text}
+                                    tag={el.tag}
+                                    color={'green'}
+                                    isSelected={true}
+                                />
+                            )
+                        })}
+                    </SelectedAnnotationWrapper>
 
-                                <AnnotationWrapper>
-                                    {annotationGroups.unselected.map(el => {
-                                        return (
-                                            <Annotation
-                                                key={el.id}
-                                                id={el.id}
-                                                startTime={el.start_time}
-                                                endTime={el.end_time}
-                                                text={el.text}
-                                                tag={el.tag}
-                                                color={'orange'}
-                                                isSelected={false}
-                                            />
-                                        )
-                                    })}
-                                </AnnotationWrapper>
-                            </Container>
-                        </animated.div>
-                    )}
-                </Sidebar>
+                    <AnnotationWrapper>
+                        {annotationGroups.unselected.map(el => {
+                            return (
+                                <Annotation
+                                    key={el.id}
+                                    id={el.id}
+                                    startTime={el.start_time}
+                                    endTime={el.end_time}
+                                    text={el.text}
+                                    tag={el.tag}
+                                    color={'orange'}
+                                    isSelected={false}
+                                />
+                            )
+                        })}
+                    </AnnotationWrapper>
+                </Container>
             </div>
         )
     }
