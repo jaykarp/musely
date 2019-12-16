@@ -105,7 +105,6 @@ class SongContainer extends Component {
                 })
             }
         }
-
     }
 
     handleCursor = data => {
@@ -239,14 +238,14 @@ class SongContainer extends Component {
 
     handleTagChange = tag => {
         var i = 0
-        for(; i < this.props.tags.length; i++) {
+        for (; i < this.props.tags.length; i++) {
             if (this.props.tags[i].name == tag) {
                 const curTag = this.props.tags[i]
                 console.log('CURRENT TAG COLOR', curTag.color.bar)
                 this.setState({
                     currentEditColor: curTag.color
                 })
-                break;
+                break
             }
         }
         if (i >= this.props.tags.length && tag !== '') {
@@ -255,7 +254,7 @@ class SongContainer extends Component {
             })
         }
         this.setState({
-            tag: tag,
+            tag: tag
         })
     }
 
@@ -324,7 +323,7 @@ class SongContainer extends Component {
                         chooseTag={this.chooseTag}
                     />
                 </TagTimelineWrapper>
-                
+
                 <Sidebar
                     as={Segment}
                     direction="bottom"
@@ -433,7 +432,8 @@ class SongContainer extends Component {
                     style={{
                         display: 'inline-flex',
                         marginTop: '10px',
-                        width: '100%'
+                        width: '100%',
+                        height: '100%'
                     }}
                 >
                     <AnnotationContainer

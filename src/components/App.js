@@ -9,7 +9,7 @@ function App() {
     return (
         <Router>
             <NavBar />
-            <div>
+            <div style={{ height: '100%' }}>
                 <Switch>
                     <Route path="/song/:name" component={SongContainer} />
                     <Route path="/library" component={Library} />
