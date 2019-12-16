@@ -8,8 +8,7 @@
     /* width: 280px; */
     background: rgb(255, 255, 255);
     transition: 1s;
-    width: 50%;
-    margin-right: 5px;
+    width: 49%;
 /* 
     border-right-width: 2px;
     border-right-color: black;
@@ -32,8 +31,7 @@
     /* width: 280px; */
     background: rgb(255, 255, 255);
     transition: 1s;
-    width: 100%;
-    margin-right: 5px;
+    width: 98%;
 /* 
     border-right-width: 2px;
     border-right-color: black;
@@ -58,7 +56,6 @@
     transition: 1s;
     width: 0%;
     opacity: 0;
-    margin-right: 5px;
 /* 
     border-right-width: 2px;
     border-right-color: black;
