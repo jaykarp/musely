@@ -9,6 +9,7 @@ import NotesContainer from './NotesContainer'
 import EditAnnotation from './EditAnnotation'
 import TimelineTag from './TimelineTag'
 import { connect } from 'react-redux'
+import '../nav/NavBar.css'
 import {
     addAnnotation,
     updateAnnotation,
@@ -267,19 +268,7 @@ class SongContainer extends Component {
         const { name } = this.props.match.params
         return (
             <SongWrapper>
-                {/* <SongHeader>{name}</SongHeader> */}
-                {/* <MediaButtonsWrapper>
-                    <Button circular icon={this.state.playing ? 'pause' : 'play'} onClick={this.handleTogglePlay}/>
-                    <Label>
-                        Current Time: {this.formatTime(this.state.currentTime)}
-                    </Label>
-                    <Label>
-                        Cursor: {this.formatTime(this.state.cursorTime)}
-                    </Label>
-                </MediaButtonsWrapper> */}
-
                 <Waveform
-                    //src={`/${name}.mp3`}
                     src={'/jeneregretterien.mp3'}
                     isPlaying={this.state.playing}
                     currentTime={this.state.currentTime}
@@ -313,7 +302,6 @@ class SongContainer extends Component {
                     />
                 </Sidebar>
 
-                {/* <SongHeader>Notes</SongHeader> */}
                 <InteractiveButtonWrapper>
                     <Segment.Group horizontal>
                         <Segment>
@@ -339,7 +327,7 @@ class SongContainer extends Component {
                                 />
                             </Button>
                             <Button
-                                color="green"
+                                className="navBar"
                                 content="Add Annotation"
                                 onClick={() => {
                                     const { dispatch, toggle } = this.props
@@ -394,7 +382,7 @@ class SongContainer extends Component {
                                 />
                             </Button>
                             <Button
-                                color="green"
+                                className="navBar"
                                 content="Add Note"
                                 floated="right"
                             />

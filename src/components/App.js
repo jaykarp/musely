@@ -13,7 +13,7 @@ function App() {
                 <Switch>
                     <Route path="/song/:name" component={SongContainer} />
                     <Route path="/library" component={Library} />
-                    <Route path="/" component={Login} />
+                    <Route path="/" component={Library} />
                 </Switch>
             </div>
         </Router>

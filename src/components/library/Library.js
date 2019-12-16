@@ -1,8 +1,19 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { setCurrentSong } from '../../actions'
 
 const songs = [
+    {
+        title: 'Non, Je Ne Regrette Rien',
+        path: 'regretterien',
+        by: {
+            first_name: 'Edith',
+            last_name: 'Paif'
+        },
+        period: 'Modern'
+    },
     {
         title: 'Ave Maria',
         path: 'avemaria',
@@ -29,6 +40,33 @@ const songs = [
             last_name: 'Parker'
         },
         period: '21st Century'
+    },
+    {
+        title: 'Lorem',
+        path: 'Ipsum',
+        by: {
+            first_name: 'Dolor',
+            last_name: 'Sit'
+        },
+        period: 'Medieval'
+    },
+    {
+        title: 'Lorem',
+        path: 'Ipsum',
+        by: {
+            first_name: 'Dolor',
+            last_name: 'Sit'
+        },
+        period: 'Medieval'
+    },
+    {
+        title: 'Lorem',
+        path: 'Ipsum',
+        by: {
+            first_name: 'Dolor',
+            last_name: 'Sit'
+        },
+        period: 'Medieval'
     }
 ]
 
@@ -62,9 +100,19 @@ const Item = styled.div`
     text-align: center;
     font-size: ${props => props.fontSize || 15}px;
     color: black;
+    width: 120px;
 `
 
 class Library extends Component {
+    handleSelect = song => {
+        const { dispatch } = this.props
+        dispatch(
+            setCurrentSong({
+                name: song.title
+            })
+        )
+    }
+
     render() {
         return (
             <LibraryWrapper>
@@ -75,8 +123,8 @@ class Library extends Component {
                 </Bar>
                 {songs.map((song, i) => (
                     <Link key={i} to={`/song/${song.path}`}>
-                        <SongBar>
-                            <Item fontSize={25}>{song.title}</Item>
+                        <SongBar onClick={() => this.handleSelect(song)}>
+                            <Item fontSize={20}>{song.title}</Item>
                             <Item>
                                 {song.by.first_name + ' ' + song.by.last_name}
                             </Item>
@@ -89,4 +137,8 @@ class Library extends Component {
     }
 }
 
-export default Library
+const mapStateToProps = state => {
+    return { song: state.song }
+}
+
+export default connect(mapStateToProps)(Library)
