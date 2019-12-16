@@ -11,9 +11,9 @@ import './NotesContainer.css'
 
 const Sidebar = Keyframes.Spring({
     // single items,
-    full: { x: -48, w: 105 },
-    half: { x: 1, w: 60 },
-    close: { x: 90, w: 60 },
+    full: { x: -46, w: 105 },
+    half: { x: 3, w: 60 },
+    close: { x: 80, w: 60 },
     closeHalf: { x: 15, w: 60 }
 })
 
@@ -22,7 +22,6 @@ const Container = styled.div`
     height: 100%;
     padding: 30px 50px 30px 50px;
 `
-
 
 export default class NotesContainer extends Component {
     state = { annoOpen: true, noteOpen: true }
@@ -42,22 +41,16 @@ export default class NotesContainer extends Component {
                         <animated.div
                             className="notes_sidebar"
                             style={{
-                                transform: props.x.interpolate(
-                                    x => `translate3d(${x}%,0,0)`
-                                ),
+                                transform: props.x.interpolate(x => {
+                                    return `translate3d(${x}%,0,0)`
+                                }),
                                 width: props.w.interpolate(w => `${w}rem`)
                             }}
                         >
-                        <Label 
-                            attached='top'
-                            
-                            size='huge'
-                        >
-                            Notes
-                        </Label>
-                        <Container>
-
-                        </Container>
+                            <Label attached="top" size="huge">
+                                Notes
+                            </Label>
+                            <Container></Container>
                         </animated.div>
                     )}
                 </Sidebar>

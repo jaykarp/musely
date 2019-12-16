@@ -51,3 +51,8 @@ export const deleteTag = data => ({
     type: 'DELETE_TAG',
     name: data.name
 })
+
+export const setCurrentSong = data => ({
+    type: 'SET_CURRENT_SONG',
+    name: data.name
+})

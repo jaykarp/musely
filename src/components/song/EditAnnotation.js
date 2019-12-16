@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import WindowTime from './WindowTime'
+import '../nav/NavBar.css'
 import {
     Button,
     Icon,
@@ -307,6 +308,7 @@ class EditAnnotation extends Component {
 
                             <Button
                                 positive
+                                className="navBar"
                                 size="huge"
                                 animated
                                 onClick={this.saveAnnotation}
