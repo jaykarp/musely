@@ -1,7 +1,7 @@
 .notes_sidebar_half {
     position: absolute;
     right: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
     height: 40rem;
     width: 49%;
     background: rgb(255, 255, 255);
@@ -16,7 +16,7 @@
 .notes_sidebar_full {
     position: absolute;
     right: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
     height: 40rem;
     width: 98%;
     background: rgb(255, 255, 255);
@@ -31,7 +31,7 @@
 .notes_sidebar_close {
     position: absolute;
     right: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
     height: 40rem;
     width: 0%;
     opacity: 0;
@@ -47,7 +47,7 @@
 .notes_sidebar_closeHalf {
     position: absolute;
     right: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
     height: 40rem;
     width: 0%;
     opacity: 0;
