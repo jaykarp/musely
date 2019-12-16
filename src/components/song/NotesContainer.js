@@ -36,7 +36,11 @@ export default class NotesContainer extends Component {
         }
         return (
             <div className={'notes_sidebar_' + state}>
-                <Label attached="top" size="huge">
+                <Label
+                    style={{ borderRadius: '15px .21428571rem 0 0' }}
+                    attached="top"
+                    size="huge"
+                >
                     Notes
                 </Label>
                 <Container></Container>
