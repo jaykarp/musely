@@ -21,7 +21,7 @@ const SelectedAnnotationWrapper = styled.div`
     /* background-color: blue; */
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: flex-row;
     &::after {
         flex: auto;
     }
