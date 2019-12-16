@@ -52,8 +52,14 @@ class Waveform extends React.Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        const { toggle, handleCursor, currentTime, annotations, isPlaying, regionColor } = nextProps
-        console.log('RECEIVED PROPS COLOR', regionColor)
+        const {
+            toggle,
+            handleCursor,
+            currentTime,
+            annotations,
+            isPlaying,
+            regionColor
+        } = nextProps
         let convertedColor = 'hsla(211, 96%, 72%, 0.5)'
         let isNewColor = false
         if (regionColor) convertedColor = this.convertColor(regionColor)
@@ -82,7 +88,6 @@ class Waveform extends React.Component {
                 region: this.state.regionExists
             })
         } else if (toggle.isEditing && this.state.regionExists && isNewColor) {
-            console.log('NEW REGION')
             this.wavesurfer.clearRegions()
             this.buildEditableRegion({
                 start_time: start_time,
@@ -194,9 +199,9 @@ class Waveform extends React.Component {
         this.wavesurfer.pause()
     }
 
-    convertColor = (hsla1) => {
+    convertColor = hsla1 => {
         var bar = hsla1.bar
-        const lastComma = bar && bar.lastIndexOf(",")
+        const lastComma = bar && bar.lastIndexOf(',')
         const half = bar.substring(0, lastComma).concat(',0.5)')
         return half
     }
