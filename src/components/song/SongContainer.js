@@ -162,7 +162,7 @@ class SongContainer extends Component {
 
     handleSave = () => {
         const { dispatch, annotations, tags, toggle } = this.props
-        //const tag_color = tags.find(tag => ann)
+
         if (toggle.id) {
             const ann = annotations.find(ann => ann.id === toggle.id)
             const tag = tags.find(tag => ann.tag === tag.name)
@@ -212,13 +212,11 @@ class SongContainer extends Component {
 
     handleDiscard = () => {
         const { dispatch, toggle, annotations } = this.props
-        console.log(toggle.id)
         // find tag of annotation with this id
         let name = ''
         annotations.forEach(a => {
             if (a.id === toggle.id) name = a.tag
         })
-        console.log('delete name', name)
         dispatch(
             deleteTag({
                 name: name
