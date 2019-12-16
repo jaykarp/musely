@@ -11,7 +11,7 @@ import './AnnotationContainer.css'
 const AnnotationWrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: flex-row;
     &::after {
         flex: auto;
     }
@@ -30,7 +30,7 @@ const SelectedAnnotationWrapper = styled.div`
 const Container = styled.div`
     overflow-y: auto;
     height: 100%;
-    padding: 20px 50px 30px 50px;
+    padding: 20px 50px 70px 50px;
     box-sizing: border-box;
 `
 
@@ -92,7 +92,6 @@ class AnnotationContainer extends Component {
                             )
                         })}
                     </SelectedAnnotationWrapper>
-
                     <AnnotationWrapper>
                         {annotationGroups.unselected.map(el => {
                             return (

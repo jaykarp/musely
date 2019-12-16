@@ -1,13 +1,12 @@
 .notes_sidebar_half {
-    position: relative;
-    margin-left: 5px;
-    overflow: hidden;
+    position: absolute;
+    right: 0;
+    /*overflow: hidden;*/
     height: 40rem;
-    width: 50%;
+    width: 49%;
     background: rgb(255, 255, 255);
     padding: 20px;
     font-size: 15px;
-    float: right;
     transition: 1s;
     
     border-radius: 15px 0px 0px 0px;
@@ -15,15 +14,14 @@
   }
 
 .notes_sidebar_full {
-    position: relative;
-    margin-left: 5px;
-    overflow: hidden;
+    position: absolute;
+    right: 0;
+    /*overflow: hidden;*/
     height: 40rem;
-    width: 100%;
+    width: 98%;
     background: rgb(255, 255, 255);
     padding: 20px;
     font-size: 15px;
-    float: right;
     transition: 1s;
     
     border-radius: 15px 0px 0px 0px;
@@ -31,16 +29,15 @@
   }
 
 .notes_sidebar_close {
-    position: relative;
-    margin-left: 5px;
-    overflow: hidden;
+    position: absolute;
+    right: 0;
+    /*overflow: hidden;*/
     height: 40rem;
     width: 0%;
     opacity: 0;
     background: rgb(255, 255, 255);
     padding: 20px;
     font-size: 15px;
-    float: right;
     transition: 1s;
     
     border-radius: 15px 0px 0px 0px;
@@ -48,16 +45,15 @@
   }
 
 .notes_sidebar_closeHalf {
-    position: relative;
-    margin-left: 5px;
-    overflow: hidden;
+    position: absolute;
+    right: 0;
+    /*overflow: hidden;*/
     height: 40rem;
     width: 0%;
     opacity: 0;
     background: rgb(255, 255, 255);
     padding: 20px;
     font-size: 15px;
-    float: right;
     transition: 1s;
     
     border-radius: 15px 0px 0px 0px;
